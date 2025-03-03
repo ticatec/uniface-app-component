@@ -160,7 +160,6 @@
   width: 100%;
   height: 100%;
   position: relative;
-  flex: 1 1 auto;
   overflow: hidden;
 }
 .uniface-app-cards-board .content-panel {
@@ -172,4 +171,5 @@
   flex-direction: row;
   flex-wrap: wrap;
   overflow: auto;
+  align-content: flex-start;
 }

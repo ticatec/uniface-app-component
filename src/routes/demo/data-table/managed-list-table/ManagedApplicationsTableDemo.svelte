@@ -31,7 +31,12 @@
         title: '操作',
         width: 150,
         getActions: (item: any) : Array<RowAction> => {
-            return []
+            return [
+                {
+                    label: '修改',
+                    callback: ()=>{console.log('操作数据...', item)}
+                }
+            ]
         }
     }
 </script>

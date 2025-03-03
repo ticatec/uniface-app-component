@@ -55,18 +55,6 @@
       "types": "./dist/data-table-pages/DynamicCriteriaDataTablePage.svelte.d.ts",
       "import": "./dist/data-table-pages/DynamicCriteriaDataTablePage.svelte"
     },
-    "./AdvancedFilterPanel": {
-      "types": "./dist/filter-panel/AdvancedFilterPanel.svelte.d.ts",
-      "import": "./dist/filter-panel/AdvancedFilterPanel.svelte"
-    },
-    "./DynamicFilterPanel": {
-      "types": "./dist/filter-panel/DynamicFilterPanel.svelte.d.ts",
-      "import": "./dist/filter-panel/DynamicFilterPanel.svelte"
-    },
-    "./FilterPanel": {
-      "types": "./dist/filter-panel/FilterPanel.svelte.d.ts",
-      "import": "./dist/filter-panel/FilterPanel.svelte"
-    },
     "./CommonFormPage": {
       "types": "./dist/form-pages/CommonFormPage.svelte.d.ts",
       "import": "./dist/form-pages/CommonFormPage.svelte"
@@ -117,8 +105,9 @@
     "@ticatec/axios-restful-service": "^0.1.1",
     "@ticatec/enhanced-utils": "^0.9.0",
     "@ticatec/uniface-dev-shell": "^0.0.2",
-    "@ticatec/uniface-element": "^0.1.10",
+    "@ticatec/uniface-element": "^0.1.11",
     "@ticatec/uniface-icons": "^0.2.0",
+    "@ticatec/uniface-filter-panel": "0.0.2",
     "axios": "^1.8.1",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.7",

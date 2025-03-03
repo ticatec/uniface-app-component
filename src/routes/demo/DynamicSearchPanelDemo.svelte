@@ -1,8 +1,8 @@
 <script lang="ts">
 
-    import DynamicFilterPanel from "$lib/filter-panel/DynamicFilterPanel.svelte";
-    import Button from "@ticatec/uniface-element/button";
-    import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
+    import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel.svelte";
+    import Button from "@ticatec/uniface-element/Button";
+    import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel/MetaCriteriaField";
 
     let visible: boolean = false;
 

@@ -1,13 +1,13 @@
 <script lang="ts">
 
     import TenantManager from "../../cards/managed-paged-cards/TenantManager";
-    import CriteriaFilterPanel from "../../cards/managed-paged-cards/CriteriaFilterPanel.svelte";
+
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import ManagedPagedDataTablePage from "$lib/managed-pages/ManagedPagedDataTablePage.svelte";
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element";
     import columns from "./TenantColumns";
     import ManagedDynamicCriteriaDataTablePage from "$lib/managed-pages/ManagedDynamicCriteriaDataTablePage.svelte";
-    import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
+    import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
 
     const dataMgr = new TenantManager();
 

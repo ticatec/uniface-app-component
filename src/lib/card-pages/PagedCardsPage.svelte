@@ -8,6 +8,7 @@
     import PaginationPanel, {type OnPageChange, type OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import Box from "@ticatec/uniface-element/Box";
+    import {onMount, tick} from "svelte";
 
     export let page$attrs: PageAttrs;
     export let gap: number = 8;
@@ -30,7 +31,8 @@
     let hasVerticalScrollbar: boolean;
 
 
-    const checkScroll = () => {
+    const checkScroll = async () => {
+        await tick();
         if (cardsPanel) {
             hasVerticalScrollbar = cardsPanel.scrollHeight > cardsPanel.clientHeight;
             isAtTop = cardsPanel.scrollTop === 0;
@@ -39,6 +41,14 @@
     }
 
     $: if (cardsPanel) {
+        checkScroll();
+    }
+
+    onMount(async ()=> {
+        await checkScroll();
+    });
+
+    $: if (list) {
         checkScroll();
     }
 

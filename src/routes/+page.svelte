@@ -6,10 +6,7 @@
     import "./app.css";
     import {onMount} from "svelte";
 
-    import CriteriaComponents from "$lib/filter-panel/filter-component/CriteriaComponents";
-    import TextEditorCriteria from "$lib/filter-panel/filter-component/TextEditorCriteria.svelte";
-    import NumberRangeCriteria from "$lib/filter-panel/filter-component/NumberRangeCriteria.svelte";
-    import OptionsSelectorCriteria from "$lib/filter-panel/filter-component/OptionsSelectorCriteria.svelte";
+    //import {reg} from "@ticatec/uniface-filter-panel";
     import uniAppCtx from "$lib/common/uniAppCtx";
     import HomePage from "$lib/HomePage.svelte";
     import RestService, {ApiError} from "@ticatec/axios-restful-service";
@@ -47,10 +44,7 @@
             params = {
                 routes
             }
-            let cmpMgr = CriteriaComponents.getInstance();
-            cmpMgr.register('text-editor', TextEditorCriteria);
-            cmpMgr.register('number-range', NumberRangeCriteria);
-            cmpMgr.register('options-select', OptionsSelectorCriteria);
+
         }
     });
 

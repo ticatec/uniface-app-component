@@ -7,8 +7,8 @@
     import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import DynamicFilterPanel from "$lib/filter-panel/DynamicFilterPanel.svelte";
-    import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
+    import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
+    import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
 

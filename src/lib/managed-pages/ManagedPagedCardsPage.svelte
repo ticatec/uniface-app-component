@@ -87,7 +87,7 @@
     }
 
     onMount(async () => {
-        await doSearch(false)
+        await doSearch(false);
     })
 
 </script>

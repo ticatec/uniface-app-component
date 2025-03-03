@@ -10,6 +10,7 @@
     import AppModule from "$lib/module/AppModule";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import Separator from "@ticatec/uniface-element/Separator";
+    import {onMount, tick} from "svelte";
 
 
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
@@ -34,6 +35,7 @@
         } else {
             filteredList = list.filter(item => filterFun?.(item, m));
         }
+        checkScroll();
     }
 
     $: doFilter(list, filter);
@@ -44,7 +46,8 @@
     let hasVerticalScrollbar: boolean;
 
 
-    const checkScroll = () => {
+    const checkScroll = async () => {
+        await tick();
         if (cardsPanel) {
             hasVerticalScrollbar = cardsPanel.scrollHeight > cardsPanel.clientHeight;
             isAtTop = cardsPanel.scrollTop === 0;
@@ -55,6 +58,10 @@
     $: if (cardsPanel) {
         checkScroll();
     }
+
+    onMount(async () => {
+        await checkScroll();
+    });
 
 </script>
 

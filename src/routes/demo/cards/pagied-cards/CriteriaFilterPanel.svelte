@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import FilterPanel from "$lib/filter-panel";
+    import FilterPanel from "@ticatec/uniface-filter-panel";
     import type {MouseClickHandler} from "@ticatec/uniface-element";
     import CriteriaField from "@ticatec/uniface-element/CriteriaField";
     import TextEditor from "@ticatec/uniface-element/TextEditor";
