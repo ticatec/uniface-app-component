@@ -1,0 +1,175 @@
+.uniface-filter-panel {
+  background-color: var(--uniface-app-background-color, #ffffff);
+}
+.uniface-filter-panel .panel-footer {
+  width: 100%;
+  flex: 0 0 auto;
+  height: 48px;
+  position: relative;
+  border-top: 1px solid var(--uniface-filter-panel-divid-border-color, #f0f0f0);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.uniface-filter-panel .panel-footer .uniface-button {
+  min-width: 80px;
+}
+
+.uniface-quick-filter-panel {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+.uniface-quick-filter-panel .filter-container {
+  width: 100%;
+  padding: 12px 0;
+}
+.uniface-quick-filter-panel .filter-container > div {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  row-gap: 6px;
+  overflow: hidden;
+}
+.uniface-quick-filter-panel .filter-container .uniface-filter-field {
+  flex: 0 0 auto;
+}
+.uniface-quick-filter-panel .inject-action-bar {
+  flex: 0 0 auto;
+  margin-right: 8px;
+  position: relative;
+}
+.uniface-quick-filter-panel .inject-action-bar::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  height: 80%;
+  top: 10%;
+  width: 1px;
+  background: var(--uniface-card-inside-border-color, #E2E8F0);
+}
+
+.uniface-advanced-filter-panel {
+  width: 520px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: var(--uniface-filter-panel-bg, #ffffff);
+  border-left: 1px solid var(--uniface-dialog-border-color, rgba(0, 0, 0, 0.0509803922));
+  color: var(--uniface-default-text-color, #374151);
+}
+.uniface-advanced-filter-panel .panel-footer {
+  padding: 0 12px;
+}
+.uniface-advanced-filter-panel > div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.uniface-advanced-filter-panel > div .panel-header {
+  width: 100%;
+  flex: 0 0 54px;
+  display: flex;
+  font-size: 1.2em;
+  flex-direction: row;
+  border-bottom: 1px solid var(--uniface-filter-panel-divid-border-color, #f0f0f0);
+  align-items: center;
+}
+.uniface-advanced-filter-panel > div .filter-container {
+  width: 100%;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.uniface-advanced-filter-panel > div .filter-container > div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  row-gap: 6px;
+}
+.uniface-advanced-filter-panel > div .filter-container .uniface-filter-field {
+  width: 100%;
+}
+.uniface-advanced-filter-panel > div .filter-container .uniface-filter-field.x10, .uniface-advanced-filter-panel > div .filter-container .uniface-filter-field.x15, .uniface-advanced-filter-panel > div .filter-container .uniface-filter-field.x20 {
+  width: 50%;
+}
+
+:root {
+  --uniface-page-margin-bg: #F8FAFC;
+}
+
+.uniface-module-board {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  background-color: var(--uniface-application-bg, #ffffff);
+}
+.uniface-module-board .module-base-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+.uniface-module-board .uniface-stack-page-board {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 4;
+}
+.uniface-module-board .uniface-stack-page-board > div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--uniface-application-bg, #ffffff);
+}
+
+.gradient_transparent_overlay {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  height: 40px;
+  background: linear-gradient(to top, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.gradient_transparent_overlay.at_top {
+  bottom: unset;
+  top: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+}
+.gradient_transparent_overlay.hidden {
+  display: none;
+}
+
+.uniface-app-cards-board {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+.uniface-app-cards-board .content-panel {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: auto;
+}

@@ -1,0 +1,5 @@
+/.idea/
+/.svelte-kit/
+/dist/
+/node_modules/
+/.env.local

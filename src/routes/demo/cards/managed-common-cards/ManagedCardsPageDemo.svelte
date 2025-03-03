@@ -1,0 +1,26 @@
+<script lang="ts">
+
+    import AppManager from "./AppManager";
+    import ManagedCardsPage from "$lib/managed-pages/ManagedCardsPage.svelte";
+    import GroupCard from "./ApplicationCard.svelte";
+
+    const dataMgr = new AppManager();
+
+    let page$attrs = {
+        title: "托管卡片页面演示"
+    };
+
+    let list: Array<any> = [];
+
+    const onCreateNewClick = () => {
+
+    }
+
+    const doFilter = (app: any, text: string): boolean => {
+        return app.name.indexOf(text) > -1 || app.code.indexOf(text) > -1
+    }
+
+    $: console.log('数据列表', list);
+</script>
+
+<ManagedCardsPage dataManager={dataMgr} bind:list page$attrs="{page$attrs}" filterFun={doFilter} card={GroupCard} {onCreateNewClick}/>

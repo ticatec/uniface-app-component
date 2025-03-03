@@ -1,0 +1,75 @@
+@use "./filter-panel/uniface-filter-panel";
+
+:root {
+  --uniface-page-margin-bg: #F8FAFC;
+}
+
+.uniface-module-board {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  background-color: var(--uniface-application-bg, #ffffff);
+
+  .module-base-page {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .uniface-stack-page-board {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 4;
+
+    & > div {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: var(--uniface-application-bg, #ffffff);
+    }
+  }
+}
+
+.gradient_transparent_overlay {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  height: 40px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  pointer-events: none;
+
+  &.at_top {
+    bottom: unset;
+    top: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.uniface-app-cards-board {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+
+  .content-panel {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+  }
+}

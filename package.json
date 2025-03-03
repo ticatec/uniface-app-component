@@ -1,0 +1,138 @@
+{
+  "name": "@ticatec/uniface-app-component",
+  "version": "0.1.0",
+  "description": "uniface web app components base on the uniface web elements",
+  "scripts": {
+    "dev": "vite dev",
+    "build:css": "sass ./src/lib/uniface-app-component.scss:./src/lib/uniface-app-component.css --no-source-map",
+    "build": "npm run build:css && svelte-kit sync && svelte-package",
+    "package": "svelte-kit sync && svelte-package && publint",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "publish:public": "npm run build && npm publish --access public"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.scss",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./uniface-app-component.css": {
+      "default": "./dist/uniface-app-component.css"
+    },
+    "./HomePage": {
+      "types": "./dist/HomePage.svelte.d.ts",
+      "import": "./dist/HomePage.svelte"
+    },
+    "./CardsPage": {
+      "types": "./dist/card-pages/CardsPage.svelte.d.ts",
+      "import": "./dist/card-pages/CardsPage.svelte"
+    },
+    "./PagedCardsPage": {
+      "types": "./dist/card-pages/PagedCardsPage.svelte.d.ts",
+      "import": "./dist/card-pages/PagedCardsPage.svelte"
+    },
+    "./DataListTablePage": {
+      "types": "./dist/data-table-pages/DataListTablePage.svelte.d.ts",
+      "import": "./dist/data-table-pages/DataListTablePage.svelte"
+    },
+    "./PagedDataTablePage": {
+      "types": "./dist/data-table-pages/PagedDataTablePage.svelte.d.ts",
+      "import": "./dist/data-table-pages/PagedDataTablePage.svelte"
+    },
+    "./DynamicCriteriaDataTablePage": {
+      "types": "./dist/data-table-pages/DynamicCriteriaDataTablePage.svelte.d.ts",
+      "import": "./dist/data-table-pages/DynamicCriteriaDataTablePage.svelte"
+    },
+    "./AdvancedFilterPanel": {
+      "types": "./dist/filter-panel/AdvancedFilterPanel.svelte.d.ts",
+      "import": "./dist/filter-panel/AdvancedFilterPanel.svelte"
+    },
+    "./DynamicFilterPanel": {
+      "types": "./dist/filter-panel/DynamicFilterPanel.svelte.d.ts",
+      "import": "./dist/filter-panel/DynamicFilterPanel.svelte"
+    },
+    "./FilterPanel": {
+      "types": "./dist/filter-panel/FilterPanel.svelte.d.ts",
+      "import": "./dist/filter-panel/FilterPanel.svelte"
+    },
+    "./CommonFormPage": {
+      "types": "./dist/form-pages/CommonFormPage.svelte.d.ts",
+      "import": "./dist/form-pages/CommonFormPage.svelte"
+    },
+    "./ManagedCardsPage": {
+      "types": "./dist/managed-pages/ManagedCardsPage.svelte.d.ts",
+      "import": "./dist/managed-pages/ManagedCardsPage.svelte"
+    },
+    "./ManagedDataTablePage": {
+      "types": "./dist/managed-pages/ManagedDataTablePage.svelte.d.ts",
+      "import": "./dist/managed-pages/ManagedDataTablePage.svelte"
+    },
+    "./ManagedDynamicCriteriaDataTablePage": {
+      "types": "./dist/managed-pages/ManagedDynamicCriteriaDataTablePage.svelte.d.ts",
+      "import": "./dist/managed-pages/ManagedDynamicCriteriaDataTablePage.svelte"
+    },
+    "./ManagedPagedDataTablePage": {
+      "types": "./dist/managed-pages/ManagedPagedDataTablePage.svelte.d.ts",
+      "import": "./dist/managed-pages/ManagedPagedDataTablePage.svelte"
+    },
+    "./module": {
+      "types": "./dist/module/index.d.ts",
+      "import": "./dist/module/index.js"
+    },
+    "./module/ModuleHome": {
+      "types": "./dist/module/ModuleHome.svelte.d.ts",
+      "import": "./dist/module/ModuleHome.svelte"
+    },
+    "./multiple-modules": {
+      "types": "./dist/multiple-modules/index.d.ts",
+      "import": "./dist/multiple-modules/index.js"
+    },
+    "./multiple-modules/TabModules": {
+      "types": "./dist/multiple-modules/TabModules.svelte.d.ts",
+      "import": "./dist/multiple-modules/TabModules.svelte"
+    }
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^4.0.0",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/package": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@ticatec/app-data-manager": "^1.0.1",
+    "@ticatec/app-data-service": "^1.0.0",
+    "@ticatec/axios-restful-service": "^0.1.1",
+    "@ticatec/enhanced-utils": "^0.9.0",
+    "@ticatec/uniface-dev-shell": "^0.0.2",
+    "@ticatec/uniface-element": "^0.1.10",
+    "@ticatec/uniface-icons": "^0.2.0",
+    "axios": "^1.8.1",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.7",
+    "publint": "^0.3.2",
+    "sass": "^1.57.1",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "svelte-portal": "^2.2.1",
+    "svelte-preprocess": "^6.0.3",
+    "tslib": "^2.3.1",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.11"
+  },
+  "author": "Henry Feng",
+  "license": "MIT",
+  "private": false
+}
