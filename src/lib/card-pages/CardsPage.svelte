@@ -38,6 +38,23 @@
 
     $: doFilter(list, filter);
 
+    let cardsPanel;
+    let isAtTop: boolean;
+    let isAtBottom: boolean;
+    let hasVerticalScrollbar: boolean;
+
+
+    const checkScroll = () => {
+        if (cardsPanel) {
+            hasVerticalScrollbar = cardsPanel.scrollHeight > cardsPanel.clientHeight;
+            isAtTop = cardsPanel.scrollTop === 0;
+            isAtBottom = cardsPanel.scrollTop + cardsPanel.clientHeight === cardsPanel.scrollHeight;
+        }
+    }
+
+    $: if (cardsPanel) {
+        checkScroll();
+    }
 
 </script>
 
@@ -60,10 +77,13 @@
         {/if}
     </div>
 
-    <div style="width: 100%; height: 100%; padding: 12px; box-sizing: border-box; overflow: auto; display: flex; flex-direction: row; flex-wrap: wrap; gap: {gap}px">
-        {#each filteredList as item}
-            <svelte:component this={card} data={item}/>
-        {/each}
+    <div class="uniface-app-cards-board">
+        <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
+            {#each filteredList as item}
+                <svelte:component this={card} data={item}/>
+            {/each}
+        </div>
+        <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop} ></div>
+        <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom} ></div>
     </div>
-
 </Page>
