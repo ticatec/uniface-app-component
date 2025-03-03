@@ -16,7 +16,7 @@
 
 </script>
 
-<FilterPanel {actions} {resetClickHandler} {searchClickHandler}>
+<FilterPanel {actions} {resetClickHandler} {searchClickHandler} style="padding: 0 12px; border-radius: 0; border-bottom: 1px solid var(--uniface-page-divid-color, #F0F0F0)">
     <CriteriaField size="x20" label="编码">
         <TextEditor variant="outlined" bind:value={criteria.code} input$placeholder="*替代所有字符"/>
     </CriteriaField>

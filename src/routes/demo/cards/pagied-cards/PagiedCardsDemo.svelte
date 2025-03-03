@@ -103,5 +103,5 @@
 
 <PaginationCardsPage {total} {onPageChange} {onRowCountChanged} {pageCount} {pageNo} list={roles} page$attrs={page$attrs} {onRefreshClick}
                      card={RoleCard} {onCreateNewClick}>
-    <CriteriaFilterPanel bind:criteria slot="search-bar" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
+    <CriteriaFilterPanel bind:criteria slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
 </PaginationCardsPage>
