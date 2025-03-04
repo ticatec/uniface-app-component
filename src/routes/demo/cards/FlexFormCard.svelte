@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import Card from "@ticatec/uniface-element/card";
+    import Card from "@ticatec/uniface-element/Card";
     import type {CardAction} from "@ticatec/uniface-element";
     export let data: any;
 

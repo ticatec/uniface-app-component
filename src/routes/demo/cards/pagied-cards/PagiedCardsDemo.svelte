@@ -89,7 +89,7 @@
     }
 
     let actions: ButtonActions = [
-        {label: '新增', type: 'primary', handler: ()=> {AppModule.showPage(CommonCardsDemo, {})}}
+        {label: '新增', type: 'primary', handler: ()=> {AppModule.showPage(CommonCardsDemo, {canBeClosed: true})}}
     ]
 
 </script>

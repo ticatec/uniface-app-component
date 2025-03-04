@@ -9,7 +9,8 @@
     const dataMgr = new AppManager();
 
     let page$attrs = {
-        title: "数据表格页面演示"
+        title: "数据表格页面演示",
+        canClose: true
     };
 
     let list: Array<any> = [];

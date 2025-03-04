@@ -6,10 +6,8 @@
     import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import CommonPaginationDataTablePage from "$lib/data-table-pages/PagedDataTablePage.svelte";
-    import {PagingDataService} from "@ticatec/app-data-service";
+    import PagedDataTablePage from "$lib/data-table-pages/PagedDataTablePage.svelte";
     import {onMount} from "svelte";
-    import {PagedDataManager} from "@ticatec/app-data-manager";
     import type PageAttrs from "$lib/common/PageAttrs";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import type PagingDataManager from "$lib/common/PagingDataManager";
@@ -26,6 +24,8 @@
     export let busyIndicator: string | null = null;
     export let page$attrs: PageAttrs;
     export let roundTable: boolean = false;
+
+    export let canBeClosed: boolean = false;
 
 
     export const reset: any = async () => {
@@ -105,8 +105,8 @@
 
 </script>
 
-<CommonPaginationDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
-                               {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange}>
+<PagedDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
+                               {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed}>
     <slot name="search-panel" slot="search-panel">
     </slot>
-</CommonPaginationDataTablePage>
+</PagedDataTablePage>

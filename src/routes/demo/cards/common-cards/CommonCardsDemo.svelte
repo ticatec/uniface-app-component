@@ -5,16 +5,17 @@
     import RoleCard from "./RoleCard.svelte";
     import RoleDetailPanel from "./RoleDetailPanel.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
+    import {AppModule} from "$lib/module";
+    import ManagedPagedTableDemo from "../../data-table/managed-paged-table";
+
+    export let canBeClosed: boolean = false;
 
     let page$attrs: PageAttrs = {
-        title: "卡片页面演示",
-        canClose: true
+        title: "卡片页面演示"
     };
 
     const onRefreshClick = async () => {
-        window.Indicator.show('刷新数据...');
-        await utils.sleep(3);
-        window.Indicator.hide();
+        AppModule.showPage(ManagedPagedTableDemo, {canBeClosed: true})
     }
 
     let roles = [
@@ -39,4 +40,4 @@
 
 </script>
 
-<CommonCardsPage list={roles} page$attrs={page$attrs} {onRefreshClick} filterFun={doFilter} card={RoleCard} {onCreateNewClick}/>
+<CommonCardsPage list={roles} page$attrs={page$attrs} {onRefreshClick} {canBeClosed} filterFun={doFilter} card={RoleCard} {onCreateNewClick}/>

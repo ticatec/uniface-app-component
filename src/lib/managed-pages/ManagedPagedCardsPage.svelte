@@ -14,6 +14,7 @@
     export let dataManager: PagingDataManager;
     export let busyIndicator: string | null = null;
     export let criteria: any;
+    export let canBeClosed: boolean = false;
 
 
     export const reset: any = async () => {
@@ -93,7 +94,7 @@
 </script>
 
 
-<PagedCardsPage {total} {pageNo} {pageCount} {page$attrs} {gap} {list} {onPageChange} {onRowCountChanged}
+<PagedCardsPage {total} {pageNo} {pageCount} {page$attrs} {gap} {list} {onPageChange} {onRowCountChanged} {canBeClosed}
                 {card}>
     <slot slot="search-panel" name="search-panel"/>
 </PagedCardsPage>

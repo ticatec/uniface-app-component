@@ -3,6 +3,8 @@
     import AppManager from "./AppManager";
     import ManagedCardsPage from "$lib/managed-pages/ManagedCardsPage.svelte";
     import GroupCard from "./ApplicationCard.svelte";
+    import {AppModule} from "$lib/module";
+    import SimpleFormDemo from "../../forms/SimpleFormDemo.svelte";
 
     const dataMgr = new AppManager();
 
@@ -13,7 +15,7 @@
     let list: Array<any> = [];
 
     const onCreateNewClick = () => {
-
+        AppModule.showPage(SimpleFormDemo, {})
     }
 
     const doFilter = (app: any, text: string): boolean => {

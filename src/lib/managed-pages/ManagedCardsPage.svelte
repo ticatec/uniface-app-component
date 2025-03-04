@@ -19,6 +19,8 @@
     export let queryParams: any = null;
     export let filterFun: FunFilter | null = null;
 
+    export let canBeClosed: boolean = false;
+
     const loadList = async (initialize?: boolean) => {
         window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.indicatorLoading', 'loading...'));
         try {
@@ -43,7 +45,7 @@
 </script>
 
 
-<CommonCardsPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {card}>
+<CommonCardsPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {card} {canBeClosed}>
 
 </CommonCardsPage>
 

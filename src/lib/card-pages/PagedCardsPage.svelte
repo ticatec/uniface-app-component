@@ -1,15 +1,14 @@
 <script lang="ts">
 
-    import Page from "@ticatec/uniface-element/Page";
-    import Button from "@ticatec/uniface-element/Button";
     import type PageAttrs from "$lib/common/PageAttrs";
     import uniAppCtx from "$lib/common/uniAppCtx";
-    import AppModule from "$lib/module/AppModule";
     import PaginationPanel, {type OnPageChange, type OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import {onMount, tick} from "svelte";
+    import CommonPage from "$lib/common/CommonPage.svelte";
 
     export let page$attrs: PageAttrs;
+    export let canBeClosed: boolean = false;
     export let gap: number = 8;
     export let list: Array<any> = [];
     export let total: number;
@@ -18,10 +17,6 @@
     export let onRowCountChanged: OnRowCountChanged;
     export let onPageChange: OnPageChange;
     export let card: any;
-
-    const closePage = (event: MouseEvent) => {
-        AppModule.closeActivePage();
-    }
 
     let cardsPanel: any;
 
@@ -54,14 +49,7 @@
 
 </script>
 
-<Page round={uniAppCtx.roundPage} shadow={uniAppCtx.shadowPage} title={page$attrs.title??'Title'} comment={page$attrs?.comment}
-      style={page$attrs?.style??''}
-      content$style="overflow: hidden; display: flex; flex-direction: column">
-    <div slot="header-ext" style="flex: 0 0 auto; display: flex;position: relative; align-items: center; column-gap: 8px">
-        {#if page$attrs?.canClose}
-            <Button type="default" label={i18n.getText('uniface.app.btnClose', "Close")} onClick={closePage}></Button>
-        {/if}
-    </div>
+<CommonPage page$attrs={page$attrs} content$style="overflow: hidden; display: flex; flex-direction: column" {canBeClosed}>
 
     <slot name="search-panel"/>
     <div class="uniface-app-cards-board">
@@ -90,4 +78,4 @@
                          rowCountLabel={uniAppCtx.rowCountLabel}/>
     </div>
 
-</Page>
+</CommonPage>

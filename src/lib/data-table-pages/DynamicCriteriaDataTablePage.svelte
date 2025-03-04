@@ -7,7 +7,6 @@
     import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
     import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
@@ -30,6 +29,7 @@
     export let onPageChange: OnPageChange;
     export let page$attrs: PageAttrs;
 
+    export let canBeClosed: boolean = false;
     export let actions: ButtonActions = [];
     export let roundTable: boolean = false;
 
@@ -39,7 +39,7 @@
 
 </script>
 
-<CommonPaginationDataTablePage page$attrs={page$attrs} {onPageChange} {onRowCountChanged} {pageNo} {pageCount} {total} {roundTable}
+<CommonPaginationDataTablePage page$attrs={page$attrs} {onPageChange} {onRowCountChanged} {pageNo} {pageCount} {total} {roundTable} {canBeClosed}
                                {list} bind:selectedRows {actionsColumn} {indicatorColumn} {columns} {rowHeight}>
     <DynamicFilterPanel slot="search-panel" style="flex: 0 0 auto" bind:criteria {fields} {actions} {resetClickHandler} {searchClickHandler}
                         {variant} {advancedCriteriaTitle}>

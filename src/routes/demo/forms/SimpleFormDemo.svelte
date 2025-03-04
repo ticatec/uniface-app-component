@@ -1,10 +1,10 @@
 <script lang="ts">
     import CommonFormPage from "$lib/form-pages/CommonFormPage.svelte";
-    import type {MouseClickHandler} from "@ticatec/uniface-element";
-    import FormContainer, {Row, CellField} from "@ticatec/uniface-element/flex-row-form";
-    import TextEditor from "@ticatec/uniface-element/text-editor";
-    import OptionsSelect from "@ticatec/uniface-element/options-select";
-    import DatePicker from "@ticatec/uniface-element/date-picker";
+    import {ModuleResult, type MouseClickHandler} from "@ticatec/uniface-element";
+    import FormContainer, {Row, CellField} from "@ticatec/uniface-element/FlexRowForm";
+    import TextEditor from "@ticatec/uniface-element/TextEditor";
+    import OptionsSelect from "@ticatec/uniface-element/OptionsSelect";
+    import DatePicker from "@ticatec/uniface-element/DatePicker";
     import CardsDemoPage from "../cards/CardsDemoPage.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import AppModule from "$lib/module/AppModule";
@@ -35,6 +35,10 @@
         }
     ]
 
+    const closeConfirm = async () => {
+        return await window.MessageBox.showConfirm('数据尚未保存，确定退出？', "关闭确认") == ModuleResult.MR_OK;
+    }
+
     let  page$attrs: PageAttrs = {
         title: '卒中患者列表',
         canClose: true
@@ -42,7 +46,7 @@
 
     $:console.log(data);
 </script>
-<CommonFormPage   page$attrs={page$attrs}  {onSaveClick} canClose={true}>
+<CommonFormPage  page$attrs={page$attrs}  {onSaveClick} {closeConfirm}>
     <FormContainer>
         <Row>
             <CellField span={3} label="姓名" required>

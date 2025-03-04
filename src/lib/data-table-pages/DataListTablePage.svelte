@@ -6,14 +6,13 @@
     import DataTable from "@ticatec/uniface-element/DataTable";
     import Box from "@ticatec/uniface-element/Box";
     import type {ActionsColumn, DataColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
-    import Page from "@ticatec/uniface-element/Page";
     import Button from "@ticatec/uniface-element/Button";
     import SearchBox from "@ticatec/uniface-element/SearchBox";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import uniAppCtx from "$lib/common/uniAppCtx";
-    import AppModule from "$lib/module/AppModule";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import Separator from "@ticatec/uniface-element/Separator";
+    import {onMount} from "svelte";
+    import CommonPage from "$lib/common/CommonPage.svelte";
 
     export let indicatorColumn: IndicatorColumn;
     export let columns: Array<DataColumn>;
@@ -26,14 +25,11 @@
 
     export let filterFun: FunFilter | null = null;
     export let page$attrs: PageAttrs;
+    export let canBeClosed: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
     let filter: string = '';
     let filteredList: Array<any> = [];
-
-    const closePage = (event: MouseEvent) => {
-        AppModule.closeActivePage();
-    }
 
     const doFilter = (arr: Array<any>, m: string) => {
         if (!m) {
@@ -43,12 +39,15 @@
         }
     }
 
+    onMount(async ()=>{
+        indicatorColumn.emptyIndicator = indicatorColumn.emptyIndicator ?? i18n.getText('uniface.app.emptyFiltered', 'There is no data that meets the filter criteria. Please set the filter criteria again.')
+    })
+
     $: doFilter(list, filter);
 
 
 </script>
-<Page round={uniAppCtx.roundPage} title={page$attrs?.title} comment={page$attrs?.comment} style={page$attrs?.style}
-      shadow={uniAppCtx.shadowPage} content$style="padding: 12px; box-sizing: border-box; overflow: hidden">
+<CommonPage page$attrs={page$attrs} {canBeClosed} content$style="padding: 12px; box-sizing: border-box; overflow: hidden">
     <div slot="header-ext" style="flex: 0 0 auto; display: flex;position: relative; align-items: center; column-gap: 8px">
         {#if filterFun}
             <SearchBox variant="outlined" compact bind:value={filter} style="width: 240px"/>
@@ -61,16 +60,10 @@
         {/if}
 
         <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
-        {#if page$attrs?.canClose}
-            <div style="flex: 0 0 auto; padding-left: 12px">
-                <i class="uniface-icon-x page-action-button" aria-hidden="true" on:click={closePage}></i>
-            </div>
-        {/if}
-
     </div>
 
     <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>
         <DataTable {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
                    list={filteredList}></DataTable>
     </Box>
-</Page>
+</CommonPage>

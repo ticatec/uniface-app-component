@@ -7,6 +7,8 @@
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element";
     import columns from "./TenantColumns";
 
+    export let canBeClosed: boolean = false;
+
     const dataMgr = new TenantManager();
 
     let page$attrs = {
@@ -16,10 +18,6 @@
     let list: Array<any> = [];
     let tablePage: any;
 
-    const onCreateNewClick = () => {
-
-    }
-
     let criteria: any = {}
 
     const doResetSearch = async () => {
@@ -28,10 +26,6 @@
 
     const doSearch = async () => {
         tablePage.search()
-    }
-
-    const saveCallback = (data: any, isNew: boolean) => {
-
     }
 
     const addNewRole = () => {
@@ -62,6 +56,6 @@
 </script>
 
 <ManagedPagedDataTablePage bind:this={tablePage} {actionsColumn} {indicatorColumn} dataManager={dataMgr} bind:list page$attrs="{page$attrs}"
-                           bind:criteria {columns} rowHeight={48}>
+                           bind:criteria {columns} rowHeight={48} {canBeClosed}>
     <CriteriaFilterPanel bind:criteria slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
 </ManagedPagedDataTablePage>

@@ -13,9 +13,4 @@ export default interface PageAttrs {
      */
     comment?: string;
 
-    /**
-     * 页面是否可以关闭
-     */
-    canClose?: boolean;
-
 }
