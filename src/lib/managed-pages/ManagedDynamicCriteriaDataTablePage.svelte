@@ -6,8 +6,8 @@
     import ManagedPaginationDataTablePage from "$lib/managed-pages/ManagedPagedDataTablePage.svelte";
     import type {ActionsColumn, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import DynamicFilterPanel from "$lib/filter-panel/DynamicFilterPanel.svelte";
-    import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
+    import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
+    import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import type PagingDataManager from "$lib/common/PagingDataManager";
@@ -29,6 +29,7 @@
     export let advancedCriteriaTitle: string = 'More';
 
     export let rowHeight: number = null as unknown as number;
+    export let roundTable: boolean = false;
 
     const resetClickHandler: MouseClickHandler = async () => {
         dataPage.reset();
@@ -42,7 +43,7 @@
 
 </script>
 
-<ManagedPaginationDataTablePage bind:this={dataPage} {list} bind:selectedRows {dataManager} page$attrs={page$attrs} {busyIndicator}
+<ManagedPaginationDataTablePage bind:this={dataPage} {list} bind:selectedRows {dataManager} page$attrs={page$attrs} {busyIndicator} {roundTable}
                                 {actionsColumn} {rowHeight} {indicatorColumn} {columns} bind:criteria>
 
     <DynamicFilterPanel slot="search-panel" bind:criteria {fields} {resetClickHandler} {searchClickHandler} {variant} {actions}

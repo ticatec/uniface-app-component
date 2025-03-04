@@ -24,6 +24,7 @@
     export let onRowCountChanged: OnRowCountChanged;
     export let onPageChange: OnPageChange;
     export let page$attrs: PageAttrs;
+    export let roundTable: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
 </script>
@@ -31,7 +32,7 @@
       shadow={uniAppCtx.shadowPage} content$style=" padding: 0 12px; box-sizing: border-box">
     <div style="width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden">
         <slot name="search-panel"/>
-        <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%">
+        <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%"  round={roundTable}>
             <DataTable {rowHeight} {columns} {indicatorColumn}
                        {actionsColumn} bind:selectedRows {list}></DataTable>
         </Box>

@@ -24,7 +24,7 @@
         AppModule.closeActivePage();
     }
 
-    let cardsPanel;
+    let cardsPanel: any;
 
     let isAtTop: boolean;
     let isAtBottom: boolean;

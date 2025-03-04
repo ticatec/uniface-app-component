@@ -22,6 +22,8 @@
     export let filterFun: FunFilter | null = null;
     export let page$attrs: PageAttrs;
     export let busyIndicator: string | null = null;
+    export let rowHeight: number = null as unknown as number;
+    export let roundTable: boolean = false;
 
     export const loadList = async () => {
         window.Indicator.show(busyIndicator??'Loading...');
@@ -44,5 +46,5 @@
 
 
 </script>
-<CommonDataTablePage {onCreateNewClick} {filterFun} {page$attrs}
+<CommonDataTablePage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable}
                      {indicatorColumn} {columns} {actionsColumn}  bind:selectedRows {list} {onRefreshClick}/>

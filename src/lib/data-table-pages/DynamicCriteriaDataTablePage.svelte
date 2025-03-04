@@ -31,6 +31,7 @@
     export let page$attrs: PageAttrs;
 
     export let actions: ButtonActions = [];
+    export let roundTable: boolean = false;
 
     export let advancedCriteriaTitle: string = 'More';
 
@@ -38,7 +39,7 @@
 
 </script>
 
-<CommonPaginationDataTablePage page$attrs={page$attrs} {onPageChange} {onRowCountChanged} {pageNo} {pageCount} {total}
+<CommonPaginationDataTablePage page$attrs={page$attrs} {onPageChange} {onRowCountChanged} {pageNo} {pageCount} {total} {roundTable}
                                {list} bind:selectedRows {actionsColumn} {indicatorColumn} {columns} {rowHeight}>
     <DynamicFilterPanel slot="search-panel" style="flex: 0 0 auto" bind:criteria {fields} {actions} {resetClickHandler} {searchClickHandler}
                         {variant} {advancedCriteriaTitle}>

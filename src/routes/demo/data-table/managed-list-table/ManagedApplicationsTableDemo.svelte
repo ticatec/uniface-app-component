@@ -14,6 +14,8 @@
 
     let list: Array<any> = [];
 
+    let selectedList: Array<any> = [];
+
     const onCreateNewClick = () => {
 
     }
@@ -24,22 +26,27 @@
 
     let indicatorColumn: IndicatorColumn = {
         width: 40,
-        selectable: false
+        selectable: true
     }
 
     const actionsColumn: ActionsColumn = {
         title: '操作',
         width: 150,
-        getActions: (item: any) : Array<RowAction> => {
+        getActions: (item: any): Array<RowAction> => {
             return [
                 {
                     label: '修改',
-                    callback: ()=>{console.log('操作数据...', item)}
+                    callback: () => {
+                        console.log('操作数据...', item)
+                    }
                 }
             ]
         }
     }
+
+    $: console.log('选中应用：', selectedList);
 </script>
 
-<ManagedDataTable {onCreateNewClick} {columns} {list} {indicatorColumn} dataManager={dataMgr} filterFun={doFilter} page$attrs={page$attrs} {actionsColumn}>
+<ManagedDataTable {onCreateNewClick} {columns} {list} {indicatorColumn} dataManager={dataMgr} bind:selectedRows={selectedList} roundTable
+                  filterFun={doFilter} page$attrs={page$attrs} {actionsColumn}>
 </ManagedDataTable>

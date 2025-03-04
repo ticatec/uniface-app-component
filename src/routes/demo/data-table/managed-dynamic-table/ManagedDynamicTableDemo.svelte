@@ -43,49 +43,66 @@
         title: '操作',
         width: 150,
         getActions: (item: any): Array<RowAction> => {
-            return []
+            return [
+                {
+                    label: '修改',
+                    callback: () => {
+                        console.log('操作数据...', item)
+                    }
+                }
+            ]
         }
     }
 
     let criteriaFields: Array<MetaCriteriaField> = [
-        {
-            type: 'text-editor',
-            attrs: {
-                field: 'code',
-                placeholder: '*代表任何字符'
+            {
+                type: 'text-editor',
+                attrs: {
+                    field: 'code',
+                    placeholder: '*代表任何字符'
+                },
+                label: '编号',
+                size: 'x20',
+                isAdvanced: false
             },
-            label: '编号',
-            size: 'x20',
-            isAdvanced: false
-        },
-        {
-            type: 'text-editor',
-            attrs: {
-                field: 'name',
-                placeholder: '*代表任何字符'
+            {
+                type: 'text-editor',
+                attrs: {
+                    field: 'name',
+                    placeholder: '*代表任何字符'
+                },
+                label: '名称',
+                size: 'x20',
+                isAdvanced: false
             },
-            label: '名称',
-            size: 'x20',
-            isAdvanced: false
-        },
-        {
-            type: 'options-select',
-            attrs: {
-                field: 'gender',
-                props: {
+            {
+                type: 'options-selector',
+                attrs: {
+                    field: 'gender',
+
+                }, props: {
                     options: [
                         {code: 'M', text: 'Male'},
                         {code: 'F', text: 'Female'}
                     ],
                     emptyText: '所有'
-                }
-
+                },
+                label: '性别',
+                size: 'x20',
+                isAdvanced: false
             },
-            label: '名称',
-            size: 'x20',
-            isAdvanced: false
-        }
-    ];
+            {
+                type: 'text-editor',
+                attrs: {
+                    field: 'region',
+                    placeholder: '包含输入字符'
+                },
+                label: '地区',
+                size: 'x20',
+                isAdvanced: false
+            }
+        ]
+    ;
 
     $: console.log('数据列表', tablePage);
 </script>

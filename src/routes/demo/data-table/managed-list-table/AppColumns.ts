@@ -13,13 +13,16 @@ const columns:Array<DataColumn> = [
     {
         text: '编码',
         field: 'code',
-        width: 120
+        width: 120,
+        resizable: true,
+        compareFunction: (o1: any, o2: any) => (o1?.code??'').localeCompare(o2?.code)
     },
     {
         text: '名称',
         field: 'name',
         width: 220,
-        resizable: true
+        resizable: true,
+        compareFunction: (o1: any, o2: any) => (o1?.name??'').localeCompare(o2?.name, 'zh')
     },
     {
         text: '版本',

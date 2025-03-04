@@ -25,6 +25,7 @@
 
     export let busyIndicator: string | null = null;
     export let page$attrs: PageAttrs;
+    export let roundTable: boolean = false;
 
 
     export const reset: any = async () => {
@@ -104,8 +105,8 @@
 
 </script>
 
-<CommonPaginationDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list} {pageCount} {pageNo}
-                               {total} {onRowCountChanged} {onPageChange}>
+<CommonPaginationDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
+                               {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange}>
     <slot name="search-panel" slot="search-panel">
     </slot>
 </CommonPaginationDataTablePage>

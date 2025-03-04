@@ -22,9 +22,11 @@
     export let list: Array<any>;
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
     export let onRefreshClick: MouseClickHandler;
+    export let roundTable: boolean = false;
 
     export let filterFun: FunFilter | null = null;
     export let page$attrs: PageAttrs;
+    export let rowHeight: number = null as unknown as number;
 
     let filter: string = '';
     let filteredList: Array<any> = [];
@@ -65,8 +67,8 @@
 
     </div>
 
-    <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%">
-        <DataTable style="width: 100%; height: 100%; " {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
+    <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>
+        <DataTable {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
                    list={filteredList}></DataTable>
     </Box>
 </Page>
