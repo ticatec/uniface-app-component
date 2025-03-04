@@ -7,7 +7,6 @@
     import AppModule from "$lib/module/AppModule";
     import PaginationPanel, {type OnPageChange, type OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
     import i18n from "@ticatec/uniface-element/I18nContext";
-    import Box from "@ticatec/uniface-element/Box";
     import {onMount, tick} from "svelte";
 
     export let page$attrs: PageAttrs;
@@ -31,6 +30,7 @@
     let hasVerticalScrollbar: boolean;
 
 
+
     const checkScroll = async () => {
         await tick();
         if (cardsPanel) {
@@ -44,7 +44,7 @@
         checkScroll();
     }
 
-    onMount(async ()=> {
+    onMount(async () => {
         await checkScroll();
     });
 
@@ -59,19 +59,29 @@
       content$style="overflow: hidden; display: flex; flex-direction: column">
     <div slot="header-ext" style="flex: 0 0 auto; display: flex;position: relative; align-items: center; column-gap: 8px">
         {#if page$attrs?.canClose}
-            <Button type="default" label={i18n.getText('uniface.appTemplate.btnClose', "Close")} onClick={closePage}></Button>
+            <Button type="default" label={i18n.getText('uniface.app.btnClose', "Close")} onClick={closePage}></Button>
         {/if}
     </div>
 
     <slot name="search-panel"/>
     <div class="uniface-app-cards-board">
-        <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
-            {#each list as item}
-                <svelte:component this={card} data={item}/>
-            {/each}
-        </div>
-        <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop} ></div>
-        <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom} ></div>
+        {#if list && list.length > 0}
+            <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
+                {#each list as item}
+                    <svelte:component this={card} data={item}/>
+                {/each}
+            </div>
+            <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop}></div>
+            <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom}></div>
+        {:else }
+            <div style="position:relative; height: 100%; width: 100%">
+                <div style="position:relative; top: 50%; transform: translateY(-50%);">
+                    <div style="width: fit-content; margin: 0 auto; font-size: 15px">
+                        <span>{i18n.getText('uniface.app.emptyDataSet', 'There is no data that meets the search criteria. Please set the search criteria again.')}</span>
+                    </div>
+                </div>
+            </div>
+        {/if}
     </div>
 
 

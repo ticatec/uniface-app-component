@@ -4,43 +4,39 @@
     import ToastBoard from "@ticatec/uniface-element/ToastBoard";
     import DialogBoard from "@ticatec/uniface-element/DialogBoard";
     import IndicatorBoard from "@ticatec/uniface-element/IndicatorBoard";
-    import {onMount} from "svelte";
+    import {onMount, tick} from "svelte";
     import ModuleHome from "$lib/module/ModuleHome.svelte";
     import type {PageLoader} from "$lib/module";
-    import i18n from "@ticatec/uniface-element/I18nContext";
-    import type {InitializeData} from "$lib/common/InitializeData";
-    import NotFramePage from "$lib/common/NotFramePage.svelte";
+    import type {ModuleInitialize} from "$lib/common/ModuleInitialize";
+    import NotInFramePage from "$lib/common/NotInFramePage.svelte";
 
     export let routes: Record<string, PageLoader>;
-    export let initialize: InitializeData | null = null;
+    export let initializeModule: ModuleInitialize = null as unknown as ModuleInitialize;
 
     export let style: string = ''
 
-    let initialized: boolean = false;
-
     let inFrame = window.frameElement !== null;
 
+    let loaded: boolean = false;
+
     onMount(async () => {
-        window.Indicator.show(i18n.getText('uniapp.loadingIndicator', 'Loading...'));
-        try {
-            await initialize?.();
-            initialized = true;
-        } catch (ex) {
-            //TODO show Error page
-        } finally {
-            window.Indicator.hide();
+        while (!window.Indicator) {
+            await tick();
         }
+        loaded = true;
     })
 
 </script>
 {#if inFrame}
-    <ModuleHome {routes} {style}>
+    {#if loaded}
+        <ModuleHome {routes} {style} {initializeModule}>
 
-    </ModuleHome>
+        </ModuleHome>
+    {/if}
     <IndicatorBoard/>
     <DialogBoard/>
     <ToastBoard/>
     <MessageBoxBoard/>
 {:else }
-    <NotFramePage/>
+    <NotInFramePage/>
 {/if}

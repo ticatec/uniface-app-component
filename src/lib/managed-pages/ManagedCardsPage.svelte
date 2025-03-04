@@ -6,10 +6,10 @@
     import i18n from "@ticatec/uniface-element/I18nContext";
     import {onMount} from "svelte";
     import type ListDataManager from "$lib/common/ListDataManager";
-    import type {InitializeData} from "$lib/common/InitializeData";
+    import type {PageInitialize} from "$lib/common/PageInitialize";
 
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
-    export let initializeData: InitializeData | null = null;
+    export let initializeData: PageInitialize | null = null;
     export let page$attrs: PageAttrs;
     export let gap: number = 8;
     export let list: Array<any> = [];
@@ -19,9 +19,12 @@
     export let queryParams: any = null;
     export let filterFun: FunFilter | null = null;
 
-    export const loadList = async () => {
-        window.Indicator.show(busyIndicator??i18n.getText('uniapp.text.loading', 'loading...'));
+    const loadList = async (initialize?: boolean) => {
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.indicatorLoading', 'loading...'));
         try {
+            if (initialize) {
+                await initializeData?.();
+            }
             await dataManager.loadData(queryParams);
             list = dataManager.list;
         } finally {
@@ -29,16 +32,11 @@
         }
     }
     const onRefreshClick: MouseClickHandler = async (event: MouseEvent) => {
-        try {
-            await initializeData?.();
-            await loadList();
-        } catch (ex) {
-
-        }
+        await loadList();
     }
 
-    onMount(async ()=>{
-        await loadList();
+    onMount(async () => {
+        await loadList(true);
     })
 
 

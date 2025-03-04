@@ -48,6 +48,6 @@ export default class AppModule {
     }
 
     static showPage(component: any, params: any = null) {
-        AppModule.instance.append({component, params});
+        AppModule.instance.append(component, params);
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ticatec/uniface-app-component",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "uniface web app components base on the uniface web elements",
   "scripts": {
     "dev": "vite dev",
@@ -30,6 +30,14 @@
     },
     "./uniface-app-component.css": {
       "default": "./dist/uniface-app-component.css"
+    },
+    "./uniAppCtx": {
+      "types": "./dist/common/uniAppCtx.d.ts",
+      "import": "./dist/common/uniAppCtx.js"
+    },
+    "./ListDataManager": {
+      "types": "./dist/common/ListDataManager.d.ts",
+      "import": "./dist/common/ListDataManager.js"
     },
     "./HomePage": {
       "types": "./dist/HomePage.svelte.d.ts",
@@ -63,6 +71,10 @@
       "types": "./dist/managed-pages/ManagedCardsPage.svelte.d.ts",
       "import": "./dist/managed-pages/ManagedCardsPage.svelte"
     },
+    "./ManagedPagedCardsPage": {
+      "types": "./dist/managed-pages/ManagedPagedCardsPage.svelte.d.ts",
+      "import": "./dist/managed-pages/ManagedPagedCardsPage.svelte"
+    },
     "./ManagedDataTablePage": {
       "types": "./dist/managed-pages/ManagedDataTablePage.svelte.d.ts",
       "import": "./dist/managed-pages/ManagedDataTablePage.svelte"
@@ -74,6 +86,10 @@
     "./ManagedPagedDataTablePage": {
       "types": "./dist/managed-pages/ManagedPagedDataTablePage.svelte.d.ts",
       "import": "./dist/managed-pages/ManagedPagedDataTablePage.svelte"
+    },
+    "./NotInFramePage.svelte": {
+      "types": "./dist/common/NotInFramePage.svelte.d.ts",
+      "import": "./dist/common/NotInFramePage.svelte"
     },
     "./module": {
       "types": "./dist/module/index.d.ts",
@@ -105,9 +121,9 @@
     "@ticatec/axios-restful-service": "^0.1.1",
     "@ticatec/enhanced-utils": "^0.9.0",
     "@ticatec/uniface-dev-shell": "^0.0.2",
-    "@ticatec/uniface-element": "^0.1.11",
+    "@ticatec/uniface-element": "^0.1.12",
     "@ticatec/uniface-icons": "^0.2.0",
-    "@ticatec/uniface-filter-panel": "0.0.2",
+    "@ticatec/uniface-filter-panel": "^0.0.4",
     "axios": "^1.8.1",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.7",

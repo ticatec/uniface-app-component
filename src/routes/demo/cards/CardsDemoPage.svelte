@@ -59,4 +59,4 @@
 </script>
 
 <CommonCardsPage {onCreateNewClick} {onRefreshClick} page$attrs={page$attrs} {list} {filterFun} gap={12}
-                   cardComponent={FlexFormCard}/>
+                   card={FlexFormCard}/>

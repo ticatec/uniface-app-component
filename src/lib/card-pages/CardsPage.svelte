@@ -40,7 +40,7 @@
 
     $: doFilter(list, filter);
 
-    let cardsPanel;
+    let cardsPanel: any;
     let isAtTop: boolean;
     let isAtBottom: boolean;
     let hasVerticalScrollbar: boolean;
@@ -74,23 +74,36 @@
             <Separator/>
         {/if}
         {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.appTemplate.btnCreateNew', 'Add New')} onClick={onCreateNewClick}></Button>
+            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnCreateNew', 'New')}
+                    onClick={onCreateNewClick}></Button>
             <Separator/>
         {/if}
 
-        <Button type="primary" label={i18n.getText('uniface.appTemplate.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
+        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
         {#if page$attrs?.canClose}
-            <Button type="default" label={i18n.getText('uniface.appTemplate.btnRefresh', 'Close')} onClick={closePage}></Button>
+            <div style="flex: 0 0 auto; padding-left: 12px">
+                <i class="uniface-icon-x page-action-button" aria-hidden="true" on:click={closePage}></i>
+            </div>
         {/if}
     </div>
 
     <div class="uniface-app-cards-board">
-        <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
-            {#each filteredList as item}
-                <svelte:component this={card} data={item}/>
-            {/each}
-        </div>
-        <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop} ></div>
-        <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom} ></div>
+        {#if filteredList.length > 0}
+            <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
+                {#each filteredList as item}
+                    <svelte:component this={card} data={item}/>
+                {/each}
+            </div>
+            <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop}></div>
+            <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom}></div>
+        {:else }
+            <div style="position:relative; height: 100%; width: 100%">
+                <div style="position:relative; top: 50%; transform: translateY(-50%);">
+                    <div style="width: fit-content; margin: 0 auto; font-size: 15px">
+                        <span>{i18n.getText('uniface.app.emptyFiltered', 'There is no data that meets the filter criteria. Please set the filter criteria again.')}</span>
+                    </div>
+                </div>
+            </div>
+        {/if}
     </div>
 </Page>

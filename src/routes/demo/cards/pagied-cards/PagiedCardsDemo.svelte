@@ -6,16 +6,12 @@
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import RoleDetailPanel from "../common-cards/RoleDetailPanel.svelte";
+    import {AppModule} from "$lib/module";
+    import CommonCardsDemo from "../common-cards";
 
     let page$attrs = {
         title: "卡片页面演示"
     };
-
-    const onRefreshClick = async () => {
-        window.Indicator.show('刷新数据...');
-        await utils.sleep(3);
-        window.Indicator.hide();
-    }
 
     let roles = [
         {name: "系统管理员", note: "可以管理整个平台，权利极大，慎用！"},
@@ -47,9 +43,6 @@
         {name: "运维人员"}
     ]
 
-    const onCreateNewClick = () => {
-
-    }
 
     let total: number = 500;
     let pageCount: number = 10;
@@ -96,12 +89,12 @@
     }
 
     let actions: ButtonActions = [
-        {label: '新增', type: 'primary', handler: addNewRole}
+        {label: '新增', type: 'primary', handler: ()=> {AppModule.showPage(CommonCardsDemo, {})}}
     ]
 
 </script>
 
-<PaginationCardsPage {total} {onPageChange} {onRowCountChanged} {pageCount} {pageNo} list={roles} page$attrs={page$attrs} {onRefreshClick}
-                     card={RoleCard} {onCreateNewClick}>
+<PaginationCardsPage {total} {onPageChange} {onRowCountChanged} {pageCount} {pageNo} list={roles} page$attrs={page$attrs}
+                     card={RoleCard}>
     <CriteriaFilterPanel bind:criteria slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
 </PaginationCardsPage>

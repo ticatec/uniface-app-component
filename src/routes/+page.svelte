@@ -2,6 +2,7 @@
 
     import "@ticatec/uniface-element/ticatec-uniface-web.css"
     import "@ticatec/uniface-icons/feather-style.css"
+    import "@ticatec/uniface-filter-panel/uniface-filter-panel.css"
     import "$lib/uniface-app-component.css"
     import "./app.css";
     import {onMount} from "svelte";
@@ -20,7 +21,7 @@
 
 
     uniAppCtx.rowCountLabel = '行/页';
-    uniAppCtx.generateInfo = (total: number, pageCount: number, pageNo: number, rows: number) => `<span>第 <b>${pageNo} / ${pageCount}</b> 页 合计 <b>${total}</b> 条</span>`
+    uniAppCtx.generateInfo = (total: number, pageCount: number, pageNo: number, rows: number) => `<span>第 <b>${pageNo} / ${pageCount|1}</b> 页 合计 <b>${total??0}</b> 条</span>`
 
 
 
@@ -36,6 +37,20 @@
             registerComponents();
             let service = new RestService(window.location.origin, (ex: any) => {
                 if (ex instanceof ApiError) {
+                    switch (ex.status) {
+                        case 401:
+                            window.Toast.show("用户尚未登录或者令牌已经失效，请重新登录");
+                            break;
+                        case 404:
+                            window.Toast.show("无效的资源地址，接口不存在，请联系平台系统管理员");
+                            break;
+                        case 403:
+                            window.Toast.show("越权访问，如有疑惑请咨询平台系统管理员");
+                            break;
+                        default:
+                            console.log('错误', ex.status, ex.code, ex.message, ex)
+                            window.Toast.show(ex.message)
+                    }
 
                 }
                 return true

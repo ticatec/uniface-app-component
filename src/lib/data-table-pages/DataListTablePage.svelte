@@ -55,14 +55,16 @@
             <Separator/>
         {/if}
         {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.appTemplate.btnNew', 'Create New')}
+            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnNew', 'New')}
                     onClick={onCreateNewClick}></Button>
             <Separator/>
         {/if}
 
-        <Button type="primary" label={i18n.getText('uniface.appTemplate.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
-        {#if page$attrs.canClose}
-            <Button type="default" label={i18n.getText('uniface.appTemplate.btnClose', 'Close')} onClick={closePage}></Button>
+        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
+        {#if page$attrs?.canClose}
+            <div style="flex: 0 0 auto; padding-left: 12px">
+                <i class="uniface-icon-x page-action-button" aria-hidden="true" on:click={closePage}></i>
+            </div>
         {/if}
 
     </div>

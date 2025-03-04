@@ -20,7 +20,7 @@
     let buttons: ButtonActions = actions;
 
     const btnClose: ButtonAction = {
-        label: i18n.getText('uniapp.btnClose', 'Close'), type: closeType, handler: () => {
+        label: i18n.getText('uniface.app.btnClose', 'Close'), type: closeType, handler: () => {
             AppModule.closeActivePage();
         }
     }

@@ -4,9 +4,11 @@
     import utils from "@ticatec/uniface-element/utils";
     import RoleCard from "./RoleCard.svelte";
     import RoleDetailPanel from "./RoleDetailPanel.svelte";
+    import type PageAttrs from "$lib/common/PageAttrs";
 
-    let page$attrs = {
-        title: "卡片页面演示"
+    let page$attrs: PageAttrs = {
+        title: "卡片页面演示",
+        canClose: true
     };
 
     const onRefreshClick = async () => {
