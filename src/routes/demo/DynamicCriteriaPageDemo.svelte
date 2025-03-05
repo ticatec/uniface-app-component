@@ -4,12 +4,13 @@
     import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
     import InlineComponent from "./data-table-old/InlineComponent.svelte";
     import {onMount} from "svelte";
-    import DynamicCriteriaDataTablePage from "$lib/data-table-pages/DynamicCriteriaDataTablePage.svelte";
+    import PagedDataTablePage from "$lib/data-table-pages/PagedDataTablePage.svelte";
     import Button from "@ticatec/uniface-element/Button";
     import SimpleDataTablePageDemo from "./SimpleDataTablePageDemo.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import AppModule from "$lib/module/AppModule";
     import type {IndicatorColumn} from "@ticatec/uniface-element";
+    import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
 
 
     let criteria: any = {}
@@ -180,15 +181,24 @@
         advancedCriteriaTitle: '所有查询条件'
     }
 
+    let variant
+
+    let actions = [
+
+    ]
+    //
+    //     <svelte:fragment slot="action-bar">
+    // <Button type=primary label=新增 onClick={createNewClick}/>
+    // <Button type=forth label=导出数据 onClick={searchClickHandler}/>
+    // <Button type=forth label=批量导入 onClick={searchClickHandler}/>
+    // </svelte:fragment>
 </script>
 
-<DynamicCriteriaDataTablePage bind:selectedRows {list} page$attrs={page$attrs} rowHeight={60}
+<PagedDataTablePage bind:selectedRows {list} page$attrs={page$attrs} rowHeight={60}
                               {criteria} {actionsColumn} {indicatorColumn} {columns} {fields} {labels}
                               {resetClickHandler} {searchClickHandler} {total} {pageCount} {pageNo} onPageChange={handlePageChange}
                               onRowCountChanged={handleRowCountChange}>
-    <svelte:fragment slot="action-bar">
-        <Button type=primary label=新增 onClick={createNewClick}/>
-        <Button type=forth label=导出数据 onClick={searchClickHandler}/>
-        <Button type=forth label=批量导入 onClick={searchClickHandler}/>
-    </svelte:fragment>
-</DynamicCriteriaDataTablePage>
+    <DynamicFilterPanel slot="search-panel" style="flex: 0 0 auto" bind:criteria {fields} {actions} {resetClickHandler} {searchClickHandler}
+                        variant="outlined">
+    </DynamicFilterPanel>
+</PagedDataTablePage>

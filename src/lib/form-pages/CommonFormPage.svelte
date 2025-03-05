@@ -2,7 +2,6 @@
 
     import {type ButtonType} from "@ticatec/uniface-element/Button";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import AppModule from "$lib/module/AppModule";
     import type {ButtonAction, ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import ActionBar from "@ticatec/uniface-element/ActionBar";
     import i18n from "@ticatec/uniface-element/I18nContext";

@@ -41,7 +41,7 @@ let menu = [
             },
             {
                 text: "动态列表展示",
-                href: "/data-table/managed/paged-list"
+                href: "/data-table/dynamic-paged-list"
             },
             {
                 text: "托管动态列表展示",

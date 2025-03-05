@@ -47,7 +47,5 @@
                                 {actionsColumn} {rowHeight} {indicatorColumn} {columns} bind:criteria>
 
     <DynamicFilterPanel slot="search-panel" bind:criteria {fields} {resetClickHandler} {searchClickHandler} {variant} {actions}
-                        {advancedCriteriaTitle} >
-
-    </DynamicFilterPanel>
+                        {advancedCriteriaTitle}/>
 </ManagedPaginationDataTablePage>

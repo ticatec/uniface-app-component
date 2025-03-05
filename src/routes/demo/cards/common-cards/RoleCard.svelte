@@ -27,6 +27,11 @@
             icon: 'uniface-icon-wind',
             callback: () => {
             }
+        },
+        {
+            icon: 'uniface-icon-wind',
+            callback: () => {
+            }
         }
     ]
 
