@@ -5,11 +5,11 @@
     import Page from "@ticatec/uniface-element/Page";
     import type PageAttrs from "$lib/common/PageAttrs";
     import AppModule from "../module/AppModule";
+    import type {CloseConfirm} from "$lib/common/CloseConfirm";
 
     export let page$attrs: PageAttrs;
     export let content$style: string = '';
     export let canBeClosed: boolean;
-
     export let closeConfirm: CloseConfirm | null = null;
 
     export const closePage = async (event: MouseEvent) => {
@@ -19,7 +19,6 @@
     }
 
 </script>
-
 
 <Page round={uniAppCtx.roundPage} shadow={uniAppCtx.shadowPage} title={page$attrs.title??'Title'} comment={page$attrs?.comment}
       style={page$attrs?.style??''} content$style={content$style}>

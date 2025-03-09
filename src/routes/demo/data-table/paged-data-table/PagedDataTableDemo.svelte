@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import PagedDataTablePage from "$lib/data-table-pages/PagedDataTablePage.svelte";
+    import PagedDataTablePage from "$lib/data-table-pages/PagingDataTablePage.svelte";
     import utils from "@ticatec/uniface-element/utils";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";

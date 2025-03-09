@@ -3,14 +3,14 @@
     import type PageAttrs from "$lib/common/PageAttrs";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import {onMount} from "svelte";
-    import PagedCardsPage from "$lib/card-pages/PagedCardsPage.svelte";
+    import PagingCardListPage from "$lib/card-pages/PagingCardListPage.svelte";
     import type PagingDataManager from "$lib/common/PagingDataManager";
     import type {OnPageChange, OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
 
     export let page$attrs: PageAttrs;
     export let gap: number = 8;
     export let list: Array<any> = [];
-    export let card: any;
+    export let render: any;
     export let dataManager: PagingDataManager;
     export let busyIndicator: string | null = null;
     export let criteria: any;
@@ -94,8 +94,8 @@
 </script>
 
 
-<PagedCardsPage {total} {pageNo} {pageCount} {page$attrs} {gap} {list} {onPageChange} {onRowCountChanged} {canBeClosed}
-                {card}>
+<PagingCardListPage {total} {pageNo} {pageCount} {page$attrs} {gap} {list} {onPageChange} {onRowCountChanged} {canBeClosed}
+                {render}>
     <slot slot="search-panel" name="search-panel"/>
-</PagedCardsPage>
+</PagingCardListPage>
 

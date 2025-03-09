@@ -14,9 +14,9 @@
     import {onMount} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
 
-    export let indicatorColumn: IndicatorColumn;
+    export let indicatorColumn: IndicatorColumn | null = null;
     export let columns: Array<DataColumn>;
-    export let actionsColumn: ActionsColumn = null as unknown as ActionsColumn;
+    export let actionsColumn: ActionsColumn | null = null;
     export let selectedRows: Array<any> = [];
     export let list: Array<any>;
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
@@ -63,7 +63,7 @@
     </div>
 
     <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>
-        <DataTable {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
+        <DataTable style="height: 100%; width: 100%" {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
                    list={filteredList}></DataTable>
     </Box>
 </CommonPage>

@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import PaginationCardsPage from "$lib/card-pages/PagedCardsPage.svelte";
+    import PaginationCardsPage from "$lib/card-pages/PagingCardListPage.svelte";
     import utils from "@ticatec/uniface-element/utils";
     import RoleCard from "../common-cards/RoleCard.svelte";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
@@ -95,6 +95,6 @@
 </script>
 
 <PaginationCardsPage {total} {onPageChange} {onRowCountChanged} {pageCount} {pageNo} list={roles} page$attrs={page$attrs}
-                     card={RoleCard}>
+                     render={RoleCard}>
     <CriteriaFilterPanel bind:criteria slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
 </PaginationCardsPage>

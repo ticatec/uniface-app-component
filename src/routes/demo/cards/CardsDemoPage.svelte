@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import CommonCardsPage from "$lib/card-pages/CardsPage.svelte";
+    import CommonCardsPage from "$lib/card-pages/CardListPage.svelte";
     import type {FunFilter, MouseClickHandler} from "@ticatec/uniface-element";
     import FlexFormCard from "./FlexFormCard.svelte";
     import utils from "@ticatec/uniface-element/utils";
@@ -59,4 +59,4 @@
 </script>
 
 <CommonCardsPage {onCreateNewClick} {onRefreshClick} page$attrs={page$attrs} {list} {filterFun} gap={12}
-                   card={FlexFormCard}/>
+                 render={FlexFormCard}/>

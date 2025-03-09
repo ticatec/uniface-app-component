@@ -1,6 +1,6 @@
 {
   "name": "@ticatec/uniface-app-component",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "uniface web app components base on the uniface web elements",
   "scripts": {
     "dev": "vite dev",
@@ -31,6 +31,10 @@
     "./uniface-app-component.css": {
       "default": "./dist/uniface-app-component.css"
     },
+    "./AppModule": {
+      "types": "./dist/module/AppModule.d.ts",
+      "import": "./dist/module/AppModule.js"
+    },
     "./uniAppCtx": {
       "types": "./dist/common/uniAppCtx.d.ts",
       "import": "./dist/common/uniAppCtx.js"
@@ -43,49 +47,45 @@
       "types": "./dist/HomePage.svelte.d.ts",
       "import": "./dist/HomePage.svelte"
     },
-    "./CardsPage": {
-      "types": "./dist/card-pages/CardsPage.svelte.d.ts",
-      "import": "./dist/card-pages/CardsPage.svelte"
+    "./CardListPage": {
+      "types": "./dist/card-pages/CardListPage.svelte.d.ts",
+      "import": "./dist/card-pages/CardListPage.svelte"
     },
-    "./PagedCardsPage": {
-      "types": "./dist/card-pages/PagedCardsPage.svelte.d.ts",
-      "import": "./dist/card-pages/PagedCardsPage.svelte"
+    "./PagingCardListPage": {
+      "types": "./dist/card-pages/PagingCardListPage.svelte.d.ts",
+      "import": "./dist/card-pages/PagingCardListPage.svelte"
+    },
+    "./ManagedCardListPage": {
+      "types": "./dist/managed-card-pages/ManagedCardListPage.svelte.d.ts",
+      "import": "./dist/managed-card-pages/ManagedCardListPage.svelte"
+    },
+    "./ManagedPagingCardListPage": {
+      "types": "./dist/managed-card-pages/ManagedPagingCardListPage.svelte.d.ts",
+      "import": "./dist/managed-card-pages/ManagedPagingCardListPage.svelte"
     },
     "./DataListTablePage": {
       "types": "./dist/data-table-pages/DataListTablePage.svelte.d.ts",
       "import": "./dist/data-table-pages/DataListTablePage.svelte"
     },
-    "./PagedDataTablePage": {
-      "types": "./dist/data-table-pages/PagedDataTablePage.svelte.d.ts",
-      "import": "./dist/data-table-pages/PagedDataTablePage.svelte"
-    },
-    "./DynamicCriteriaDataTablePage": {
-      "types": "./dist/data-table-pages/DynamicCriteriaDataTablePage.svelte.d.ts",
-      "import": "./dist/data-table-pages/DynamicCriteriaDataTablePage.svelte"
+    "./PagingDataTablePage": {
+      "types": "./dist/data-table-pages/PagingDataTablePage.svelte.d.ts",
+      "import": "./dist/data-table-pages/PagingDataTablePage.svelte"
     },
     "./CommonFormPage": {
       "types": "./dist/form-pages/CommonFormPage.svelte.d.ts",
       "import": "./dist/form-pages/CommonFormPage.svelte"
     },
-    "./ManagedCardsPage": {
-      "types": "./dist/managed-pages/ManagedCardsPage.svelte.d.ts",
-      "import": "./dist/managed-pages/ManagedCardsPage.svelte"
-    },
-    "./ManagedPagedCardsPage": {
-      "types": "./dist/managed-pages/ManagedPagedCardsPage.svelte.d.ts",
-      "import": "./dist/managed-pages/ManagedPagedCardsPage.svelte"
-    },
     "./ManagedDataTablePage": {
-      "types": "./dist/managed-pages/ManagedDataTablePage.svelte.d.ts",
-      "import": "./dist/managed-pages/ManagedDataTablePage.svelte"
+      "types": "./dist/managed-table-pages/ManagedDataTablePage.svelte.d.ts",
+      "import": "./dist/managed-table-pages/ManagedDataTablePage.svelte"
     },
-    "./ManagedDynamicCriteriaDataTablePage": {
-      "types": "./dist/managed-pages/ManagedDynamicCriteriaDataTablePage.svelte.d.ts",
-      "import": "./dist/managed-pages/ManagedDynamicCriteriaDataTablePage.svelte"
+    "./ManagedDynamicFilterDataTablePage": {
+      "types": "./dist/managed-table-pages/ManagedDynamicFilterDataTablePage.svelte.d.ts",
+      "import": "./dist/managed-table-pages/ManagedDynamicFilterDataTablePage.svelte"
     },
-    "./ManagedPagedDataTablePage": {
-      "types": "./dist/managed-pages/ManagedPagedDataTablePage.svelte.d.ts",
-      "import": "./dist/managed-pages/ManagedPagedDataTablePage.svelte"
+    "./ManagedPagingDataTablePage": {
+      "types": "./dist/managed-table-pages/ManagedPagingDataTablePage.svelte.d.ts",
+      "import": "./dist/managed-table-pages/ManagedPagingDataTablePage.svelte"
     },
     "./NotInFramePage.svelte": {
       "types": "./dist/common/NotInFramePage.svelte.d.ts",

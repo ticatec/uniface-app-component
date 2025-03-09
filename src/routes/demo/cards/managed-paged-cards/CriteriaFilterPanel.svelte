@@ -23,5 +23,8 @@
     <CriteriaField size="x20" label="名称">
         <TextEditor variant="outlined" bind:value={criteria.name} input$placeholder="*替代所有字符" />
     </CriteriaField>
+    <CriteriaField size="x20" label="地区">
+        <TextEditor variant="outlined" bind:value={criteria.region} input$placeholder="*替代所有字符" />
+    </CriteriaField>
 
 </FilterPanel>

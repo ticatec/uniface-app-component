@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import AppManager from "./AppManager";
-    import ManagedCardsPage from "$lib/managed-pages/ManagedCardsPage.svelte";
+    import ManagedCardsPage from "$lib/managed-card-pages/ManagedCardListPage.svelte";
     import GroupCard from "./ApplicationCard.svelte";
     import {AppModule} from "$lib/module";
     import SimpleFormDemo from "../../forms/SimpleFormDemo.svelte";
@@ -25,4 +25,4 @@
     $: console.log('数据列表', list);
 </script>
 
-<ManagedCardsPage dataManager={dataMgr} bind:list page$attrs="{page$attrs}" filterFun={doFilter} card={GroupCard} {onCreateNewClick}/>
+<ManagedCardsPage dataManager={dataMgr} bind:list page$attrs="{page$attrs}" filterFun={doFilter} render={GroupCard} {onCreateNewClick}/>

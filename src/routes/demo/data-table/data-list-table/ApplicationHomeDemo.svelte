@@ -5,12 +5,13 @@
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element/DataTable";
     import columns from "../managed-list-table/AppColumns";
     import {onMount} from "svelte";
+    import type PageAttrs from "$lib/common/PageAttrs";
 
     const dataMgr = new AppManager();
 
-    let page$attrs = {
+    let page$attrs: PageAttrs = {
         title: "数据表格页面演示",
-        canClose: true
+        style: "padding: 0"
     };
 
     let list: Array<any> = [];

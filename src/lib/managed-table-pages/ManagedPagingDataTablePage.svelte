@@ -6,7 +6,7 @@
     import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import PagedDataTablePage from "$lib/data-table-pages/PagedDataTablePage.svelte";
+    import PagedDataTablePage from "$lib/data-table-pages/PagingDataTablePage.svelte";
     import {onMount} from "svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import i18n from "@ticatec/uniface-element/I18nContext";

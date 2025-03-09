@@ -21,7 +21,9 @@
 
 
     uniAppCtx.rowCountLabel = '行/页';
-    uniAppCtx.generateInfo = (total: number, pageCount: number, pageNo: number, rows: number) => `<span>第 <b>${pageNo} / ${pageCount|1}</b> 页 合计 <b>${total??0}</b> 条</span>`
+    uniAppCtx.roundPage = false;
+    uniAppCtx.shadowPage = false;
+    uniAppCtx.generateInfo = (total: number, pageCount: number, pageNo: number, rows: number) => `<span>第 <b>${pageNo} / ${pageCount||1}</b> 页 合计 <b>${total??0}</b> 条</span>`
 
 
 

@@ -16,14 +16,13 @@
     export let pageNo: number;
     export let onRowCountChanged: OnRowCountChanged;
     export let onPageChange: OnPageChange;
-    export let card: any;
+    export let render: any;
 
     let cardsPanel: any;
 
     let isAtTop: boolean;
     let isAtBottom: boolean;
     let hasVerticalScrollbar: boolean;
-
 
 
     const checkScroll = async () => {
@@ -54,13 +53,15 @@
     <slot name="search-panel"/>
     <div class="uniface-app-cards-board">
         {#if list && list.length > 0}
-            <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
-                {#each list as item}
-                    <svelte:component this={card} data={item}/>
-                {/each}
-            </div>
-            <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop}></div>
-            <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom}></div>
+            {#if render && render.component}
+                <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
+                    {#each list as item}
+                        <svelte:component this={render.component} {...render.props} data={item}/>
+                    {/each}
+                </div>
+                <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop}></div>
+                <div class="gradient_transparent_overlay" class:hidden={!hasVerticalScrollbar || isAtBottom}></div>
+            {/if}
         {:else }
             <div style="position:relative; height: 100%; width: 100%">
                 <div style="position:relative; top: 50%; transform: translateY(-50%);">

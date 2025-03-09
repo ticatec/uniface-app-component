@@ -3,7 +3,7 @@
 -->
 <script lang="ts">
 
-    import ManagedPaginationDataTablePage from "$lib/managed-pages/ManagedPagedDataTablePage.svelte";
+    import ManagedPaginationDataTablePage from "$lib/managed-table-pages/ManagedPagingDataTablePage.svelte";
     import type {ActionsColumn, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
     import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";

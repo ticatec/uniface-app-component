@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import type {FunFilter, MouseClickHandler} from "@ticatec/uniface-element";
-    import CommonCardsPage from "$lib/card-pages/CardsPage.svelte";
+    import CommonCardsPage from "$lib/card-pages/CardListPage.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import {onMount} from "svelte";
@@ -13,7 +13,7 @@
     export let page$attrs: PageAttrs;
     export let gap: number = 8;
     export let list: Array<any> = [];
-    export let card: any;
+    export let render: any;
     export let dataManager: ListDataManager;
     export let busyIndicator: string | null = null;
     export let queryParams: any = null;
@@ -45,7 +45,7 @@
 </script>
 
 
-<CommonCardsPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {card} {canBeClosed}>
+<CommonCardsPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {render} {canBeClosed}>
 
 </CommonCardsPage>
 

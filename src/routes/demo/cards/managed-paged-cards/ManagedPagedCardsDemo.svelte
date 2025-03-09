@@ -2,7 +2,7 @@
 
     import TenantManager from "./TenantManager";
     import GroupCard from "./TenantCard.svelte";
-    import ManagedPagedCardsPage from "$lib/managed-pages/ManagedPagedCardsPage.svelte";
+    import ManagedPagedCardsPage from "$lib/managed-card-pages/ManagedPagingCardListPage.svelte";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
 
@@ -46,6 +46,6 @@
     $: console.log('数据列表', cardPage);
 </script>
 
-<ManagedPagedCardsPage bind:this={cardPage} dataManager={dataMgr} bind:list page$attrs="{page$attrs}" card={GroupCard} bind:criteria {onCreateNewClick} >
+<ManagedPagedCardsPage bind:this={cardPage} dataManager={dataMgr} bind:list page$attrs="{page$attrs}" render={GroupCard} bind:criteria {onCreateNewClick} >
     <CriteriaFilterPanel bind:criteria  slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
 </ManagedPagedCardsPage>

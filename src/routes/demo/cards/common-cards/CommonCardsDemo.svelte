@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import CommonCardsPage from "$lib/card-pages/CardsPage.svelte";
+    import CommonCardsPage from "$lib/card-pages/CardListPage.svelte";
     import utils from "@ticatec/uniface-element/utils";
     import RoleCard from "./RoleCard.svelte";
     import RoleDetailPanel from "./RoleDetailPanel.svelte";
@@ -40,4 +40,4 @@
 
 </script>
 
-<CommonCardsPage list={roles} page$attrs={page$attrs} {onRefreshClick} {canBeClosed} filterFun={doFilter} card={RoleCard} {onCreateNewClick}/>
+<CommonCardsPage list={roles} page$attrs={page$attrs} {onRefreshClick} {canBeClosed} filterFun={doFilter} render={RoleCard} {onCreateNewClick}/>

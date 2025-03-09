@@ -2,14 +2,13 @@
 
     import Button from "@ticatec/uniface-element/Button";
     import SearchBox from "@ticatec/uniface-element/SearchBox";
-    import type {FunFilter, MouseClickHandler} from "@ticatec/uniface-element";
+    import type {CardAction, FunFilter, MouseClickHandler} from "@ticatec/uniface-element";
     import utils from "@ticatec/uniface-element/utils";
     import type PageAttrs from "$lib/common/PageAttrs";
     import i18n from "@ticatec/uniface-element/I18nContext";
     import Separator from "@ticatec/uniface-element/Separator";
     import {onMount, tick} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
-
 
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
     export let onRefreshClick: MouseClickHandler;
@@ -18,7 +17,7 @@
     export let gap: number = 8;
     export let list: Array<any> = [];
     export let filterFun: FunFilter | null = null;
-    export let card: any;
+    export let render: any;
 
 
     let filter: string = '';
@@ -76,10 +75,10 @@
     </div>
 
     <div class="uniface-app-cards-board">
-        {#if filteredList.length > 0}
+        {#if filteredList.length > 0 && render && render.component}
             <div bind:this={cardsPanel} on:scroll={checkScroll} class="content-panel" style="gap: {gap}px">
                 {#each filteredList as item}
-                    <svelte:component this={card} data={item}/>
+                    <svelte:component this={render.component} {...render.props} data={item}/>
                 {/each}
             </div>
             <div class="gradient_transparent_overlay at_top" class:hidden={!hasVerticalScrollbar || isAtTop}></div>
