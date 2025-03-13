@@ -67,7 +67,7 @@
             <div style="position:relative; height: 100%; width: 100%">
                 <div style="position:relative; top: 50%; transform: translateY(-50%);">
                     <div style="width: fit-content; margin: 0 auto; font-size: 15px">
-                        <span>{i18n.getText('unifaceApp.emptyDataSet', langRes.unifaceApp.emptyDataSet)}</span>
+                        <span>{i18n.getText('uniface.app.emptyDataSet', langRes.uniface.app.emptyDataSet)}</span>
                     </div>
                 </div>
             </div>

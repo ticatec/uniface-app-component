@@ -55,12 +55,12 @@
             <Separator/>
         {/if}
         {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('unifaceApp.btnNew', langRes.unifaceApp.btnAddNew)}
+            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnNew', langRes.uniface.app.btnAddNew)}
                     onClick={onCreateNewClick}></Button>
             <Separator/>
         {/if}
 
-        <Button type="primary" label={i18n.getText('unifaceApp.btnRefresh', langRes.unifaceApp.btnRefresh)} onClick={onRefreshClick}></Button>
+        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', langRes.uniface.app.btnRefresh)} onClick={onRefreshClick}></Button>
     </div>
 
     <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>

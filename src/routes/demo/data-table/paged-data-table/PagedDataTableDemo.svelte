@@ -40,7 +40,7 @@
     }
 
     const onRowCountChanged = async (rows: number) => {
-        window.Indicator.show(i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -50,7 +50,7 @@
     }
 
     const onPageChange = async (no: number) => {
-        window.Indicator.show(i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await dataManager.setPageNo(no);
             showResult();
@@ -66,7 +66,7 @@
             criteria = dataManager.resetCriteria();
         }
         console.log('查询条件', criteria, reset)
-        window.Indicator.show(i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await dataManager.search(criteria);
             showResult();

@@ -29,7 +29,7 @@
         if (reset) {
             criteria = dataManager.resetCriteria();
         }
-        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await dataManager.search(criteria);
             showResult();
@@ -61,7 +61,7 @@
      * @param page
      */
     const onPageChange: OnPageChange = async (page: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await dataManager.setPageNo(page);
             showResult();
@@ -75,7 +75,7 @@
      * @param rows
      */
     let onRowCountChanged: OnRowCountChanged = async (rows: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -88,7 +88,7 @@
     let loaded: boolean = false;
 
     onMount(async () => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             await initializeData?.();
             await dataManager.search(criteria);

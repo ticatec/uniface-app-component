@@ -10,7 +10,7 @@
 
 <div style="position: relative; top: 50%; transform: translateY(-50%); text-align: center">
     <div>
-        <span>{i18n.getText('unifaceApp.moduleError', langRes.unifaceApp.moduleError)}</span>
+        <span>{i18n.getText('uniface.app.moduleError', langRes.uniface.app.moduleError)}</span>
     </div>
     <div>
         <span>{error?.message ?? error}</span>

@@ -67,12 +67,12 @@
             <Separator/>
         {/if}
         {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('unifaceApp.btnNew', langRes.unifaceApp.btnAddNew)}
+            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnNew', langRes.uniface.app.btnAddNew)}
                     onClick={onCreateNewClick}></Button>
             <Separator/>
         {/if}
 
-        <Button type="primary" label={i18n.getText('unifaceApp.btnRefresh', langRes.unifaceApp.btnRefresh)} onClick={onRefreshClick}></Button>
+        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', langRes.uniface.app.btnRefresh)} onClick={onRefreshClick}></Button>
     </div>
 
     <div class="uniface-app-cards-board">
@@ -88,7 +88,7 @@
             <div style="position:relative; height: 100%; width: 100%">
                 <div style="position:relative; top: 50%; transform: translateY(-50%);">
                     <div style="width: fit-content; margin: 0 auto; font-size: 15px">
-                        <span>{i18n.getText('unifaceApp.emptyFiltered', langRes.unifaceApp.emptyFiltered)}</span>
+                        <span>{i18n.getText('uniface.app.emptyFiltered', langRes.uniface.app.emptyFiltered)}</span>
                     </div>
                 </div>
             </div>

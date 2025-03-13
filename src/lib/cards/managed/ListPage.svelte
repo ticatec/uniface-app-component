@@ -23,7 +23,7 @@
     export let canBeClosed: boolean = false;
 
     const loadList = async (initialize?: boolean) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
             if (initialize) {
                 await initializeData?.();

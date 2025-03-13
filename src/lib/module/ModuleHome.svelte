@@ -49,7 +49,7 @@
 
     onMount(async () => {
 
-        window.Indicator.show(i18n.getText('unifaceApp.indicatorInitialing', langRes.unifaceApp.indicatorInitialing))
+        window.Indicator.show(i18n.getText('uniface.app.indicatorInitialing', langRes.uniface.app.indicatorInitialing))
         try {
             await initializeModule?.();
             AppModule.initialize(onPagesChange);

@@ -7,7 +7,7 @@
 <div class="uniface-module-board">
     <div style="position: relative; top: 50%; transform: translateY(-50%); text-align: center">
         <div>
-            <span>{i18n.getText('unifaceApp.pageNotInFrame', langRes.unifaceApp.pageNotInFrame)}</span>
+            <span>{i18n.getText('uniface.app.pageNotInFrame', langRes.uniface.app.pageNotInFrame)}</span>
         </div>
 
     </div>
