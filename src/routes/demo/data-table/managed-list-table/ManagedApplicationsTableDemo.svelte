@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import ManagedDataTable from "$lib/managed-table-pages/ManagedDataTablePage.svelte";
+    import ManagedDataTable from "$lib/data-table/managed/ListPage.svelte";
     import AppManager from "../../cards/managed-common-cards/AppManager";
     import type {ActionsColumn, DataColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element";
     import type PageAttrs from "$lib/common/PageAttrs";

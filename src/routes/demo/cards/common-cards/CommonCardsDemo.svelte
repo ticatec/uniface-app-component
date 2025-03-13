@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import CommonCardsPage from "$lib/card-pages/CardListPage.svelte";
+    import CommonCardsPage from "$lib/cards/ListPage.svelte";
     import utils from "@ticatec/uniface-element/utils";
     import RoleCard from "./RoleCard.svelte";
     import RoleDetailPanel from "./RoleDetailPanel.svelte";

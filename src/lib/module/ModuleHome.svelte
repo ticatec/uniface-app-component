@@ -8,8 +8,9 @@
     import type {PageLoader} from "$lib/module/PageLoader";
     import AppModule from "$lib/module/AppModule";
     import type {ModuleInitialize} from "$lib/common/ModuleInitialize";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
+    import langRes from "$lib/i18n_resources/en_res";
 
 
     export let style: string = "";
@@ -48,7 +49,7 @@
 
     onMount(async () => {
 
-        window.Indicator.show(i18n.getText('uniface.app.indicatorInitialing', 'Loading module...'))
+        window.Indicator.show(i18n.getText('unifaceApp.indicatorInitialing', langRes.unifaceApp.indicatorInitialing))
         try {
             await initializeModule?.();
             AppModule.initialize(onPagesChange);

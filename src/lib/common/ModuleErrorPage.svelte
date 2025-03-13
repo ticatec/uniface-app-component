@@ -1,16 +1,19 @@
 <script lang="ts">
 
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
+    import langRes from "$lib/i18n_resources/en_res";
 
-    export let ex: any;
+    export let error: any;
+    export let canBeClosed: boolean;
+
 </script>
 
 <div style="position: relative; top: 50%; transform: translateY(-50%); text-align: center">
     <div>
-        <span>{i18n.getText('uniface.app.moduleError', "Can't load current module.")}</span>
+        <span>{i18n.getText('unifaceApp.moduleError', langRes.unifaceApp.moduleError)}</span>
     </div>
     <div>
-        <span>{ex.message ?? ex}</span>
+        <span>{error?.message ?? error}</span>
     </div>
 
 </div>

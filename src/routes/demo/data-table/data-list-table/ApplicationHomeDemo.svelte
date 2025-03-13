@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import DataListTablePage from "$lib/data-table-pages/DataListTablePage.svelte";
+    import DataListTablePage from "$lib/data-table/ListPage.svelte";
     import AppManager from "../../cards/managed-common-cards/AppManager";
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element/DataTable";
     import columns from "../managed-list-table/AppColumns";

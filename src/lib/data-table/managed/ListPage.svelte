@@ -3,7 +3,7 @@
 -->
 <script lang="ts">
 
-    import CommonDataTablePage from "$lib/data-table-pages/DataListTablePage.svelte";
+    import CommonDataTablePage from "$lib/data-table/ListPage.svelte";
     import type {ActionsColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
     import {FullListDataManager} from "@ticatec/app-data-manager";

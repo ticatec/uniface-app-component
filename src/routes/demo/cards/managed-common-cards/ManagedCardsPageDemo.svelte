@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import AppManager from "./AppManager";
-    import ManagedCardsPage from "$lib/managed-card-pages/ManagedCardListPage.svelte";
+    import ManagedCardsPage from "$lib/cards/managed/ListPage.svelte";
     import GroupCard from "./ApplicationCard.svelte";
     import {AppModule} from "$lib/module";
     import SimpleFormDemo from "../../forms/SimpleFormDemo.svelte";

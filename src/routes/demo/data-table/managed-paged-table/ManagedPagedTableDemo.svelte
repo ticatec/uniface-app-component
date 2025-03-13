@@ -3,7 +3,7 @@
     import TenantManager from "../../cards/managed-paged-cards/TenantManager";
     import CriteriaFilterPanel from "../../cards/managed-paged-cards/CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
-    import ManagedPagedDataTablePage from "$lib/managed-table-pages/ManagedPagingDataTablePage.svelte";
+    import ManagedPagedDataTablePage from "$lib/data-table/managed/PagingListPage.svelte";
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element";
     import columns from "./TenantColumns";
 

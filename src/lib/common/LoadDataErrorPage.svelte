@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     export let message: string;
 
 </script>

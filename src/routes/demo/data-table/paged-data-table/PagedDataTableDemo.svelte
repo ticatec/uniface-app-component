@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import PagedDataTablePage from "$lib/data-table-pages/PagingDataTablePage.svelte";
+    import PagedDataTablePage from "$lib/data-table/PagingListPage.svelte";
     import utils from "@ticatec/uniface-element/utils";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
@@ -8,7 +8,8 @@
     import columns from "../managed-paged-table/TenantColumns";
     import TenantManager from "../../cards/managed-paged-cards/TenantManager";
     import {onMount} from "svelte";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
+    import langRes from "$lib/i18n_resources/en_res";
 
 
     const dataManager = new TenantManager();
@@ -39,7 +40,7 @@
     }
 
     const onRowCountChanged = async (rows: number) => {
-        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', 'Loading data...'));
+        window.Indicator.show(i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -49,7 +50,7 @@
     }
 
     const onPageChange = async (no: number) => {
-        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', 'Loading data...'));
+        window.Indicator.show(i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             await dataManager.setPageNo(no);
             showResult();
@@ -65,7 +66,7 @@
             criteria = dataManager.resetCriteria();
         }
         console.log('查询条件', criteria, reset)
-        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', 'Loading data...'));
+        window.Indicator.show(i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             await dataManager.search(criteria);
             showResult();

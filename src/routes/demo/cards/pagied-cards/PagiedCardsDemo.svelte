@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import PaginationCardsPage from "$lib/card-pages/PagingCardListPage.svelte";
+    import PaginationCardsPage from "$lib/cards/PagingListPage.svelte";
     import utils from "@ticatec/uniface-element/utils";
     import RoleCard from "../common-cards/RoleCard.svelte";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";

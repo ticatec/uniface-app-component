@@ -5,10 +5,11 @@
     import type {CardAction, FunFilter, MouseClickHandler} from "@ticatec/uniface-element";
     import utils from "@ticatec/uniface-element/utils";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import Separator from "@ticatec/uniface-element/Separator";
     import {onMount, tick} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
+    import langRes from "../i18n_resources/en_res"
 
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
     export let onRefreshClick: MouseClickHandler;
@@ -66,12 +67,12 @@
             <Separator/>
         {/if}
         {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnNew', 'New')}
+            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('unifaceApp.btnNew', langRes.unifaceApp.btnAddNew)}
                     onClick={onCreateNewClick}></Button>
             <Separator/>
         {/if}
 
-        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
+        <Button type="primary" label={i18n.getText('unifaceApp.btnRefresh', langRes.unifaceApp.btnRefresh)} onClick={onRefreshClick}></Button>
     </div>
 
     <div class="uniface-app-cards-board">
@@ -87,7 +88,7 @@
             <div style="position:relative; height: 100%; width: 100%">
                 <div style="position:relative; top: 50%; transform: translateY(-50%);">
                     <div style="width: fit-content; margin: 0 auto; font-size: 15px">
-                        <span>{i18n.getText('uniface.app.emptyFiltered', 'There is no data that meets the filter criteria. Please set the filter criteria again.')}</span>
+                        <span>{i18n.getText('unifaceApp.emptyFiltered', langRes.unifaceApp.emptyFiltered)}</span>
                     </div>
                 </div>
             </div>

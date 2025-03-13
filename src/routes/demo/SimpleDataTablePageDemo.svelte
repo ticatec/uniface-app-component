@@ -4,7 +4,7 @@
     import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
     import {onMount} from "svelte";
     //import SimpleFormDemo from "./forms/SimpleFormDemo.svelte";
-    import CommonDataTablePage from "$lib/data-table-pages/DataListTablePage.svelte";
+    import CommonDataTablePage from "$lib/data-table/ListPage.svelte";
     import type {FunFilter} from "@ticatec/uniface-element";
     import type PageAttrs from "$lib/common/PageAttrs";
     import AppModule from "$lib/module/AppModule";

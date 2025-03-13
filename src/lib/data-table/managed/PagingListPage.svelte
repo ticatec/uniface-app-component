@@ -6,13 +6,19 @@
     import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import PagedDataTablePage from "$lib/data-table-pages/PagingDataTablePage.svelte";
+    import PagedDataTablePage from "$lib/data-table/PagingListPage.svelte";
     import {onMount} from "svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import type PagingDataManager from "$lib/common/PagingDataManager";
+    import FilterPanel from "@ticatec/uniface-filter-panel";
+    import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
+    import type {PageInitialize} from "$lib/common";
+    import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
+    import langRes from "$lib/i18n_resources/en_res";
 
     export let indicatorColumn: IndicatorColumn;
+    export let initializeData: PageInitialize | null = null;
     export let columns: Array<DataColumn>;
     export let actionsColumn: ActionsColumn = null as unknown as ActionsColumn;
     export let selectedRows: Array<any> = [];
@@ -26,24 +32,14 @@
     export let roundTable: boolean = false;
 
     export let canBeClosed: boolean = false;
-
-
-    export const reset: any = async () => {
-        await doSearch(true);
-    }
-
-    /**
-     * 执行查询
-     */
-    export const search = async (): Promise<void> => {
-        await doSearch();
-    }
+    export let actions: ButtonActions;
+    export let advancedTitle: string | undefined = undefined;
 
     const doSearch = async (reset: boolean = false): Promise<void> => {
         if (reset) {
             criteria = dataManager.resetCriteria();
         }
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', 'Loading data...'));
+        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             await dataManager.search(criteria);
             showResult();
@@ -74,7 +70,7 @@
      * @param page
      */
     const onPageChange: OnPageChange = async (page: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', 'Loading data...'));
+        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             await dataManager.setPageNo(page);
             showResult();
@@ -88,7 +84,7 @@
      * @param rows
      */
     let onRowCountChanged: OnRowCountChanged = async (rows: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', 'Loading data...'));
+        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -97,16 +93,36 @@
         }
     }
 
+    let loaded:boolean = false;
+    let error: any;
 
     onMount(async () => {
-        await doSearch(false)
+        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
+        try {
+            await initializeData?.();
+            await dataManager.search(criteria);
+            showResult();
+        } catch (ex) {
+            error = ex;
+        } finally {
+            loaded = true;
+            window.Indicator?.hide();
+        }
     })
 
 
 </script>
-
-<PagedDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
-                               {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed}>
-    <slot name="search-panel" slot="search-panel">
-    </slot>
-</PagedDataTablePage>
+{#if loaded}
+    {#if error}
+        <ModuleErrorPage {error} {canBeClosed}/>
+    {:else }
+        <PagedDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
+                            {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed}>
+            <FilterPanel slot="search-panel" {actions} resetClickHandler={()=>{doSearch(true)}} searchClickHandler={()=>doSearch()}
+                         advancedCriteriaTitle={advancedTitle} hasAdvanced={$$slots['advanced-panel']!=null}>
+                <slot name="search-panel"/>
+                <slot name="advanced-panel" slot="advanced-panel"/>
+            </FilterPanel>
+        </PagedDataTablePage>
+    {/if}
+{/if}

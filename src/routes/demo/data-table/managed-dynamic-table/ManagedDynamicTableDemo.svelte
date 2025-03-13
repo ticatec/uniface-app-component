@@ -3,10 +3,10 @@
     import TenantManager from "../../cards/managed-paged-cards/TenantManager";
 
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
-    import ManagedPagedDataTablePage from "$lib/managed-table-pages/ManagedPagingDataTablePage.svelte";
+    import ManagedPagedDataTablePage from "$lib/data-table/managed/PagingListPage.svelte";
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element";
     import columns from "./TenantColumns";
-    import ManagedDynamicCriteriaDataTablePage from "$lib/managed-table-pages/ManagedDynamicFilterDataTablePage.svelte";
+    import ManagedDynamicCriteriaDataTablePage from "$lib/data-table/managed/DynamicPagingListPage.svelte";
     import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
 
     const dataMgr = new TenantManager();

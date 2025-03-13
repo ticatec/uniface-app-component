@@ -4,7 +4,7 @@
     import type MetaCriteriaField from "$lib/filter-panel/MetaCriteriaField";
     import InlineComponent from "./data-table-old/InlineComponent.svelte";
     import {onMount} from "svelte";
-    import PagedDataTablePage from "$lib/data-table-pages/PagingDataTablePage.svelte";
+    import PagedDataTablePage from "$lib/data-table/PagingListPage.svelte";
     import Button from "@ticatec/uniface-element/Button";
     import SimpleDataTablePageDemo from "./SimpleDataTablePageDemo.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";

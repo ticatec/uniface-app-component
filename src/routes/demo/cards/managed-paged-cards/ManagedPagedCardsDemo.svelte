@@ -2,7 +2,7 @@
 
     import TenantManager from "./TenantManager";
     import GroupCard from "./TenantCard.svelte";
-    import ManagedPagedCardsPage from "$lib/managed-card-pages/ManagedPagingCardListPage.svelte";
+    import ManagedPagedCardsPage from "$lib/cards/managed/PagingListPage.svelte";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
 

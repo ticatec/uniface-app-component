@@ -9,10 +9,11 @@
     import Button from "@ticatec/uniface-element/Button";
     import SearchBox from "@ticatec/uniface-element/SearchBox";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import Separator from "@ticatec/uniface-element/Separator";
     import {onMount} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
+    import langRes from "$lib/i18n_resources/en_res";
 
     export let indicatorColumn: IndicatorColumn | null = null;
     export let columns: Array<DataColumn>;
@@ -40,7 +41,7 @@
     }
 
     onMount(async ()=>{
-        indicatorColumn.emptyIndicator = indicatorColumn.emptyIndicator ?? i18n.getText('uniface.app.emptyFiltered', 'There is no data that meets the filter criteria. Please set the filter criteria again.')
+
     })
 
     $: doFilter(list, filter);
@@ -54,12 +55,12 @@
             <Separator/>
         {/if}
         {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnNew', 'New')}
+            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('unifaceApp.btnNew', langRes.unifaceApp.btnAddNew)}
                     onClick={onCreateNewClick}></Button>
             <Separator/>
         {/if}
 
-        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', 'Refresh')} onClick={onRefreshClick}></Button>
+        <Button type="primary" label={i18n.getText('unifaceApp.btnRefresh', langRes.unifaceApp.btnRefresh)} onClick={onRefreshClick}></Button>
     </div>
 
     <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>

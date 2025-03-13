@@ -3,9 +3,10 @@
     import type PageAttrs from "$lib/common/PageAttrs";
     import uniAppCtx from "$lib/common/uniAppCtx";
     import PaginationPanel, {type OnPageChange, type OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import {onMount, tick} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
+    import langRes from "$lib/i18n_resources/en_res";
 
     export let page$attrs: PageAttrs;
     export let canBeClosed: boolean = false;
@@ -66,7 +67,7 @@
             <div style="position:relative; height: 100%; width: 100%">
                 <div style="position:relative; top: 50%; transform: translateY(-50%);">
                     <div style="width: fit-content; margin: 0 auto; font-size: 15px">
-                        <span>{i18n.getText('uniface.app.emptyDataSet', 'There is no data that meets the search criteria. Please set the search criteria again.')}</span>
+                        <span>{i18n.getText('unifaceApp.emptyDataSet', langRes.unifaceApp.emptyDataSet)}</span>
                     </div>
                 </div>
             </div>

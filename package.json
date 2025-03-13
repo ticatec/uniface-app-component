@@ -1,6 +1,6 @@
 {
   "name": "@ticatec/uniface-app-component",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "description": "uniface web app components base on the uniface web elements",
   "scripts": {
     "dev": "vite dev",
@@ -39,6 +39,14 @@
       "types": "./dist/common/uniAppCtx.d.ts",
       "import": "./dist/common/uniAppCtx.js"
     },
+    "./i18n_resources": {
+      "types": "./dist/i18n_resources/index.d.ts",
+      "import": "./dist/i18n_resources/index.js"
+    },
+    "./common": {
+      "types": "./dist/common/index.d.ts",
+      "import": "./dist/common/index.js"
+    },
     "./ListDataManager": {
       "types": "./dist/common/ListDataManager.d.ts",
       "import": "./dist/common/ListDataManager.js"
@@ -47,45 +55,45 @@
       "types": "./dist/HomePage.svelte.d.ts",
       "import": "./dist/HomePage.svelte"
     },
-    "./CardListPage": {
-      "types": "./dist/card-pages/CardListPage.svelte.d.ts",
-      "import": "./dist/card-pages/CardListPage.svelte"
+    "./card/ListPage": {
+      "types": "./dist/cards/ListPage.svelte.d.ts",
+      "import": "./dist/cards/ListPage.svelte"
     },
-    "./PagingCardListPage": {
-      "types": "./dist/card-pages/PagingCardListPage.svelte.d.ts",
-      "import": "./dist/card-pages/PagingCardListPage.svelte"
+    "./card/PagingListPage": {
+      "types": "./dist/cards/PagingListPage.svelte.d.ts",
+      "import": "./dist/cards/PagingListPage.svelte"
     },
-    "./ManagedCardListPage": {
-      "types": "./dist/managed-card-pages/ManagedCardListPage.svelte.d.ts",
-      "import": "./dist/managed-card-pages/ManagedCardListPage.svelte"
+    "./card/managed/ListPage": {
+      "types": "./dist/cards/managed/ListPage.svelte.d.ts",
+      "import": "./dist/cards/managed/ListPage.svelte"
     },
-    "./ManagedPagingCardListPage": {
-      "types": "./dist/managed-card-pages/ManagedPagingCardListPage.svelte.d.ts",
-      "import": "./dist/managed-card-pages/ManagedPagingCardListPage.svelte"
-    },
-    "./DataListTablePage": {
-      "types": "./dist/data-table-pages/DataListTablePage.svelte.d.ts",
-      "import": "./dist/data-table-pages/DataListTablePage.svelte"
-    },
-    "./PagingDataTablePage": {
-      "types": "./dist/data-table-pages/PagingDataTablePage.svelte.d.ts",
-      "import": "./dist/data-table-pages/PagingDataTablePage.svelte"
+    "./card/managed/PagingListPage": {
+      "types": "./dist/cards/managed/PagingListPage.svelte.d.ts",
+      "import": "./dist/cards/managed/PagingListPage.svelte"
     },
     "./CommonFormPage": {
       "types": "./dist/form-pages/CommonFormPage.svelte.d.ts",
       "import": "./dist/form-pages/CommonFormPage.svelte"
     },
-    "./ManagedDataTablePage": {
-      "types": "./dist/managed-table-pages/ManagedDataTablePage.svelte.d.ts",
-      "import": "./dist/managed-table-pages/ManagedDataTablePage.svelte"
+    "./data-table/ListPage": {
+      "types": "./dist/data-table/ListPage.svelte.d.ts",
+      "import": "./dist/data-table/ListPage.svelte"
     },
-    "./ManagedDynamicFilterDataTablePage": {
-      "types": "./dist/managed-table-pages/ManagedDynamicFilterDataTablePage.svelte.d.ts",
-      "import": "./dist/managed-table-pages/ManagedDynamicFilterDataTablePage.svelte"
+    "./data-table/PagingListPage": {
+      "types": "./dist/data-table/PagingListPage.svelte.d.ts",
+      "import": "./dist/data-table/PagingListPage.svelte"
     },
-    "./ManagedPagingDataTablePage": {
-      "types": "./dist/managed-table-pages/ManagedPagingDataTablePage.svelte.d.ts",
-      "import": "./dist/managed-table-pages/ManagedPagingDataTablePage.svelte"
+    "./data-table/managed/ListPage": {
+      "types": "./dist/data-table/managed/ListPage.svelte.d.ts",
+      "import": "./dist/data-table/managed/ListPage.svelte"
+    },
+    "./data-table/managed/PagingListPage": {
+      "types": "./dist/data-table/managed/PagingListPage.svelte.d.ts",
+      "import": "./dist/data-table/managed/PagingListPage.svelte"
+    },
+    "./data-table/managed/DynamicPagingListPage": {
+      "types": "./dist/data-table/managed/DynamicPagingListPage.svelte.d.ts",
+      "import": "./dist/data-table/managed/DynamicPagingListPage.svelte"
     },
     "./NotInFramePage.svelte": {
       "types": "./dist/common/NotInFramePage.svelte.d.ts",
@@ -121,9 +129,9 @@
     "@ticatec/axios-restful-service": "^0.1.1",
     "@ticatec/enhanced-utils": "^0.9.0",
     "@ticatec/uniface-dev-shell": "^0.0.2",
-    "@ticatec/uniface-element": "^0.1.12",
+    "@ticatec/uniface-element": "^0.1.16",
+    "@ticatec/uniface-filter-panel": "^0.0.7",
     "@ticatec/uniface-icons": "^0.2.0",
-    "@ticatec/uniface-filter-panel": "^0.0.4",
     "axios": "^1.8.1",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.7",
@@ -139,5 +147,8 @@
   },
   "author": "Henry Feng",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "@ticatec/i18n": "^0.0.4"
+  }
 }

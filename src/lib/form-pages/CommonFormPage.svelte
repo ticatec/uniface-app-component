@@ -4,9 +4,10 @@
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {ButtonAction, ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import ActionBar from "@ticatec/uniface-element/ActionBar";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import CommonPage from "$lib/common/CommonPage.svelte";
     import type {CloseConfirm} from "$lib/common/CloseConfirm";
+    import {cn_resource} from "@ticatec/uniface-element/i18n_resources"
 
     export let page$attrs: PageAttrs;
 
@@ -23,7 +24,7 @@
     let page: any;
 
     const btnClose: ButtonAction = {
-        label: i18n.getText('uniface.app.btnClose', 'Close'), type: closeType, handler: () => {
+        label: i18n.getText('uniface.btnClose', cn_resource.uniface.btnClose), type: closeType, handler: () => {
             page.closePage();
         }
     }

@@ -1,12 +1,13 @@
 <script lang="ts">
 
     import type {FunFilter, MouseClickHandler} from "@ticatec/uniface-element";
-    import CommonCardsPage from "$lib/card-pages/CardListPage.svelte";
+    import ListPage from "$lib/cards/ListPage.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/uniface-element/I18nContext";
+    import i18n from "@ticatec/i18n";
     import {onMount} from "svelte";
     import type ListDataManager from "$lib/common/ListDataManager";
     import type {PageInitialize} from "$lib/common/PageInitialize";
+    import langRes from "$lib/i18n_resources/en_res";
 
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
     export let initializeData: PageInitialize | null = null;
@@ -22,7 +23,7 @@
     export let canBeClosed: boolean = false;
 
     const loadList = async (initialize?: boolean) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.indicatorLoading', 'loading...'));
+        window.Indicator.show(busyIndicator ?? i18n.getText('unifaceApp.busyIndicator', langRes.unifaceApp.busyIndicator));
         try {
             if (initialize) {
                 await initializeData?.();
@@ -45,7 +46,7 @@
 </script>
 
 
-<CommonCardsPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {render} {canBeClosed}>
+<ListPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {render} {canBeClosed}>
 
-</CommonCardsPage>
+</ListPage>
 
