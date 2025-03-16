@@ -3,7 +3,7 @@
 -->
 <script lang="ts">
 
-    import ManagedPaginationDataTablePage from "$lib/data-table/managed/PagingListPage.svelte";
+    import PagingListPage from "$lib/data-table/PagingListPage.svelte";
     import type {ActionsColumn, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
     import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
@@ -11,6 +11,12 @@
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import type PagingDataManager from "$lib/common/PagingDataManager";
+    import type {PageInitialize} from "$lib/common";
+    import i18n from "@ticatec/i18n";
+    import langRes from "$lib/i18n_resources/en_res";
+    import type {OnPageChange, OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
+    import {onMount} from "svelte";
+    import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
 
     export let dataManager: PagingDataManager;
     export let criteria: any;
@@ -28,24 +34,113 @@
 
     export let advancedCriteriaTitle: string = 'More';
 
+
+    export let initializeData: PageInitialize | null = null;
+
     export let rowHeight: number = null as unknown as number;
+
+
     export let roundTable: boolean = false;
 
-    const resetClickHandler: MouseClickHandler = async () => {
-        dataPage.reset();
-    }
-    const searchClickHandler: MouseClickHandler = async () => {
-        dataPage.search();
+    export let canBeClosed: boolean = false;
+
+    export let advancedTitle: string | undefined = undefined;
+
+    const doSearch = async (reset: boolean = false): Promise<void> => {
+        if (reset) {
+            criteria = dataManager.resetCriteria();
+        }
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        try {
+            await dataManager.search(criteria);
+            showResult();
+        } finally {
+            window.Indicator?.hide();
+        }
     }
 
-    let dataPage: any;
+    let pageCount: number;
+
+    let pageNo: number;
+
+    let total: number;
+
+    /**
+     * 显示返回的结果
+     */
+    const showResult = () => {
+        list = dataManager.list;
+        total = dataManager.count;
+        pageNo = dataManager.pageNo;
+        pageCount = dataManager.pageCount;
+        criteria = dataManager.criteria;
+    }
+
+    /**
+     * 当页码发生变化的时候
+     * @param page
+     */
+    const onPageChange: OnPageChange = async (page: number) => {
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        try {
+            await dataManager.setPageNo(page);
+            showResult();
+        } finally {
+            window.Indicator.hide();
+        }
+    };
+
+    /**
+     * 当每页的行数发生变化的时候
+     * @param rows
+     */
+    let onRowCountChanged: OnRowCountChanged = async (rows: number) => {
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        try {
+            await dataManager.setRowsPage(rows);
+            showResult();
+        } finally {
+            window.Indicator.hide();
+        }
+    }
+
+    let loaded: boolean = false;
+    let error: any;
+
+    onMount(async () => {
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        try {
+            await initializeData?.();
+            await dataManager.search(criteria);
+            showResult();
+        } catch (ex) {
+            error = ex;
+        } finally {
+            loaded = true;
+            window.Indicator?.hide();
+        }
+    });
+
+    const resetClickHandler = () => {
+        doSearch(true)
+    }
+
+    const searchClickHandler = () => {
+        doSearch()
+    }
 
 
 </script>
 
-<ManagedPaginationDataTablePage bind:this={dataPage} {list} bind:selectedRows {dataManager} page$attrs={page$attrs} {busyIndicator} {roundTable}
-                                {actionsColumn} {rowHeight} {indicatorColumn} {columns} bind:criteria>
+{#if loaded}
+    {#if error}
+        <ModuleErrorPage {error} {canBeClosed}/>
+    {:else }
+        <PagingListPage bind:list bind:selectedRows {page$attrs} {roundTable} {total} {pageNo} {onRowCountChanged} {onPageChange} {canBeClosed}
+                        {pageCount} {actionsColumn} {rowHeight} {indicatorColumn} {columns}>
 
-    <DynamicFilterPanel slot="search-panel" bind:criteria {fields} {resetClickHandler} {searchClickHandler} {variant} {actions}
-                        {advancedCriteriaTitle}/>
-</ManagedPaginationDataTablePage>
+            <DynamicFilterPanel slot="search-panel" bind:criteria {fields} {resetClickHandler} {searchClickHandler} {variant} {actions}
+                                {advancedCriteriaTitle}/>
+        </PagingListPage>
+    {/if}
+{/if}

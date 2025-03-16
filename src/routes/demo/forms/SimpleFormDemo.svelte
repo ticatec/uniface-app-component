@@ -1,6 +1,6 @@
 <script lang="ts">
     import CommonFormPage from "$lib/form-pages/CommonFormPage.svelte";
-    import {ModuleResult, type MouseClickHandler} from "@ticatec/uniface-element";
+    import {ModalResult, type MouseClickHandler} from "@ticatec/uniface-element";
     import FormContainer, {Row, CellField} from "@ticatec/uniface-element/FlexRowForm";
     import TextEditor from "@ticatec/uniface-element/TextEditor";
     import OptionsSelect from "@ticatec/uniface-element/OptionsSelect";
@@ -36,7 +36,7 @@
     ]
 
     const closeConfirm = async () => {
-        return await window.MessageBox.showConfirm('数据尚未保存，确定退出？', "关闭确认") == ModuleResult.MR_OK;
+        return await window.MessageBox.showConfirm('数据尚未保存，确定退出？', "关闭确认") == ModalResult.MR_OK;
     }
 
     let  page$attrs: PageAttrs = {

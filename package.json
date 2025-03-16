@@ -1,6 +1,6 @@
 {
   "name": "@ticatec/uniface-app-component",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "description": "uniface web app components base on the uniface web elements",
   "scripts": {
     "dev": "vite dev",
@@ -55,6 +55,14 @@
       "types": "./dist/HomePage.svelte.d.ts",
       "import": "./dist/HomePage.svelte"
     },
+    "./card": {
+      "types": "./dist/cards/index.d.ts",
+      "import": "./dist/cards/index.js"
+    },
+    "./card/CardListBoard": {
+      "types": "./dist/cards/index.d.ts",
+      "import": "./dist/cards/index.js"
+    },
     "./card/ListPage": {
       "types": "./dist/cards/ListPage.svelte.d.ts",
       "import": "./dist/cards/ListPage.svelte"
@@ -74,6 +82,14 @@
     "./CommonFormPage": {
       "types": "./dist/form-pages/CommonFormPage.svelte.d.ts",
       "import": "./dist/form-pages/CommonFormPage.svelte"
+    },
+    "./data-table": {
+      "types": "./dist/data-table/index.d.ts",
+      "import": "./dist/data-table/index.js"
+    },
+    "./data-table/DataTableBoard": {
+      "types": "./dist/data-table/index.d.ts",
+      "import": "./dist/data-table/index.js"
     },
     "./data-table/ListPage": {
       "types": "./dist/data-table/ListPage.svelte.d.ts",
@@ -129,7 +145,7 @@
     "@ticatec/axios-restful-service": "^0.1.1",
     "@ticatec/enhanced-utils": "^0.9.0",
     "@ticatec/uniface-dev-shell": "^0.0.2",
-    "@ticatec/uniface-element": "^0.1.16",
+    "@ticatec/uniface-element": "^0.1.26",
     "@ticatec/uniface-filter-panel": "^0.0.7",
     "@ticatec/uniface-icons": "^0.2.0",
     "axios": "^1.8.1",
@@ -143,12 +159,12 @@
     "svelte-preprocess": "^6.0.3",
     "tslib": "^2.3.1",
     "typescript": "^5.7.3",
-    "vite": "^5.4.11"
+    "vite": "^5.4.11",
+    "@ticatec/i18n": "^0.0.5"
   },
   "author": "Henry Feng",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@ticatec/i18n": "^0.0.4"
   }
 }

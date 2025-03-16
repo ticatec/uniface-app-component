@@ -95,6 +95,6 @@
 </script>
 
 <PaginationCardsPage {total} {onPageChange} {onRowCountChanged} {pageCount} {pageNo} list={roles} page$attrs={page$attrs}
-                     render={RoleCard}>
+                     render={{component: RoleCard}}>
     <CriteriaFilterPanel bind:criteria slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
 </PaginationCardsPage>

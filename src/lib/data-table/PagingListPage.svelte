@@ -11,9 +11,8 @@
     import type PageAttrs from "$lib/common/PageAttrs";
     import uniAppCtx from "$lib/common/uniAppCtx";
     import {onMount} from "svelte";
-    import i18n from "@ticatec/i18n";
-    import AppModule from "../module/AppModule";
     import CommonPage from "$lib/common/CommonPage.svelte";
+    import DataTableBoard from "$lib/data-table/DataTableBoard.svelte";
 
     export let indicatorColumn: IndicatorColumn;
     export let columns: Array<DataColumn>;
@@ -30,25 +29,19 @@
     export let roundTable: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
+
+
     onMount(async ()=>{
 
     })
 
-    const closePage = (event: MouseEvent) => {
-        AppModule.closeActivePage();
-    }
-
 </script>
 <CommonPage page$attrs={page$attrs} {canBeClosed} content$style=" padding: 0 12px; box-sizing: border-box">
-    <div style="width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden">
-        <slot name="search-panel"/>
-        <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%"  round={roundTable}>
-            <DataTable style="height: 100%" {rowHeight} {columns} {indicatorColumn}
-                       {actionsColumn} bind:selectedRows {list}></DataTable>
-        </Box>
-        <div style="width: 100%; padding: 8px 0; box-sizing: border-box; flex: 0 0 auto">
+    <DataTableBoard {list} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} {selectedRows}>
+        <slot name="search-panel" slot="header"/>
+        <div slot="footer" style="width: 100%; padding: 8px 12px; box-sizing: border-box; flex: 0 0 auto; border-top: 1px solid var(--uniface-page-divid-color, #F0F0F0)">
             <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={uniAppCtx.generateInfo}
                              rowCountLabel={uniAppCtx.rowCountLabel}/>
         </div>
-    </div>
+    </DataTableBoard>
 </CommonPage>

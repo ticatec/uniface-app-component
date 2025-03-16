@@ -1,7 +1,7 @@
 const langRes = {
     uniface: {
         app: {
-            btnAddNew: "添加",
+            btnAddNew: "新增",
             btnRefresh: "刷新",
             emptyFiltered: "没有符合筛选条件的数据。请重新设置筛选条件。",
             emptyDataSet: "没有符合搜索条件的数据。请重新设置搜索条件。",

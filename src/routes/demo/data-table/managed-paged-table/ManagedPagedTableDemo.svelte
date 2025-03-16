@@ -43,7 +43,6 @@
     }
 
     const actionsColumn: ActionsColumn = {
-        title: '操作',
         width: 150,
         getActions: (item: any): Array<RowAction> => {
             return []
@@ -56,6 +55,6 @@
 </script>
 
 <ManagedPagedDataTablePage bind:this={tablePage} {actionsColumn} {indicatorColumn} dataManager={dataMgr} bind:list page$attrs="{page$attrs}"
-                           bind:criteria {columns} rowHeight={48} {canBeClosed}>
-    <CriteriaFilterPanel bind:criteria slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
+                           bind:criteria {columns} rowHeight={48} {canBeClosed} {actions}>
+    <CriteriaFilterPanel bind:criteria slot="search-panel"/>
 </ManagedPagedDataTablePage>

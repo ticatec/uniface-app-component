@@ -8,6 +8,9 @@
     import type ListDataManager from "$lib/common/ListDataManager";
     import type {PageInitialize} from "$lib/common/PageInitialize";
     import langRes from "$lib/i18n_resources/en_res";
+    import CommonPage from "$lib/common/CommonPage.svelte";
+    import CardListBoard from "$lib/cards/CardListBoard.svelte";
+    import FilterablePageBar from "$lib/common/FilterablePageBar.svelte";
 
     export let onCreateNewClick: MouseClickHandler = null as unknown as MouseClickHandler;
     export let initializeData: PageInitialize | null = null;
@@ -22,31 +25,38 @@
 
     export let canBeClosed: boolean = false;
 
-    const loadList = async (initialize?: boolean) => {
+    let filter: string;
+
+    const onRefreshClick: MouseClickHandler = async (event: MouseEvent) => {
         window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
         try {
-            if (initialize) {
-                await initializeData?.();
-            }
             await dataManager.loadData(queryParams);
             list = dataManager.list;
         } finally {
             window.Indicator.hide();
         }
     }
-    const onRefreshClick: MouseClickHandler = async (event: MouseEvent) => {
-        await loadList();
-    }
 
     onMount(async () => {
-        await loadList(true);
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        try {
+            await initializeData?.();
+            await dataManager.loadData(queryParams);
+            list = dataManager.list;
+        } finally {
+            window.Indicator.hide();
+        }
     })
 
 
 </script>
 
+<CommonPage page$attrs={page$attrs} content$style="overflow: hidden;" {canBeClosed}>
+    <FilterablePageBar slot="header-ext" bind:filter filterable={filterFun!=null} {onCreateNewClick} {onRefreshClick}/>
+    <CardListBoard {filterFun} filterText={filter} {list} {render} {gap} showHeader={$$slots['header']!=null}>
+        <slot slot="header" name="header"/>
+    </CardListBoard>
+</CommonPage>
 
-<ListPage {onCreateNewClick} {onRefreshClick} {page$attrs} {gap} {list} {filterFun} {render} {canBeClosed}>
 
-</ListPage>
 

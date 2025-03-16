@@ -41,6 +41,18 @@
   position: relative;
   top: 1px;
 }
+.uniface-module-board .common-page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.uniface-module-board .common-page-container .uniface-app-cards-board {
+  flex: 1 1 auto;
+}
+.uniface-module-board .common-page-container .card_board_footer, .uniface-module-board .common-page-container .card_board_footer {
+  flex: 0 0 auto;
+}
 
 .gradient_transparent_overlay {
   position: absolute;

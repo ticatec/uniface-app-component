@@ -3,15 +3,20 @@
 -->
 <script lang="ts">
 
-    import CommonDataTablePage from "$lib/data-table/ListPage.svelte";
+    import ListPage from "$lib/data-table/ListPage.svelte";
     import type {ActionsColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
     import {FullListDataManager} from "@ticatec/app-data-manager";
     import {onMount} from "svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {FullListDataService} from "@ticatec/app-data-service";
+    import i18n from "@ticatec/i18n";
+    import langRes from "$lib/i18n_resources/en_res";
+    import type {PageInitialize} from "$lib/common";
+    import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
 
     export let dataManager: FullListDataManager<FullListDataService>;
+    export let initializeData: PageInitialize | null = null;
     export let indicatorColumn: IndicatorColumn;
     export let columns: Array<DataColumn>;
     export let actionsColumn: ActionsColumn = null as unknown as ActionsColumn;
@@ -24,9 +29,13 @@
     export let busyIndicator: string | null = null;
     export let rowHeight: number = null as unknown as number;
     export let roundTable: boolean = false;
+    export let canBeClosed: boolean = false;
+
+    let loaded: boolean = false;
+    let error: any;
 
     export const loadList = async () => {
-        window.Indicator.show(busyIndicator??'Loading...');
+        window.Indicator.show(busyIndicator ?? 'Loading...');
         try {
             await dataManager.loadData(queryParams);
             list = dataManager.list;
@@ -36,7 +45,17 @@
     }
 
     onMount(async () => {
-        await loadList();
+        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        try {
+            await initializeData?.();
+            await dataManager.loadData(queryParams);
+            list = dataManager.list;
+        } catch (ex) {
+            error = ex;
+        } finally {
+            loaded = true;
+            window.Indicator?.hide();
+        }
     })
 
 
@@ -46,5 +65,12 @@
 
 
 </script>
-<CommonDataTablePage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable}
-                     {indicatorColumn} {columns} {actionsColumn}  bind:selectedRows {list} {onRefreshClick}/>
+{#if loaded}
+    {#if error}
+        <ModuleErrorPage {error} {canBeClosed}/>
+    {:else }
+        <ListPage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable} {canBeClosed}
+                  {indicatorColumn} {columns} {actionsColumn} bind:selectedRows {list} {onRefreshClick}/>
+
+    {/if}
+{/if}

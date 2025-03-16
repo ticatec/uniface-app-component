@@ -1,12 +1,12 @@
 <script lang="ts">
 
-    import CommonCardsPage from "$lib/cards/ListPage.svelte";
-    import utils from "@ticatec/uniface-element/utils";
+    import ListPage from "$lib/cards/ListPage.svelte";
     import RoleCard from "./RoleCard.svelte";
     import RoleDetailPanel from "./RoleDetailPanel.svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import {AppModule} from "$lib/module";
     import ManagedPagedTableDemo from "../../data-table/managed-paged-table";
+    import Breadcrumbs from "@ticatec/uniface-element/Breadcrumbs";
 
     export let canBeClosed: boolean = false;
 
@@ -38,6 +38,41 @@
         return role.name.indexOf(text) > -1 || role.note?.indexOf(text) > -1
     }
 
+
+    let list = [
+        {
+            label: "中国",
+            data: {}
+        },
+        {
+            label: "河北省",
+            data: {}
+        },
+        {
+            label: "石家庄市",
+            data: {}
+        },
+        {
+            label: "桥西区",
+            data: {}
+        },
+        {
+            label: "西里派出所",
+            data: {}
+        }
+    ]
+
+
+    const handleItemClick = (item: any) => (event: MouseEvent) => {
+        console.log(item)
+    }
+    const render = {
+        component: RoleCard,
+        props: {}
+    }
+
 </script>
 
-<CommonCardsPage list={roles} page$attrs={page$attrs} {onRefreshClick} {canBeClosed} filterFun={doFilter} render={RoleCard} {onCreateNewClick}/>
+<ListPage list={roles} page$attrs={page$attrs} {onRefreshClick} {canBeClosed} filterFun={doFilter} {render} {onCreateNewClick}>
+    <Breadcrumbs slot="header" items={list} onItemClick={handleItemClick}/>
+</ListPage>

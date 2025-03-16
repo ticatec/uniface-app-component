@@ -3,17 +3,11 @@
 -->
 <script lang="ts">
 
-    import DataTable from "@ticatec/uniface-element/DataTable";
-    import Box from "@ticatec/uniface-element/Box";
     import type {ActionsColumn, DataColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
-    import Button from "@ticatec/uniface-element/Button";
-    import SearchBox from "@ticatec/uniface-element/SearchBox";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/i18n";
-    import Separator from "@ticatec/uniface-element/Separator";
-    import {onMount} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
-    import langRes from "$lib/i18n_resources/en_res";
+    import DataTableBoard from "$lib/data-table/DataTableBoard.svelte";
+    import FilterablePageBar from "$lib/common/FilterablePageBar.svelte";
 
     export let indicatorColumn: IndicatorColumn | null = null;
     export let columns: Array<DataColumn>;
@@ -29,42 +23,11 @@
     export let canBeClosed: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
-    let filter: string = '';
-    let filteredList: Array<any> = [];
-
-    const doFilter = (arr: Array<any>, m: string) => {
-        if (!m) {
-            filteredList = [...list];
-        } else {
-            filteredList = list.filter(item => filterFun?.(item, m));
-        }
-    }
-
-    onMount(async ()=>{
-
-    })
-
-    $: doFilter(list, filter);
+    let filterText: string = '';
 
 
 </script>
 <CommonPage page$attrs={page$attrs} {canBeClosed} content$style="padding: 12px; box-sizing: border-box; overflow: hidden">
-    <div slot="header-ext" style="flex: 0 0 auto; display: flex;position: relative; align-items: center; column-gap: 8px">
-        {#if filterFun}
-            <SearchBox variant="outlined" compact bind:value={filter} style="width: 240px"/>
-            <Separator/>
-        {/if}
-        {#if onCreateNewClick}
-            <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnNew', langRes.uniface.app.btnAddNew)}
-                    onClick={onCreateNewClick}></Button>
-            <Separator/>
-        {/if}
-
-        <Button type="primary" label={i18n.getText('uniface.app.btnRefresh', langRes.uniface.app.btnRefresh)} onClick={onRefreshClick}></Button>
-    </div>
-
-    <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>
-        <DataTable style="height: 100%; width: 100%" {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
-                   list={filteredList}></DataTable>
-    </Box>
+    <FilterablePageBar slot="header-ext" bind:filter={filterText} filterable={filterFun!=null} {onCreateNewClick} {onRefreshClick}/>
+    <DataTableBoard {filterFun} {list} {filterText} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} {selectedRows} showHeader={false}/>
 </CommonPage>

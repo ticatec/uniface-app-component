@@ -1,7 +1,7 @@
 const langRes = {
     uniface: {
         app: {
-            btnAddNew: "Add",
+            btnAddNew: "New",
             btnRefresh: "Refresh",
             emptyFiltered: "There is no data that meets the filter criteria. Please set the filter criteria again.",
             emptyDataSet: "There is no data that meets the search criteria. Please set the search criteria again.",

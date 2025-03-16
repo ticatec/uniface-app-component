@@ -6,7 +6,7 @@
     import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
-    import PagedDataTablePage from "$lib/data-table/PagingListPage.svelte";
+    import PagingListPage from "$lib/data-table/PagingListPage.svelte";
     import {onMount} from "svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import i18n from "@ticatec/i18n";
@@ -116,13 +116,13 @@
     {#if error}
         <ModuleErrorPage {error} {canBeClosed}/>
     {:else }
-        <PagedDataTablePage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
+        <PagingListPage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
                             {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed}>
             <FilterPanel slot="search-panel" {actions} resetClickHandler={()=>{doSearch(true)}} searchClickHandler={()=>doSearch()}
                          advancedCriteriaTitle={advancedTitle} hasAdvanced={$$slots['advanced-panel']!=null}>
                 <slot name="search-panel"/>
                 <slot name="advanced-panel" slot="advanced-panel"/>
             </FilterPanel>
-        </PagedDataTablePage>
+        </PagingListPage>
     {/if}
 {/if}

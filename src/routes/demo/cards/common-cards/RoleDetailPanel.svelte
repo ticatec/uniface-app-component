@@ -3,7 +3,7 @@
 
     import {onMount} from "svelte";
     import type {ButtonAction, ButtonActions} from "@ticatec/uniface-element/ActionBar";
-    import {ModuleResult} from "@ticatec/uniface-element";
+    import {ModalResult} from "@ticatec/uniface-element";
     import FormContainer, {CellField, Row} from "@ticatec/uniface-element/FlexRowForm";
     import TextEditor from "@ticatec/uniface-element/TextEditor";
     import OptionsSelect from "@ticatec/uniface-element/OptionsSelect";
@@ -30,7 +30,7 @@
 
     export const closeConfirm = async (): Promise<boolean> => {
         if (JSON.stringify(data) != oldData) {
-            return await window.MessageBox.showConfirm('Data has been changed, are you sure to discard the changes?', 'Discard changes', false, 'warning') == ModuleResult.MR_OK;
+            return await window.MessageBox.showConfirm('Data has been changed, are you sure to discard the changes?', 'Discard changes', false, 'warning') == ModalResult.MR_OK;
         } else {
             return true
         }

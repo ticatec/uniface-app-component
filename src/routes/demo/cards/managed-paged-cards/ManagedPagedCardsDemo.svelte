@@ -46,6 +46,7 @@
     $: console.log('数据列表', cardPage);
 </script>
 
-<ManagedPagedCardsPage bind:this={cardPage} dataManager={dataMgr} bind:list page$attrs="{page$attrs}" render={GroupCard} bind:criteria {onCreateNewClick} >
-    <CriteriaFilterPanel bind:criteria  slot="search-panel" {actions} resetClickHandler={doResetSearch} searchClickHandler={doSearch}/>
+<ManagedPagedCardsPage bind:this={cardPage} dataManager={dataMgr} bind:list page$attrs="{page$attrs}" {actions} render={{component: GroupCard}}
+                       bind:criteria>
+    <CriteriaFilterPanel bind:criteria slot="search-panel"/>
 </ManagedPagedCardsPage>
