@@ -23,11 +23,14 @@
     export let canBeClosed: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
+    export let emptyIndicator: string | undefined = undefined;;
+
     let filterText: string = '';
 
 
 </script>
 <CommonPage page$attrs={page$attrs} {canBeClosed} content$style="padding: 12px; box-sizing: border-box; overflow: hidden">
     <FilterablePageBar slot="header-ext" bind:filter={filterText} filterable={filterFun!=null} {onCreateNewClick} {onRefreshClick}/>
-    <DataTableBoard {filterFun} {list} {filterText} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} {selectedRows} showHeader={false}/>
+    <DataTableBoard {filterFun} {list} {filterText} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} {selectedRows}
+                    {emptyIndicator} showHeader={false}/>
 </CommonPage>

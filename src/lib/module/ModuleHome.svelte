@@ -56,6 +56,7 @@
             window.addEventListener('hashchange', handleHashChangeEvent);
             await buildHomePage();
         } catch (ex) {
+            console.error('Module loading with error', ex);
             homePage = ModuleErrorPage;
             params = {ex}
         } finally {

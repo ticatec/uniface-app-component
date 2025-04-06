@@ -35,6 +35,8 @@
     export let actions: ButtonActions;
     export let advancedTitle: string | undefined = undefined;
 
+    export let emptyIndicator: string | undefined = undefined;;
+
     const doSearch = async (reset: boolean = false): Promise<void> => {
         if (reset) {
             criteria = dataManager.resetCriteria();
@@ -103,6 +105,7 @@
             await dataManager.search(criteria);
             showResult();
         } catch (ex) {
+            console.error('Module loading with error', ex);
             error = ex;
         } finally {
             loaded = true;
@@ -117,7 +120,7 @@
         <ModuleErrorPage {error} {canBeClosed}/>
     {:else }
         <PagingListPage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
-                            {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed}>
+                            {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed} {emptyIndicator}>
             <FilterPanel slot="search-panel" {actions} resetClickHandler={()=>{doSearch(true)}} searchClickHandler={()=>doSearch()}
                          advancedCriteriaTitle={advancedTitle} hasAdvanced={$$slots['advanced-panel']!=null}>
                 <slot name="search-panel"/>

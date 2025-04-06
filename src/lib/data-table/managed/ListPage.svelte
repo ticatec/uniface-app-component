@@ -30,6 +30,7 @@
     export let rowHeight: number = null as unknown as number;
     export let roundTable: boolean = false;
     export let canBeClosed: boolean = false;
+    export let emptyIndicator: string | undefined = undefined;
 
     let loaded: boolean = false;
     let error: any;
@@ -51,6 +52,7 @@
             await dataManager.loadData(queryParams);
             list = dataManager.list;
         } catch (ex) {
+            console.error('Module loading with error', ex);
             error = ex;
         } finally {
             loaded = true;
@@ -69,7 +71,7 @@
     {#if error}
         <ModuleErrorPage {error} {canBeClosed}/>
     {:else }
-        <ListPage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable} {canBeClosed}
+        <ListPage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable} {canBeClosed} {emptyIndicator}
                   {indicatorColumn} {columns} {actionsColumn} bind:selectedRows {list} {onRefreshClick}/>
 
     {/if}

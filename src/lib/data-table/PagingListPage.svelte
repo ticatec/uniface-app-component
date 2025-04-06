@@ -29,6 +29,7 @@
     export let roundTable: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
+    export let emptyIndicator: string | undefined = undefined;;
 
 
     onMount(async ()=>{
@@ -37,7 +38,7 @@
 
 </script>
 <CommonPage page$attrs={page$attrs} {canBeClosed} content$style=" padding: 0 12px; box-sizing: border-box">
-    <DataTableBoard {list} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} {selectedRows}>
+    <DataTableBoard {list} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} bind:selectedRows {emptyIndicator}>
         <slot name="search-panel" slot="header"/>
         <div slot="footer" style="width: 100%; padding: 8px 12px; box-sizing: border-box; flex: 0 0 auto; border-top: 1px solid var(--uniface-page-divid-color, #F0F0F0)">
             <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={uniAppCtx.generateInfo}

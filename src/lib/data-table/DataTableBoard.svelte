@@ -19,6 +19,8 @@
 
     export let filterText: string | null = null;
 
+    export let emptyIndicator: string | undefined;
+
 
     let filteredList: Array<any> = [];
 
@@ -41,7 +43,7 @@
         </div>
     {/if}
     <Box style="border: 1px solid var(--uniface-editor-border-color, #F8FAFC); width: 100%; height: 100%" round={roundTable}>
-        <DataTable style="height: 100%; width: 100%" {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows
+        <DataTable style="height: 100%; width: 100%" {rowHeight} {columns} {indicatorColumn} {actionsColumn} bind:selectedRows {emptyIndicator}
                    list={filteredList}></DataTable>
     </Box>
     {#if $$slots.footer}
