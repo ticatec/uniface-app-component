@@ -3,7 +3,7 @@
 -->
 <script lang="ts">
 
-    import type {OnRowCountChanged, OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
+    import PaginationPanel, {type OnRowCountChanged, type OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element";
     import type {DataColumn} from "@ticatec/uniface-element";
     import PagingListPage from "$lib/data-table/PagingListPage.svelte";
@@ -16,6 +16,10 @@
     import type {PageInitialize} from "$lib/common";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
     import langRes from "$lib/i18n_resources/en_res";
+    import uniAppCtx from "$lib/common/uniAppCtx";
+    import DataTableBoard from "$lib/data-table";
+    import CommonPage from "../../common/CommonPage.svelte";
+
 
     export let indicatorColumn: IndicatorColumn;
     export let initializeData: PageInitialize | null = null;
@@ -35,7 +39,8 @@
     export let actions: ButtonActions;
     export let advancedTitle: string | undefined = undefined;
 
-    export let emptyIndicator: string | undefined = undefined;;
+    export let emptyIndicator: string | undefined = undefined;
+    ;
 
     const doSearch = async (reset: boolean = false): Promise<void> => {
         if (reset) {
@@ -95,7 +100,7 @@
         }
     }
 
-    let loaded:boolean = false;
+    let loaded: boolean = false;
     let error: any;
 
     onMount(async () => {
@@ -113,19 +118,26 @@
         }
     })
 
-
+    console.log("sidebar - mp", $$slots['listpage-sidebar'])
 </script>
 {#if loaded}
     {#if error}
         <ModuleErrorPage {error} {canBeClosed}/>
     {:else }
-        <PagingListPage page$attrs={page$attrs} {indicatorColumn} {rowHeight} {columns} {actionsColumn} bind:selectedRows {list}
-                            {pageCount} {pageNo} {roundTable} {total} {onRowCountChanged} {onPageChange} {canBeClosed} {emptyIndicator}>
-            <FilterPanel slot="search-panel" {actions} resetClickHandler={()=>{doSearch(true)}} searchClickHandler={()=>doSearch()}
-                         advancedCriteriaTitle={advancedTitle} hasAdvanced={$$slots['advanced-panel']!=null}>
-                <slot name="search-panel"/>
-                <slot name="advanced-panel" slot="advanced-panel"/>
-            </FilterPanel>
-        </PagingListPage>
+        <CommonPage page$attrs={page$attrs} {canBeClosed} content$style=" padding: 0 12px; box-sizing: border-box">
+            <slot name="sidebar" slot="sidebar"/>
+            <DataTableBoard {list} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} bind:selectedRows {emptyIndicator}>
+                <FilterPanel slot="header" {actions} resetClickHandler={()=>{doSearch(true)}} searchClickHandler={()=>doSearch()}
+                             advancedCriteriaTitle={advancedTitle} hasAdvanced={$$slots['advanced-panel']!=null}>
+                    <slot name="search-panel"/>
+                    <slot name="advanced-panel" slot="advanced-panel"/>
+                </FilterPanel>
+                <div slot="footer"
+                     style="width: 100%; padding: 8px 12px; box-sizing: border-box; flex: 0 0 auto; border-top: 1px solid var(--uniface-page-divid-color, #F0F0F0)">
+                    <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={uniAppCtx.generateInfo}
+                                     rowCountLabel={uniAppCtx.rowCountLabel}/>
+                </div>
+            </DataTableBoard>
+        </CommonPage>
     {/if}
 {/if}

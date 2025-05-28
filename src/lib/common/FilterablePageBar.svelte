@@ -19,7 +19,7 @@
         <Separator/>
     {/if}
     {#if onCreateNewClick}
-        <Button type="third" icon="uniface-icon-plus" label={i18n.getText('uniface.app.btnAddNew', langRes.uniface.app.btnAddNew)}
+        <Button type="third" icon="icon_google_add" label={i18n.getText('uniface.app.btnAddNew', langRes.uniface.app.btnAddNew)}
                 onClick={onCreateNewClick}></Button>
         <Separator/>
     {/if}

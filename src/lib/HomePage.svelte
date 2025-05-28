@@ -15,13 +15,19 @@
 
     export let style: string = ''
 
-    let inFrame = window.frameElement !== null;
+    let inFrame = window.self !== window.top;
 
     let loaded: boolean = false;
 
+    const sleep = (n: number) => {
+        return new Promise((resolve) => {
+            setTimeout(()=>{resolve()}, n*1000);
+        })
+    }
+
     onMount(async () => {
         while (!window.Indicator) {
-            await tick();
+            await sleep(1);
         }
         loaded = true;
     })

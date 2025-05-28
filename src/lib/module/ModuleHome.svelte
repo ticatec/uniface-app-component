@@ -25,7 +25,9 @@
     let query: any = {};
     const buildHomePage = async () => {
         let hashStr = decodeURIComponent(window.location.hash);
+        console.debug('route hash:', hashStr);
         let result = modUtils.parseHash(hashStr);
+        console.debug(('route to', result));
         let route = modUtils.parseRoute(routes, result.path);
         if (route.loader != null) {
             homePage = (await route.loader())?.default;

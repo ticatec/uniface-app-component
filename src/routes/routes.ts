@@ -7,7 +7,7 @@ const routes = {
     '/data-table/paged-list': () => import('./demo/data-table/paged-data-table'),
     '/data-table/dynamic-paged-list': ()=>import('./demo/DynamicCriteriaPageDemo.svelte'),
     '/data-table/managed/full-list': () => import('./demo/data-table/managed-list-table'),
-    '/data-table/managed/paged-list': () => import('./demo/data-table/managed-dynamic-table')
+    '/data-table/managed/paged-list': () => import('./demo/data-table/managed-paged-table')
 }
 
 export default routes;

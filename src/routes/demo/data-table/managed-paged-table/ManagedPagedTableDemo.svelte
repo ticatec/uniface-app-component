@@ -3,7 +3,7 @@
     import TenantManager from "../../cards/managed-paged-cards/TenantManager";
     import CriteriaFilterPanel from "../../cards/managed-paged-cards/CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
-    import ManagedPagedDataTablePage from "$lib/data-table/managed/PagingListPage.svelte";
+    import PagingListPage from "$lib/data-table/managed/PagingListPage.svelte";
     import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element";
     import columns from "./TenantColumns";
 
@@ -48,13 +48,14 @@
             return []
         }
     }
-
-
-
-    $: console.log('数据列表', tablePage);
 </script>
 
-<ManagedPagedDataTablePage bind:this={tablePage} {actionsColumn} {indicatorColumn} dataManager={dataMgr} bind:list page$attrs="{page$attrs}"
+<PagingListPage bind:this={tablePage} {actionsColumn} {indicatorColumn} dataManager={dataMgr} bind:list page$attrs="{page$attrs}"
                            bind:criteria {columns} rowHeight={48} {canBeClosed} {actions}>
+    <div style="width: 300px; height: 100%; box-sizing: border-box; padding: 12px 0 12px 12px" slot="sidebar">
+        <div style="width: 100%; height: 100%; overflow: auto; border: 1px solid var(--uniface-plain-border-color, #f0f0f0);">
+
+        </div>
+    </div>
     <CriteriaFilterPanel bind:criteria slot="search-panel"/>
-</ManagedPagedDataTablePage>
+</PagingListPage>

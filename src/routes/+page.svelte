@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import "@ticatec/uniface-element/ticatec-uniface-web.css"
-    import "@ticatec/uniface-icons/feather-style.css"
+    import "@ticatec/uniface-google-material-icons/google_material_icons.css"
     import "@ticatec/uniface-filter-panel/uniface-filter-panel.css"
     import "$lib/uniface-app-component.css"
     import "./app.css";
