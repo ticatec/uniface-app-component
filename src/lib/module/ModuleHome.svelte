@@ -8,9 +8,8 @@
     import type {PageLoader} from "$lib/module/PageLoader";
     import AppModule from "$lib/module/AppModule";
     import type {ModuleInitialize} from "$lib/common/ModuleInitialize";
-    import i18n from "@ticatec/i18n";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
-    import langRes from "$lib/i18n_resources/en_res";
+    import i18nRes from "$lib/i18nRes";
 
 
     export let style: string = "";
@@ -27,7 +26,7 @@
         let hashStr = decodeURIComponent(window.location.hash);
         console.debug('route hash:', hashStr);
         let result = modUtils.parseHash(hashStr);
-        console.debug(('route to', result));
+        console.debug('route to', result);
         let route = modUtils.parseRoute(routes, result.path);
         if (route.loader != null) {
             homePage = (await route.loader())?.default;
@@ -51,7 +50,7 @@
 
     onMount(async () => {
 
-        window.Indicator.show(i18n.getText('uniface.app.indicatorInitialing', langRes.uniface.app.indicatorInitialing))
+        window.Indicator.show(i18nRes.app.indicatorInitialing)
         try {
             await initializeModule?.();
             AppModule.initialize(onPagesChange);
@@ -74,7 +73,7 @@
 <div class="uniface-module-board" {style}>
     <div class="module-base-page" style="width: 100%; height: 100%">
         {#if homePage}
-            <svelte:component this={homePage} {...params} {query}/>
+            <svelte:component this={homePage} {...params} {...query}/>
         {/if}
     </div>
     {#each pages as page}

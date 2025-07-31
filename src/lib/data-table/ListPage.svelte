@@ -3,7 +3,9 @@
 -->
 <script lang="ts">
 
-    import type {ActionsColumn, DataColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
+    import type {MouseClickHandler} from "@ticatec/uniface-element/types";
+    import type {FunFilter} from "@ticatec/uniface-element/ListBox";
+    import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element/DataTable";
     import type PageAttrs from "$lib/common/PageAttrs";
     import CommonPage from "$lib/common/CommonPage.svelte";
     import DataTableBoard from "$lib/data-table/DataTableBoard.svelte";
@@ -23,14 +25,20 @@
     export let canBeClosed: boolean = false;
     export let rowHeight: number = null as unknown as number;
 
-    export let emptyIndicator: string | undefined = undefined;;
+    export let placeholder: string = '';
+
+
+    export let emptyIndicator: string | undefined = undefined;
+    ;
 
     let filterText: string = '';
 
 
 </script>
 <CommonPage page$attrs={page$attrs} {canBeClosed} content$style="padding: 12px; box-sizing: border-box; overflow: hidden">
-    <FilterablePageBar slot="header-ext" bind:filter={filterText} filterable={filterFun!=null} {onCreateNewClick} {onRefreshClick}/>
+    <slot name="sidebar" slot="sidebar"/>
+    <FilterablePageBar slot="header-ext" bind:filter={filterText} filterable={filterFun!=null} {placeholder} {onCreateNewClick}
+                       {onRefreshClick}/>
     <DataTableBoard {filterFun} {list} {filterText} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} {selectedRows}
                     {emptyIndicator} showHeader={false}/>
 </CommonPage>

@@ -1,13 +1,13 @@
 <script lang="ts">
 
-    import i18n from "@ticatec/i18n";
+    import i18nRes from "$lib/i18nRes";
     export let message: string;
 
 </script>
 <div class="uniface-module-board">
     <div style="position: relative; top: 50%; transform: translateY(-50%); text-align: center">
         <div>
-            <span>{i18n.get('uniapp.page_initialize_load_error'??"Can't initialize this module.")}</span>
+            <span>{i18nRes.app.moduleError}</span>
         </div>
         <div>
             <span>{message}</span>

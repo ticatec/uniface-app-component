@@ -1,16 +1,15 @@
 <script lang="ts">
 
-    import i18n from "@ticatec/i18n";
-    import langRes from "$lib/i18n_resources/en_res";
+
+    import i18nRes from "$lib/i18nRes";
 
     export let error: any;
-    export let canBeClosed: boolean;
 
 </script>
 
 <div style="position: relative; top: 50%; transform: translateY(-50%); text-align: center">
     <div>
-        <span>{i18n.getText('uniface.app.moduleError', langRes.uniface.app.moduleError)}</span>
+        <span>{i18nRes.app.moduleError}</span>
     </div>
     <div>
         <span>{error?.message ?? error}</span>

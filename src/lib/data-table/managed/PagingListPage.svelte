@@ -4,21 +4,20 @@
 <script lang="ts">
 
     import PaginationPanel, {type OnRowCountChanged, type OnPageChange} from "@ticatec/uniface-element/PaginationPanel";
-    import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element";
-    import type {DataColumn} from "@ticatec/uniface-element";
+    import type {ActionsColumn, IndicatorColumn} from "@ticatec/uniface-element/DataTable";
+    import type {DataColumn} from "@ticatec/uniface-element/DataTable";
     import PagingListPage from "$lib/data-table/PagingListPage.svelte";
     import {onMount} from "svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/i18n";
     import type PagingDataManager from "$lib/common/PagingDataManager";
     import FilterPanel from "@ticatec/uniface-filter-panel";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import type {PageInitialize} from "$lib/common";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
-    import langRes from "$lib/i18n_resources/en_res";
-    import uniAppCtx from "$lib/common/uniAppCtx";
     import DataTableBoard from "$lib/data-table";
     import CommonPage from "../../common/CommonPage.svelte";
+    import i18nRes from "$lib/i18nRes";
+    import utils from "$lib/common/utils";
 
 
     export let indicatorColumn: IndicatorColumn;
@@ -31,6 +30,7 @@
     export let criteria: any;
     export let rowHeight: number = null as unknown as number;
 
+
     export let busyIndicator: string | null = null;
     export let page$attrs: PageAttrs;
     export let roundTable: boolean = false;
@@ -40,13 +40,12 @@
     export let advancedTitle: string | undefined = undefined;
 
     export let emptyIndicator: string | undefined = undefined;
-    ;
 
-    const doSearch = async (reset: boolean = false): Promise<void> => {
+    export const doSearch = async (reset: boolean = false): Promise<void> => {
         if (reset) {
             criteria = dataManager.resetCriteria();
         }
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.search(criteria);
             showResult();
@@ -77,7 +76,7 @@
      * @param page
      */
     const onPageChange: OnPageChange = async (page: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.setPageNo(page);
             showResult();
@@ -91,7 +90,7 @@
      * @param rows
      */
     let onRowCountChanged: OnRowCountChanged = async (rows: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -104,7 +103,7 @@
     let error: any;
 
     onMount(async () => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await initializeData?.();
             await dataManager.search(criteria);
@@ -118,7 +117,6 @@
         }
     })
 
-    console.log("sidebar - mp", $$slots['listpage-sidebar'])
 </script>
 {#if loaded}
     {#if error}
@@ -134,8 +132,8 @@
                 </FilterPanel>
                 <div slot="footer"
                      style="width: 100%; padding: 8px 12px; box-sizing: border-box; flex: 0 0 auto; border-top: 1px solid var(--uniface-page-divid-color, #F0F0F0)">
-                    <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={uniAppCtx.generateInfo}
-                                     rowCountLabel={uniAppCtx.rowCountLabel}/>
+                    <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={utils.generateInfo}
+                                     rowCountLabel={i18nRes.app.rowCountLabel}/>
                 </div>
             </DataTableBoard>
         </CommonPage>

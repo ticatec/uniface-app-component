@@ -4,6 +4,7 @@
     import ToastBoard from "@ticatec/uniface-element/ToastBoard";
     import DialogBoard from "@ticatec/uniface-element/DialogBoard";
     import IndicatorBoard from "@ticatec/uniface-element/IndicatorBoard";
+    import PopupHint from "@ticatec/uniface-element/PopupHint";
     import {onMount, tick} from "svelte";
     import ModuleHome from "$lib/module/ModuleHome.svelte";
     import type {PageLoader} from "$lib/module";
@@ -39,10 +40,11 @@
 
         </ModuleHome>
     {/if}
-    <IndicatorBoard/>
     <DialogBoard/>
-    <ToastBoard/>
     <MessageBoxBoard/>
+    <PopupHint/>
+    <ToastBoard/>
+    <IndicatorBoard/>
 {:else }
     <NotInFramePage/>
 {/if}

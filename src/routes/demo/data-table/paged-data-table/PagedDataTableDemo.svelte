@@ -1,15 +1,15 @@
 <script lang="ts">
 
     import PagedDataTablePage from "$lib/data-table/PagingListPage.svelte";
-    import utils from "@ticatec/uniface-element/utils";
     import CriteriaFilterPanel from "./CriteriaFilterPanel.svelte";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
-    import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element";
+    import type {ActionsColumn, IndicatorColumn, RowAction} from "@ticatec/uniface-element/DataTable";
     import columns from "../managed-paged-table/TenantColumns";
     import TenantManager from "../../cards/managed-paged-cards/TenantManager";
     import {onMount} from "svelte";
     import i18n from "@ticatec/i18n";
-    import langRes from "$lib/i18n_resources/en_res";
+    import langRes from "$lib/i18nRes/en_res";
+    import i18nRes from "$lib/i18nRes/i18nRes";
 
 
     const dataManager = new TenantManager();
@@ -32,7 +32,6 @@
     }
 
     const actionsColumn: ActionsColumn = {
-        title: '操作',
         width: 150,
         getActions: (item: any): Array<RowAction> => {
             return []
@@ -40,7 +39,7 @@
     }
 
     const onRowCountChanged = async (rows: number) => {
-        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(i18nRes.app.busyIndicator);
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -50,7 +49,7 @@
     }
 
     const onPageChange = async (no: number) => {
-        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(i18nRes.app.busyIndicator);
         try {
             await dataManager.setPageNo(no);
             showResult();
@@ -66,7 +65,7 @@
             criteria = dataManager.resetCriteria();
         }
         console.log('查询条件', criteria, reset)
-        window.Indicator.show(i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(i18nRes.app.busyIndicator);
         try {
             await dataManager.search(criteria);
             showResult();

@@ -4,16 +4,17 @@
 <script lang="ts">
 
     import ListPage from "$lib/data-table/ListPage.svelte";
-    import type {ActionsColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
-    import type {DataColumn} from "@ticatec/uniface-element";
+    import type {MouseClickHandler} from "@ticatec/uniface-element/types";
+    import type {FunFilter} from "@ticatec/uniface-element/ListBox";
+
+    import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element/DataTable";
     import {FullListDataManager} from "@ticatec/app-data-manager";
     import {onMount} from "svelte";
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {FullListDataService} from "@ticatec/app-data-service";
-    import i18n from "@ticatec/i18n";
-    import langRes from "$lib/i18n_resources/en_res";
     import type {PageInitialize} from "$lib/common";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
+    import i18nRes from "$lib/i18nRes";
 
     export let dataManager: FullListDataManager<FullListDataService>;
     export let initializeData: PageInitialize | null = null;
@@ -31,7 +32,7 @@
     export let roundTable: boolean = false;
     export let canBeClosed: boolean = false;
     export let emptyIndicator: string | undefined = undefined;
-
+    export let placeholder: string = '';
     let loaded: boolean = false;
     let error: any;
 
@@ -46,7 +47,7 @@
     }
 
     onMount(async () => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await initializeData?.();
             await dataManager.loadData(queryParams);
@@ -71,8 +72,10 @@
     {#if error}
         <ModuleErrorPage {error} {canBeClosed}/>
     {:else }
-        <ListPage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable} {canBeClosed} {emptyIndicator}
-                  {indicatorColumn} {columns} {actionsColumn} bind:selectedRows {list} {onRefreshClick}/>
+        <ListPage {onCreateNewClick} {filterFun} {page$attrs} {rowHeight} {roundTable} {canBeClosed} {emptyIndicator} {placeholder}
+                  {indicatorColumn} {columns} {actionsColumn} bind:selectedRows {list} {onRefreshClick}>
+            <slot name="sidebar" slot="sidebar"/>
+        </ListPage>
 
     {/if}
 {/if}

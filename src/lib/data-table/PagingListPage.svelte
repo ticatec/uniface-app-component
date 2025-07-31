@@ -3,16 +3,17 @@
 -->
 <script lang="ts">
 
-    import DataTable from "@ticatec/uniface-element/DataTable";
+
     import type {OnPageChange, OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
     import PaginationPanel from "@ticatec/uniface-element/PaginationPanel";
-    import Box from "@ticatec/uniface-element/Box";
-    import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element";
+    import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element/DataTable";
     import type PageAttrs from "$lib/common/PageAttrs";
     import uniAppCtx from "$lib/common/uniAppCtx";
     import {onMount} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
     import DataTableBoard from "$lib/data-table/DataTableBoard.svelte";
+    import utils from "$lib/common/utils";
+    import i18nRes from "$lib/i18nRes";
 
     export let indicatorColumn: IndicatorColumn;
     export let columns: Array<DataColumn>;
@@ -42,8 +43,8 @@
     <DataTableBoard {list} {rowHeight} {indicatorColumn} {columns} {actionsColumn} {roundTable} bind:selectedRows {emptyIndicator}>
         <slot name="search-panel" slot="header"/>
         <div slot="footer" style="width: 100%; padding: 8px 12px; box-sizing: border-box; flex: 0 0 auto; border-top: 1px solid var(--uniface-page-divid-color, #F0F0F0)">
-            <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={uniAppCtx.generateInfo}
-                             rowCountLabel={uniAppCtx.rowCountLabel}/>
+            <PaginationPanel {pageCount} {pageNo} {total} {onRowCountChanged} {onPageChange} generateInfo={utils.generateInfo}
+                             rowCountLabel={i18nRes.app.rowCountLabel}/>
         </div>
     </DataTableBoard>
 </CommonPage>

@@ -1,7 +1,6 @@
 <script lang="ts">
 
     import type PageAttrs from "$lib/common/PageAttrs";
-    import i18n from "@ticatec/i18n";
     import {onMount} from "svelte";
     import PagingListPage from "$lib/cards/PagingListPage.svelte";
     import type PagingDataManager from "$lib/common/PagingDataManager";
@@ -10,7 +9,7 @@
     import FilterPanel from "@ticatec/uniface-filter-panel";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
-    import langRes from "$lib/i18n_resources/en_res";
+    import i18nRes from "$lib/i18nRes";
 
     export let page$attrs: PageAttrs;
     export let initializeData: PageInitialize | null = null;
@@ -29,7 +28,7 @@
         if (reset) {
             criteria = dataManager.resetCriteria();
         }
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.search(criteria);
             showResult();
@@ -61,7 +60,7 @@
      * @param page
      */
     const onPageChange: OnPageChange = async (page: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.setPageNo(page);
             showResult();
@@ -75,7 +74,7 @@
      * @param rows
      */
     let onRowCountChanged: OnRowCountChanged = async (rows: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -88,7 +87,7 @@
     let loaded: boolean = false;
 
     onMount(async () => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await initializeData?.();
             await dataManager.search(criteria);
@@ -106,7 +105,7 @@
 
 {#if loaded}
     {#if error}
-        <ModuleErrorPage {error} {canBeClosed}/>
+        <ModuleErrorPage {error}/>
     {:else }
         <PagingListPage {total} {pageNo} {pageCount} {page$attrs} {gap} {list} {onPageChange} {onRowCountChanged} {canBeClosed} {render}>
             <FilterPanel slot="search-panel" {actions} resetClickHandler={()=>{doSearch(true)}} searchClickHandler={()=>doSearch()}

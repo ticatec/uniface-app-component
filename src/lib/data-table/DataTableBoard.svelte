@@ -1,7 +1,8 @@
 <script lang="ts">
 
 
-    import type {ActionsColumn, DataColumn, FunFilter, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
+    import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element/DataTable";
+    import type {FunFilter} from "@ticatec/uniface-element/ListBox";
     import Box from "@ticatec/uniface-element/Box";
     import DataTable from "@ticatec/uniface-element/DataTable";
     import utils from "@ticatec/uniface-element/utils";

@@ -1,13 +1,12 @@
 <script lang="ts">
 
-    import type {FunFilter} from "@ticatec/uniface-element";
+    import type {FunFilter} from "@ticatec/uniface-element/ListBox";
     import utils from "@ticatec/uniface-element/utils";
-    import i18n from "@ticatec/i18n";
     import {onMount, tick} from "svelte";
-    import langRes from "../i18n_resources/en_res"
+    import i18nRes from "$lib/i18nRes";
 
 
-    export let gap: number = 8;
+    export let gap: number = 12;
     export let list: Array<any> = [];
     export let filterFun: FunFilter | null = null;
     export let render: any;
@@ -72,7 +71,7 @@
             <div style="position:relative; height: 100%; width: 100%">
                 <div style="position:relative; top: 50%; transform: translateY(-50%);">
                     <div style="width: fit-content; margin: 0 auto; font-size: 15px">
-                        <span>{i18n.getText('uniface.app.emptyFiltered', langRes.uniface.app.emptyFiltered)}</span>
+                        <span>{i18nRes.app.emptyFiltered}</span>
                     </div>
                 </div>
             </div>

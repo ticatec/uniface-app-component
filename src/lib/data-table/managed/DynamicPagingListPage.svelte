@@ -4,19 +4,18 @@
 <script lang="ts">
 
     import PagingListPage from "$lib/data-table/PagingListPage.svelte";
-    import type {ActionsColumn, IndicatorColumn, MouseClickHandler} from "@ticatec/uniface-element";
-    import type {DataColumn} from "@ticatec/uniface-element";
+    import type {ActionsColumn, IndicatorColumn, DataColumn} from "@ticatec/uniface-element/DataTable";
+    import type {MouseClickHandler} from "@ticatec/uniface-element/types";
     import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
     import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
     import type PageAttrs from "$lib/common/PageAttrs";
     import type {ButtonActions} from "@ticatec/uniface-element/ActionBar";
     import type PagingDataManager from "$lib/common/PagingDataManager";
     import type {PageInitialize} from "$lib/common";
-    import i18n from "@ticatec/i18n";
-    import langRes from "$lib/i18n_resources/en_res";
     import type {OnPageChange, OnRowCountChanged} from "@ticatec/uniface-element/PaginationPanel";
     import {onMount} from "svelte";
     import ModuleErrorPage from "$lib/common/ModuleErrorPage.svelte";
+    import i18nRes from "$lib/i18nRes";
 
     export let dataManager: PagingDataManager;
     export let criteria: any;
@@ -52,7 +51,7 @@
         if (reset) {
             criteria = dataManager.resetCriteria();
         }
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.search(criteria);
             showResult();
@@ -83,7 +82,7 @@
      * @param page
      */
     const onPageChange: OnPageChange = async (page: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.setPageNo(page);
             showResult();
@@ -97,7 +96,7 @@
      * @param rows
      */
     let onRowCountChanged: OnRowCountChanged = async (rows: number) => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await dataManager.setRowsPage(rows);
             showResult();
@@ -110,7 +109,7 @@
     let error: any;
 
     onMount(async () => {
-        window.Indicator.show(busyIndicator ?? i18n.getText('uniface.app.busyIndicator', langRes.uniface.app.busyIndicator));
+        window.Indicator.show(busyIndicator ?? i18nRes.app.busyIndicator);
         try {
             await initializeData?.();
             await dataManager.search(criteria);
@@ -137,7 +136,7 @@
 
 {#if loaded}
     {#if error}
-        <ModuleErrorPage {error} {canBeClosed}/>
+        <ModuleErrorPage {error}/>
     {:else }
         <PagingListPage bind:list bind:selectedRows {page$attrs} {roundTable} {total} {pageNo} {onRowCountChanged} {onPageChange} {canBeClosed}
                         {pageCount} {actionsColumn} {rowHeight} {indicatorColumn} {columns} {emptyIndicator}>

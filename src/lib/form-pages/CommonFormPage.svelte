@@ -8,6 +8,7 @@
     import CommonPage from "$lib/common/CommonPage.svelte";
     import type {CloseConfirm} from "$lib/common/CloseConfirm";
     import {cn_resource} from "@ticatec/uniface-element/i18n_resources"
+    import i18nRes from "$lib/i18nRes/i18nRes";
 
     export let page$attrs: PageAttrs;
 
@@ -24,7 +25,7 @@
     let page: any;
 
     const btnClose: ButtonAction = {
-        label: i18n.getText('uniface.btnClose', cn_resource.uniface.btnClose), type: closeType, handler: () => {
+        label: i18nRes.app.btnClose, type: closeType, handler: () => {
             page.closePage();
         }
     }

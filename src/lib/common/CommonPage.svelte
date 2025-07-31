@@ -6,22 +6,22 @@
     import type PageAttrs from "$lib/common/PageAttrs";
     import AppModule from "../module/AppModule";
     import type {CloseConfirm} from "$lib/common/CloseConfirm";
-    import SidebarLayout from "@ticatec/uniface-element/app-layout/SidebarLayout";
 
     export let page$attrs: PageAttrs;
     export let content$style: string = '';
     export let canBeClosed: boolean;
     export let closeConfirm: CloseConfirm | null = null;
+    export let reload: any = null;
 
-    export const closePage = async (event: MouseEvent) => {
+    export const closePage = async () => {
         if (closeConfirm == null || await closeConfirm()) {
             AppModule.closeActivePage();
         }
     }
-    console.log("page-sidebar", $$slots['sidebar'])
+
 </script>
 
-<Page round={uniAppCtx.roundPage} shadow={uniAppCtx.shadowPage} title={page$attrs.title??'Title'} comment={page$attrs?.comment}
+<Page round={uniAppCtx.roundPage} {reload} shadow={uniAppCtx.shadowPage} title={page$attrs.title??'Title'} comment={page$attrs?.comment} goBack={ canBeClosed ? closePage : null}
       style={page$attrs?.style??''} content$style="width: 100; height: 100%; box-sizing: border-box; display: flex; flex-direction: row">
     {#if $$slots['sidebar']}
         <div style="height: 100%; flex: 0 0 auto; overflow: hidden;">
@@ -36,10 +36,5 @@
         <slot name="header-ext">
 
         </slot>
-        {#if canBeClosed}
-            <div style="flex: 0 0 auto; padding-left: 12px">
-                <i class="icon_google_clear page-action-button" aria-hidden="true" on:click={closePage}></i>
-            </div>
-        {/if}
     </div>
 </Page>
