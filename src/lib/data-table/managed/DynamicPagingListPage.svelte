@@ -5,7 +5,6 @@
 
     import PagingListPage from "$lib/data-table/PagingListPage.svelte";
     import type {ActionsColumn, IndicatorColumn, DataColumn} from "@ticatec/uniface-element/DataTable";
-    import type {MouseClickHandler} from "@ticatec/uniface-element/types";
     import DynamicFilterPanel from "@ticatec/uniface-filter-panel/DynamicFilterPanel";
     import type {MetaCriteriaField} from "@ticatec/uniface-filter-panel";
     import type PageAttrs from "$lib/common/PageAttrs";

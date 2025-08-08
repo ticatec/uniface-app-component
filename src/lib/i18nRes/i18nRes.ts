@@ -11,8 +11,8 @@ const langRes = {
         moduleError: "Can't load the module.",
         pageNotInFrame: "Can't show the page which is not in iframe.",
         indicatorInitialing: "Loading module...",
-        paginationInfo: "<span>#<b>{{pageNo}} / {{pageCount}}</b> Total: <b>{{total}}</b> records.</span>",
-        rowCountLabel: "rows/page"
+        paginationInfo: "Total: <b>{{total}}</b> record(s).</span>",
+        rowCountLabel: "records per page"
     }
 }
 

@@ -8,7 +8,6 @@
     import PaginationPanel from "@ticatec/uniface-element/PaginationPanel";
     import type {ActionsColumn, DataColumn, IndicatorColumn} from "@ticatec/uniface-element/DataTable";
     import type PageAttrs from "$lib/common/PageAttrs";
-    import uniAppCtx from "$lib/common/uniAppCtx";
     import {onMount} from "svelte";
     import CommonPage from "$lib/common/CommonPage.svelte";
     import DataTableBoard from "$lib/data-table/DataTableBoard.svelte";

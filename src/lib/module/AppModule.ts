@@ -29,7 +29,7 @@ export default class AppModule {
      * @param params
      */
     append(component: any, params?: any): string {
-        let page: ModulePage = {id: `${new Date().getTime().toString(36)}`, component, params};
+        let page: ModulePage = {id: crypto.randomUUID(), component, params};
         this.list.push(page);
         this.onPageChange?.(this.list);
         return page.id;

@@ -1,92 +1,117 @@
-# Uniface应用和页面模版组件库
+# @ticatec/uniface-app-component
 
-Uniface 组件库是一套基于 Svelte 5 和 Uniface Element 的前端 UI 组合件库，专注于 **微前端应用管理**、**数据展示** 和 **表单管理**，提供高效、灵活的 UI 解决方案。
+[![NPM Version](https://img.shields.io/npm/v/@ticatec/uniface-app-component.svg)](https://www.npmjs.com/package/@ticatec/uniface-app-component)
+[![License](https://img.shields.io/npm/l/@ticatec/uniface-app-component.svg)](LICENSE)
 
+[English Document](./README.md)
 
-## **核心功能**
-### 1. **微前端应用管理**
-Uniface 提供 **微前端应用模块管理**，支持动态加载、路由管理、`iframe` 运行检测等特性，适用于 SaaS 平台或大型 Web 应用的独立模块开发。
+一个功能强大的 Svelte 组件库，旨在加速数据驱动、模块化 Web 应用的开发。它基于 Svelte 5 和 Ticatec Uniface 生态系统构建，为常见的企业级应用场景提供了高级的、面向应用的组件。
 
-#### **主要组件**
-- **`AppModule`**：管理微前端应用的模块页面，支持动态加载和页面监听。[详细文件](./document/AppModule_CN)
-- **`HomePage`**：用于 `iframe` 环境的微前端模块主页，支持路由和模块初始化。[详细文档](./document/HomePage_CN)
+该库是构建以下类型应用的理想选择：
+- 微前端模块
+- 数据密集型管理后台
+- 复杂的数据表格和列表
+- 全页式数据录入表单
 
----
+## 核心功能
 
-### 2. I18N关键字
-本模版组件库支持I18N，使用前请根据应用的语言配置语言资源库，相关信息请查看uniface element中的I18N小节。
+- **🚀 应用级组件**: 提供面向页面的高级抽象和数据管理方案，而不仅仅是基础 UI 元素。
+- **📦 模块化架构**: 通过 `AppModule` 内置了对微前端架构的支持，实现了模块的隔离开发和部署。
+- **📊 强大的数据视图**: 提供精密的 `DataTable` 和 `CardList` 数据展示组件，并原生支持：
+    - 分页功能（客户端与服务端）
+    - “托管”模式，自动处理数据获取和状态管理。
+    - 动态过滤与搜索。
+- **📋 灵活的表单**: 标准化的 `CommonFormPage` 组件，用于创建布局和行为一致的全页式表单。
+- **🌐 国际化 (i18n)**: 核心组件内置了对多语言的支持。
+- **🎨 Ticatec 生态系统**: 与 `@ticatec/uniface-element` 及其他 Ticatec 数据管理库无缝集成。
 
-|名称| 说明               | 默认值                                                                                    |
-|-----|------------------|----------------------------------------------------------------------------------------|
-|uniface.app.busyIndicator| 数据读取的信息指示        | Loading data...                                                                        |
-|uniface.app.btnNew| 新增按钮             | New                                                                                    |
-|uniface.app.btnRefresh| 刷新按钮文字           | Refresh                                                                                |
-|uniface.app.btnClose| 关闭按钮文字           | Close                                                                                  |
-|uniface.app.emptyFiltered| 全量数据设置过滤后没有匹配的数据 | There is no data that meets the filter criteria. Please set the filter criteria again. |
-|uniface.app.emptyDataSet| 分页查询没有符合条件的数据    | There is no data that meets the search criteria. Please set the search criteria again. |
-|uniface.app.indicatorInitialing| 模块初始化            |  Loading module...                                                                                      |
+## 安装
 
----
+使用你喜欢的包管理器安装本包及其对等依赖：
 
-### 3. **数据集合展示**
-Uniface 提供多种 **数据展示组件**，支持 **卡片视图** 和 **表格视图**，同时支持 **全量数据** 与 **分页查询数据**，并结合 `DataManager` 进行数据自动管理。
+```bash
+npm install @ticatec/uniface-app-component @ticatec/uniface-element svelte
+```
 
-#### **展示方式**
-- **卡片方式**：
-    - 全量数据卡片展示 [详细文档](./document/CardsPage_CN)
-    - 分页查询数据卡片展示 [详细文档](./document/PagedCardsPage_CN)
-    - 托管全量数据卡片展示 [详细文档](./document/ManagedCardsPage_CN)
-    - 托管分页查询数据卡片展示 [详细文档](./document/ManagedPagedCardsPage_CN)
-- **表格方式**：
-    - 全量数据表格展示 [详细文档](./document/DataListTablePage_CN)
-    - 分页查询数据表格展示 [详细文档](./document/PagedDataTablePage_CN)
-    - 托管全量数据表格展示 [详细文档](./document/ManagedDataTablePage_CN)
-    - 托管分页查询数据表格展示 [详细文档](./document/ManagedPagedDataTablePage_CN)
-    - 托管动态条件分页查询数据表格展示 [详细文档](./)
----
+你还需要在你的主应用文件中引入组件的样式表。
 
-### 4. **表单录入管理**
-Uniface 提供 **表单管理组件**，适用于 **大屏表单输入**，支持 **页面级表单** 以及 **操作按钮管理**。
-[详细文档](./document/CommonFormPage_CN)
-#### **主要组件**
-- **`CommonFormPage`**：全页面表单录入组件，支持：
-    - 自适应滚动表单区域
-    - 操作按钮栏（可配置 `ActionBar`）
-    - 关闭按钮与关闭前确认机制
-    - 页面属性传递 (`PageAttrs`)
+```ts
+// src/main.ts
+import "@ticatec/uniface-app-component/uniface-app-component.css";
+```
 
----
+## 快速上手
 
-## **依赖与适用场景**
-### **依赖组件**
-- `@ticatec/uniface-icons`
-- `@ticatec/app-data-manager`
-- `@ticatec/app-data-service`
-- `@ticatec/uniface-element`
-- `@ticatec/uniface-filter-panel`
+以下示例将演示如何创建一个从远程 API 获取数据的“托管”模式分页数据表格。
 
-### **适用场景**
-- **微前端架构**：支持 `iframe` 运行环境，适用于 SaaS 平台或大型 Web 应用。
-- **动态数据展示**：支持全量数据、分页查询，适用于数据密集型应用。
-- **复杂表单管理**：适用于多步骤、长表单的管理应用。
+1.  **定义你的数据服务和列配置:**
 
+    ```ts
+    // src/routes/demo/paged-table/TenantService.ts
+    import { PagedDataService } from '@ticatec/app-data-service';
 
-## 贡献
+    export class TenantService extends PagedDataService<any> {
+        constructor() {
+            // 定义获取分页数据的 URL
+            super('/api/tenants');
+        }
+    }
 
-欢迎提交 issue 和 pull request。
+    // src/routes/demo/paged-table/TenantColumns.ts
+    export const tenantColumns = [
+        { key: 'name', label: '租户名称' },
+        { key: 'email', label: '联系邮箱' },
+        { key: 'status', label: '状态' }
+    ];
+    ```
 
-## 版权信息
+2.  **在你的 Svelte 页面中使用 `PagingListPage` 组件:**
 
-Copyright © 2023 Ticatec。保留所有权利。
+    ```svelte
+    <!-- src/routes/demo/paged-table/+page.svelte -->
+    <script lang="ts">
+        import PagingListPage from '@ticatec/uniface-app-component/data-table/managed/PagingListPage.svelte';
+        import { TenantService } from './TenantService';
+        import { tenantColumns } from './TenantColumns';
 
-本类库遵循 MIT 许可证发布。有关许可证的详细信息，请参阅 [LICENSE](LICENSE) 文件。
+        const tenantService = new TenantService();
+    </script>
 
-## 联系方式
+    <PagingListPage
+        title="托管租户列表"
+        service={tenantService}
+        columns={tenantColumns}
+        let:row
+    >
+        <!-- 这个插槽定义了每一行的渲染方式 -->
+        <tr class="hover">
+            <td>{row.name}</td>
+            <td>{row.email}</td>
+            <td>{row.status}</td>
+        </tr>
+    </PagingListPage>
+    ```
 
-huili.f@gmail.com
+这个简单的示例就创建了一个功能齐全的数据表格，它自带分页、数据获取、加载提示和错误处理等功能——而你只需要编写很少的代码。
 
-https://github.com/henryfeng/filter-panel
+## 开发
 
+这是一个 SvelteKit 库项目。要开始开发，请克隆本仓库并运行以下命令：
 
+```bash
+# 安装依赖
+npm install
 
+# 启动支持实时刷新的开发服务器
+npm run dev
 
+# 构建用于发布的库文件
+npm run build
+
+# 运行类型检查
+npm run check
+```
+
+## 许可证
+
+本项目基于 MIT 许可证授权。详情请参阅 [LICENSE](LICENSE) 文件。
