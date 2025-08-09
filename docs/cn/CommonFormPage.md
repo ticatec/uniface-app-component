@@ -1,67 +1,86 @@
 # CommonFormPage (通用表单页面)
 
-`CommonFormPage.svelte` 组件为全页式表单提供了一个标准化的布局。它旨在确保在您的整个应用中，数据录入任务都能拥有一致的用户体验。
+`CommonFormPage.svelte` 组件为全页式表单提供了一个标准化的布局。它基于 `CommonPage` 构建，并提供了表单专用的操作栏和关闭确认功能。
 
 ## 设计目的
 
 您可以使用此组件来包裹您的表单内容。它原生提供了一些关键功能：
 
--   **一致的布局**: 包含一个用于标题的专用页眉、一个可滚动的主内容区域，以及一个固定在底部的操作栏。
--   **操作栏 (Action Bar)**: 一个简洁、固定的操作栏，用于放置“保存”、“提交”或“取消”等操作按钮。
--   **关闭前确认**: 内置的可选功能，当用户试图关闭一个“脏”（已修改）的表单时，会弹出确认对话框，以防止意外丢失数据。
--   **易于集成**: 与标准的 HTML `<form>` 元素和 Svelte 的表单处理能力无缝协作。
+-   **一致的布局**: 使用 `CommonPage` 提供的标准页面布局，包含标题栏和可滚动的主内容区域
+-   **内置操作栏 (Action Bar)**: 自动在页面顶部显示操作按钮，包含您定义的自定义按钮和可选的关闭按钮
+-   **关闭前确认**: 内置的可选功能，当用户试图关闭表单时，会调用确认函数以防止意外丢失数据
+-   **易于集成**: 与标准的 HTML `<form>` 元素和 Svelte 的表单处理能力无缝协作
 
 ## 如何使用
 
-将您的表单元素包裹在 `CommonFormPage` 组件内。使用 `header` 和 `actions` 插槽来放置您的标题和按钮。
+将您的表单元素包裹在 `CommonFormPage` 组件内，并通过 `page$attrs` 设置页面标题和其他属性。
 
 ```svelte
 <script lang="ts">
     import CommonFormPage from '@ticatec/uniface-app-component/form-pages/CommonFormPage.svelte';
-    import { CloseConfirm } from '@ticatec/uniface-app-component/common';
-    import Button from '@ticatec/uniface-element/Button.svelte';
+    import type { ButtonActions } from '@ticatec/uniface-element/ActionBar';
 
     let name = '';
     let email = '';
     let isDirty = false;
 
-    // 一个简单的“脏”检查
+    // 一个简单的"脏"检查
     $: isDirty = name !== '' || email !== '';
+
+    // 页面属性
+    let page$attrs = {
+        title: "创建新用户",
+        comment: "填写用户基本信息"
+    };
+
+    // 定义操作按钮
+    const actions: ButtonActions = [
+        {
+            label: '保存用户',
+            type: 'primary',
+            handler: handleSave
+        },
+        {
+            label: '重置',
+            type: 'secondary', 
+            handler: handleReset
+        }
+    ];
 
     function handleSave() {
         // 实现保存逻辑
         console.log('正在保存:', { name, email });
-        isDirty = false; // 保存后重置“脏”状态
+        isDirty = false; // 保存后重置"脏"状态
     }
 
-    function handleClose() {
-        // 实现关闭逻辑 (例如，导航到其他页面)
-        console.log('正在关闭页面');
+    function handleReset() {
+        name = '';
+        email = '';
+        isDirty = false;
     }
 
     // 设置关闭前确认
-    const closeConfirm = new CloseConfirm({
-        isDirty: () => isDirty,
-        onClose: handleClose
-    });
+    const closeConfirm = async (): Promise<boolean> => {
+        if (isDirty) {
+            return confirm('您有未保存的更改，确定要关闭吗？');
+        }
+        return true;
+    };
 </script>
 
-<CommonFormPage {closeConfirm}>
-    <div slot="header">
-        <h2>创建新用户</h2>
-    </div>
-
+<CommonFormPage 
+    {page$attrs} 
+    {actions} 
+    {closeConfirm}
+    canBeClosed={true}
+    closeType="secondary"
+>
     <div class="form-content">
         <label for="name">名称</label>
         <input type="text" id="name" bind:value={name} />
 
         <label for="email">邮箱</label>
         <input type="email" id="email" bind:value={email} />
-    </div>
-
-    <div slot="actions">
-        <Button on:click={handleSave} style="primary">保存用户</Button>
-        <Button on:click={closeConfirm.tryClose}>关闭</Button>
     </div>
 </CommonFormPage>
 
@@ -76,21 +95,44 @@
 
 ## 组件属性 (Props)
 
--   `closeConfirm?: CloseConfirm`: `CloseConfirm` 辅助类的实例。如果提供此属性，将启用“您确定要关闭吗？”的功能。
--   `showActionBar?: boolean`: 是否显示底部的操作栏。默认为 `true`。
--   `showCloseButton?: boolean`: 是否在操作栏中显示默认的关闭按钮。默认为 `true`。
+-   `page$attrs: PageAttrs`: 页面属性，包含标题和其他页面级设置。**(必需)**
+-   `closeConfirm?: CloseConfirm | null`: 关闭确认函数。当用户试图关闭页面时调用，返回 `Promise<boolean>` 以确定是否允许关闭。默认为 `null`。
+-   `canBeClosed?: boolean`: 是否可以关闭页面。如果为 `true`，将在操作栏中显示关闭按钮。默认为 `true`。
+-   `closeType?: ButtonType`: 关闭按钮的类型（如 'primary', 'secondary'）。默认为 `'primary'`。
+-   `actions?: ButtonActions`: 要在操作栏中显示的自定义操作按钮数组。默认为空数组。
 
 ## 插槽 (Slots)
 
--   `header`: 在此放置标题或页眉内容 (例如, `<h2>我的表单</h2>`)。
--   `default`: 表单的主要内容 (例如, 输入字段、标签)。
--   `actions`: 在此放置您的操作按钮。它们将显示在底部的操作栏中。
+-   `default`: 表单的主要内容（例如，输入字段、标签）。这些内容将显示在带有滚动功能的主内容区域中。
 
-## `CloseConfirm` 辅助类
+## CloseConfirm 类型
 
-`CloseConfirm` 类用于管理“关闭前确认”的工作流程。
+`CloseConfirm` 是一个异步函数类型，用于处理关闭确认逻辑：
 
-`new CloseConfirm({ isDirty: () => boolean, onClose: () => void })`
+```ts
+type CloseConfirm = () => Promise<boolean>
+```
 
--   `isDirty`: 一个函数，如果表单有未保存的更改，则返回 `true`，否则返回 `false`。每当尝试关闭时都会调用此函数。
--   `onClose`: 一个函数，在用户确认关闭或表单并非“脏”状态时执行，用于处理实际的关闭逻辑（例如，导航到另一个页面）。
+-   **返回值**: 返回 `Promise<boolean>`，其中 `true` 表示允许关闭，`false` 表示取消关闭
+-   **用途**: 在用户试图关闭页面时调用，用于检查是否有未保存的更改并提示用户确认
+
+## PageAttrs 接口
+
+页面属性接口定义：
+
+```ts
+interface PageAttrs {
+    title: string;        // 页面标题（必需）
+    comment?: string;     // 标题注解（可选）
+    style?: string;       // 自定义CSS样式（可选）
+}
+```
+
+## 功能特性
+
+-   基于 `CommonPage` 的标准页面布局
+-   内置 `ActionBar` 组件用于显示操作按钮
+-   自动管理关闭按钮的显示和行为
+-   支持异步关闭确认机制
+-   可滚动的内容区域，适合长表单
+-   与现有的页面系统集成良好
