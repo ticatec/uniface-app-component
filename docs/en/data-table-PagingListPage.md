@@ -15,15 +15,26 @@ Use this component when you need full control over how and when data is fetched.
 
 You manually create a `PagingDataManager` instance, orchestrate the API calls, and feed the results back into the manager. The `PagingListPage` component simply renders the state of the manager.
 
-1.  **Create and manage a `PagingDataManager` in your page's script.**
+1.  **Prepare your data and columns**
 
     ```ts
+    import type { DataColumn } from "@ticatec/uniface-element";
     import { PagingDataManager } from '@ticatec/app-data-manager';
     import { onMount } from 'svelte';
 
-    const columns = [
-        { key: 'name', label: 'Tenant Name' },
-        { key: 'email', label: 'Contact Email' }
+    const columns: Array<DataColumn> = [
+        {
+            text: 'Tenant Name',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: 'Contact Email',
+            field: 'email',
+            width: 250,
+            resizable: true
+        }
     ];
 
     // 1. Create the manager instance.
@@ -68,25 +79,58 @@ You manually create a `PagingDataManager` instance, orchestrate the API calls, a
     <script lang="ts">
         // ... (script from above)
         import PagingListPage from '@ticatec/uniface-app-component/data-table/PagingListPage.svelte';
+
+        let page$attrs = {
+            title: "Unmanaged Tenants"
+        };
+
+        // Optional action button handlers
+        const onCreateNewClick = () => {
+            // Logic for creating new items
+        };
+
+        const onRefreshClick = () => {
+            fetchData(manager.pageNo, manager.pageSize);
+        };
     </script>
 
     <PagingListPage
-        title="Unmanaged Tenants"
-        dataManager={manager}
+        {page$attrs}
+        list={manager.pagedData.data}
         {columns}
-        let:row
-    >
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-        </tr>
-    </PagingListPage>
+        {onCreateNewClick}
+        {onRefreshClick}
+        rowHeight={48}
+        canBeClosed={false}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `dataManager: PagingDataManager`: An instance of your manually controlled data manager. **(Required)**
--   `columns: any[]`: An array of column definitions passed to the underlying `DataTable`. **(Required)**
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showPagingBar?: boolean`: Whether to show the bottom pagination bar. Defaults to `true`.
+-   `page$attrs: PageAttrs`: Page attributes containing title and other page-level settings. **(Required)**
+-   `list: Array<any>`: The array of data items to display in the table. **(Required)**
+-   `columns: Array<DataColumn>`: Array of column definition objects from @ticatec/uniface-element. **(Required)**
+-   `onCreateNewClick?: MouseClickHandler`: Handler for the "Create New" button.
+-   `onRefreshClick?: MouseClickHandler`: Handler for the refresh button.
+-   `indicatorColumn?: IndicatorColumn`: Configuration for selection indicators.
+-   `actionsColumn?: ActionsColumn`: Configuration for row action buttons.
+-   `selectedRows?: Array<any>`: Array to bind selected rows to.
+-   `rowHeight?: number`: Height of each row in pixels.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `roundTable?: boolean`: Whether to use rounded table corners. Defaults to `false`.
+-   `placeholder?: string`: Placeholder text for the search input.
+-   `emptyIndicator?: string`: Custom text for empty state.
+
+## Slots
+
+-   `sidebar`: Optional sidebar content.
+
+## Features
+
+-   Data display using @ticatec/uniface-element/DataTable
+-   Pagination controls and loading state management based on PagingDataManager
+-   Built-in filtering and search capabilities
+-   Support for row selection and actions
+-   Customizable action buttons (create new, refresh)
+-   Responsive design with filterable page bar
+-   Optional sidebar support

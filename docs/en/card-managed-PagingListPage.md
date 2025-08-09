@@ -15,63 +15,93 @@ Use this component when you need to display a large, paginated dataset as a seri
 
 The component is almost identical in usage to its data-table counterpart, relying on a service for data and a slot for rendering.
 
-1.  **Create a `PagedDataService`** (You can reuse the same service as the data table).
+1.  **Create a `PagingDataService`**
 
     ```ts
     // src/services/TenantService.ts
-    import { PagedDataService } from '@ticatec/app-data-service';
+    import { PagingDataService } from '@ticatec/app-data-service';
 
-    export class TenantService extends PagedDataService<any> {
+    export default class TenantService extends PagingDataService {
         constructor() {
             super('/api/tenants');
         }
     }
+
+    export const service = new TenantService();
     ```
 
-2.  **Use the Component in Your Page**
+2.  **Create a `PagedDataManager`**
 
-    Instead of `columns`, you pass your data to the `CardListBoard` component, and you have complete freedom to design your card within the slot.
+    ```ts
+    // src/managers/TenantManager.ts
+    import { PagedDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/TenantService';
+
+    export default class TenantManager extends PagedDataManager {
+        constructor() {
+            super(service, 'id');
+        }
+    }
+    ```
+
+3.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
-        import PagingListPage from '@ticatec/uniface-app-component/card/managed/PagingListPage.svelte';
-        import CardListBoard from '@ticatec/uniface-app-component/card/CardListBoard.svelte';
-        import { TenantService } from '../services/TenantService';
+        import PagingListPage from '@ticatec/uniface-app-component/cards/managed/PagingListPage.svelte';
+        import TenantManager from '../managers/TenantManager';
+        import TenantCard from './TenantCard.svelte'; // Your custom card component
 
-        // A simple card component for displaying a tenant
-        import TenantCard from './TenantCard.svelte';
+        const dataManager = new TenantManager();
 
-        const tenantService = new TenantService();
+        let page$attrs = {
+            title: "Managed Tenant Cards"
+        };
+
+        // Configure the render object to use your card component
+        let render = {
+            component: TenantCard,
+            props: {} // Any additional props to pass to the card
+        };
+
+        let criteria = {}; // Search criteria
     </script>
 
     <PagingListPage
-        title="Managed Tenant Cards"
-        service={tenantService}
-        let:pagedDataManager
+        {dataManager}
+        {page$attrs}
+        {render}
+        {criteria}
     >
-        <!--
-            The slot gives you access to the PagedDataManager instance.
-            You pass its `pagedData` to the CardListBoard.
-        -->
-        <CardListBoard
-            items={pagedDataManager.pagedData.data}
-            let:item
-        >
-            <!-- Render your custom card component for each item -->
-            <TenantCard tenant={item} />
-        </CardListBoard>
+        <!-- Optional search panel -->
+        <div slot="search-panel">
+            <!-- Your search form controls -->
+        </div>
     </PagingListPage>
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `service: PagedDataService`: An instance of your data service. **(Required)**
--   `pageNo?: number`: The initial page number to load (1-based). Defaults to `1`.
--   `pageSize?: number`: The number of items per page. Defaults to `10`.
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showPagingBar?: boolean`: Whether to show the bottom pagination bar. Defaults to `true`.
+-   `dataManager: PagedDataManager`: An instance of your data manager. **(Required)**
+-   `page$attrs: object`: Page attributes containing title and other page-level settings. **(Required)**
+-   `render: object`: Configuration object with `component` and `props` for rendering cards. **(Required)**
+-   `criteria: object`: Search criteria object that gets passed to the data manager. **(Required)**
+-   `gap?: number`: Gap between cards in pixels. Defaults to `8`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `actions?: ButtonActions`: Array of action buttons for the search panel.
 
-## Slot Properties
+## Slots
 
--   `let:pagedDataManager`: The instance of `PagingDataManager` that manages the component's state and data. You can access the loaded data via `pagedDataManager.pagedData.data`.
+-   `search-panel`: Optional slot for custom search form controls.
+-   `advanced-panel`: Optional slot for advanced search criteria.
+
+## Features
+
+-   Automatic data fetching using PagedDataManager
+-   Built-in pagination controls
+-   Server-side data loading and searching
+-   Loading and error state management  
+-   Flexible card-based layout with configurable gap
+-   Integrated search panel with FilterPanel
+-   Responsive design with action bars
+-   Automatic card rendering using the render configuration

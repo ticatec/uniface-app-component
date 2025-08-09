@@ -42,57 +42,99 @@ import "@ticatec/uniface-app-component/uniface-app-component.css";
 
 ## 快速上手
 
-以下示例将演示如何创建一个从远程 API 获取数据的“托管”模式分页数据表格。
+以下示例将演示如何使用 DataManager 创建一个从远程 API 获取数据的"托管"模式分页数据表格。
 
-1.  **定义你的数据服务和列配置:**
+1.  **定义你的数据服务、管理器和列配置:**
 
     ```ts
     // src/routes/demo/paged-table/TenantService.ts
-    import { PagedDataService } from '@ticatec/app-data-service';
+    import { PagingDataService } from '@ticatec/app-data-service';
 
-    export class TenantService extends PagedDataService<any> {
+    export default class TenantService extends PagingDataService {
         constructor() {
-            // 定义获取分页数据的 URL
             super('/api/tenants');
         }
     }
 
-    // src/routes/demo/paged-table/TenantColumns.ts
-    export const tenantColumns = [
-        { key: 'name', label: '租户名称' },
-        { key: 'email', label: '联系邮箱' },
-        { key: 'status', label: '状态' }
-    ];
+    export const service = new TenantService();
     ```
 
-2.  **在你的 Svelte 页面中使用 `PagingListPage` 组件:**
+    ```ts
+    // src/routes/demo/paged-table/TenantManager.ts
+    import { PagedDataManager } from "@ticatec/app-data-manager";
+    import { service } from "./TenantService";
+
+    export default class TenantManager extends PagedDataManager {
+        constructor() {
+            super(service, 'id'); // 使用 'id' 作为唯一标识符字段
+        }
+    }
+    ```
+
+    ```ts
+    // src/routes/demo/paged-table/TenantColumns.ts
+    import type { DataColumn } from "@ticatec/uniface-element";
+
+    const columns: Array<DataColumn> = [
+        {
+            text: '租户名称',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: '联系邮箱',
+            field: 'email',
+            width: 250,
+            resizable: true
+        },
+        {
+            text: '状态',
+            field: 'status',
+            width: 120,
+            align: 'center'
+        }
+    ];
+
+    export default columns;
+    ```
+
+2.  **配置全局 REST 服务（在应用设置中）:**
+
+    ```ts
+    // src/app.ts 或 src/main.ts
+    import { BaseDataService } from '@ticatec/app-data-service';
+    import RestService from '@ticatec/axios-restful-service';
+
+    // 配置全局 REST 服务
+    BaseDataService.setProxy(new RestService('https://api.example.com'));
+    ```
+
+3.  **在你的 Svelte 页面中使用 `PagingListPage` 组件:**
 
     ```svelte
     <!-- src/routes/demo/paged-table/+page.svelte -->
     <script lang="ts">
         import PagingListPage from '@ticatec/uniface-app-component/data-table/managed/PagingListPage.svelte';
-        import { TenantService } from './TenantService';
-        import { tenantColumns } from './TenantColumns';
+        import TenantManager from './TenantManager';
+        import columns from './TenantColumns';
 
-        const tenantService = new TenantService();
+        const dataManager = new TenantManager();
+
+        let page$attrs = {
+            title: "托管租户列表"
+        };
     </script>
 
-    <PagingListPage
-        title="托管租户列表"
-        service={tenantService}
-        columns={tenantColumns}
-        let:row
-    >
-        <!-- 这个插槽定义了每一行的渲染方式 -->
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-            <td>{row.status}</td>
-        </tr>
-    </PagingListPage>
+    <PagingListPage 
+        {dataManager} 
+        {columns} 
+        {page$attrs} 
+        rowHeight={48}
+    />
     ```
 
-这个简单的示例就创建了一个功能齐全的数据表格，它自带分页、数据获取、加载提示和错误处理等功能——而你只需要编写很少的代码。
+这个示例使用 @ticatec/uniface-element/DataTable 创建了一个功能完整的数据表格，包含分页、数据获取、加载提示和错误处理等功能——所有这些都由 PagedDataManager 自动管理。
 
 ## 开发
 
@@ -112,6 +154,36 @@ npm run build
 npm run check
 ```
 
-## 许可证
+## 📚 文档
+
+### 🌐 语言选项
+- **[📖 中文文档](./docs/cn/)** - 完整中文文档
+- **[🇺🇸 English Documentation](./docs/en/)** - Complete English documentation
+
+### 🧩 核心组件
+- **[AppModule](./docs/cn/AppModule.md)** - 应用模块管理与导航
+- **[HomePage](./docs/cn/HomePage.md)** - 首页组件
+- **[CommonFormPage](./docs/cn/CommonFormPage.md)** - 标准化表单页面组件
+
+### 📊 数据展示组件
+
+#### 📋 数据表格
+- **[ListPage](./docs/cn/data-table-ListPage.md)** - 基础数据表格列表
+- **[PagingListPage](./docs/cn/data-table-PagingListPage.md)** - 分页数据表格
+- **[Managed ListPage](./docs/cn/data-table-managed-ListPage.md)** - 托管数据表格（自动数据获取）
+- **[Managed PagingListPage](./docs/cn/data-table-managed-PagingListPage.md)** - 托管分页数据表格
+- **[Dynamic PagingListPage](./docs/cn/data-table-managed-DynamicPagingListPage.md)** - 动态分页数据表格
+
+#### 🃏 卡片列表
+- **[Card ListPage](./docs/cn/card-ListPage.md)** - 基础卡片列表
+- **[Card PagingListPage](./docs/cn/card-PagingListPage.md)** - 分页卡片列表
+- **[Managed Card ListPage](./docs/cn/card-managed-ListPage.md)** - 托管卡片列表
+- **[Managed Card PagingListPage](./docs/cn/card-managed-PagingListPage.md)** - 托管分页卡片列表
+
+### 🏗️ 模块组件
+- **[ModuleHome](./docs/cn/module-ModuleHome.md)** - 模块主页组件
+- **[TabModules](./docs/cn/multiple-modules-TabModules.md)** - 基于选项卡的多模块组件
+
+## 📄 许可证
 
 本项目基于 MIT 许可证授权。详情请参阅 [LICENSE](LICENSE) 文件。

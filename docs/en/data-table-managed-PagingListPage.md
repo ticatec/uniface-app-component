@@ -20,72 +20,105 @@ Your `let:row` slot is passed directly to the base `DataTable`, giving you full 
 
 ## How to Use
 
-1.  **Create a `PagedDataService`**
+1.  **Create a `PagingDataService`**
 
     ```ts
     // src/services/TenantService.ts
-    import { PagedDataService } from '@ticatec/app-data-service';
+    import { PagingDataService } from '@ticatec/app-data-service';
 
-    export class TenantService extends PagedDataService<any> {
+    export default class TenantService extends PagingDataService {
         constructor() {
             super('/api/tenants');
         }
     }
+
+    export const service = new TenantService();
     ```
 
-2.  **Define Your Columns**
+2.  **Create a `PagedDataManager`**
+
+    ```ts
+    // src/managers/TenantManager.ts
+    import { PagedDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/TenantService';
+
+    export default class TenantManager extends PagedDataManager {
+        constructor() {
+            super(service, 'id');
+        }
+    }
+    ```
+
+3.  **Define Your Columns**
 
     ```ts
     // src/config/TenantColumns.ts
-    export const tenantColumns = [
-        { key: 'name', label: 'Tenant Name' },
-        { key: 'email', label: 'Contact Email' },
-        { key: 'status', label: 'Status' }
+    import type { DataColumn } from "@ticatec/uniface-element";
+
+    const columns: Array<DataColumn> = [
+        {
+            text: 'Tenant Name',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: 'Contact Email',
+            field: 'email',
+            width: 250,
+            resizable: true
+        },
+        {
+            text: 'Status',
+            field: 'status',
+            width: 120,
+            align: 'center'
+        }
     ];
+
+    export default columns;
     ```
 
-3.  **Use the Component in Your Page**
+4.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
         import PagingListPage from '@ticatec/uniface-app-component/data-table/managed/PagingListPage.svelte';
-        import { TenantService } from '../services/TenantService';
-        import { tenantColumns } from '../config/TenantColumns';
+        import TenantManager from '../managers/TenantManager';
+        import columns from '../config/TenantColumns';
 
-        const tenantService = new TenantService();
+        const dataManager = new TenantManager();
+
+        let page$attrs = {
+            title: "Managed Tenants"
+        };
     </script>
 
     <PagingListPage
-        title="Managed Tenants"
-        service={tenantService}
-        columns={tenantColumns}
-        let:row
-        let:index
-    >
-        <!--
-            This slot is passed directly to the underlying DataTable.
-            You are responsible for rendering the `<tr>` and `<td>` elements
-            for each `row` of data.
-        -->
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-            <td>{row.status}</td>
-        </tr>
-    </PagingListPage>
+        {dataManager}
+        {columns}
+        {page$attrs}
+        rowHeight={48}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `service: PagedDataService`: An instance of your data service. **(Required)**
--   `columns: any[]`: An array of column definitions passed to the underlying `DataTable` to render the `<thead>`. **(Required)**
--   `pageNo?: number`: The initial page number to load (1-based). Defaults to `1`.
--   `pageSize?: number`: The number of items per page. Defaults to `10`.
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showPagingBar?: boolean`: Whether to show the bottom pagination bar. Defaults to `true`.
+-   `dataManager: PagedDataManager`: An instance of your data manager. **(Required)**
+-   `columns: DataColumn[]`: An array of column definition objects from @ticatec/uniface-element. **(Required)**
+-   `page$attrs: object`: Page attributes containing title and other page-level settings. **(Required)**
+-   `rowHeight?: number`: Height of each row in pixels. Defaults to `40`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `actions?: ButtonActions`: Array of action buttons for the top action bar.
+-   `indicatorColumn?: IndicatorColumn`: Configuration for selection indicators.
+-   `actionsColumn?: ActionsColumn`: Configuration for row action buttons.
 
-## Slot Properties
+## Features
 
--   `let:row`: The data object for the current row.
--   `let:index`: The zero-based index of the current row within the page.
+-   Automatic data fetching using PagedDataManager
+-   Built-in pagination controls
+-   Server-side data loading and searching
+-   Loading and error state management
+-   Uses @ticatec/uniface-element/DataTable for rendering
+-   Support for row selection and actions
+-   Responsive layout with action bars

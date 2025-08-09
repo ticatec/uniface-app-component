@@ -15,71 +15,116 @@ Use this component for advanced search scenarios. It integrates a filter panel w
 
 ## How to Use
 
-This component requires a `PagedDataService` and a filter panel component that exposes its filter criteria.
+This component requires a `PagingDataService` and a `PagedDataManager`, along with a filter panel component that exposes its filter criteria.
 
-1.  **Create a `PagedDataService`**
-
-    The service will automatically receive the filter criteria as a `POST` request body. Your backend API must be designed to handle this.
+1.  **Create a `PagingDataService`**
 
     ```ts
     // src/services/DynamicTenantService.ts
-    import { PagedDataService } from '@ticatec/app-data-service';
+    import { PagingDataService } from '@ticatec/app-data-service';
 
-    export class DynamicTenantService extends PagedDataService<any> {
+    export default class DynamicTenantService extends PagingDataService {
         constructor() {
-            // The service sends a POST request to this URL with filter criteria in the body
             super('/api/tenants/search');
+        }
+    }
+
+    export const service = new DynamicTenantService();
+    ```
+
+2.  **Create a `PagedDataManager`**
+
+    ```ts
+    // src/managers/DynamicTenantManager.ts
+    import { PagedDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/DynamicTenantService';
+
+    export default class DynamicTenantManager extends PagedDataManager {
+        constructor() {
+            super(service, 'id');
         }
     }
     ```
 
-2.  **Use the Component in Your Page**
+3.  **Define Your Columns**
 
-    You need to provide a filter panel component in the `criteria` slot. The `DynamicPagingListPage` will manage it.
+    ```ts
+    // src/config/TenantColumns.ts
+    import type { DataColumn } from "@ticatec/uniface-element";
+
+    const columns: Array<DataColumn> = [
+        {
+            text: 'Tenant Name',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: 'Contact Email',
+            field: 'email',
+            width: 250,
+            resizable: true
+        },
+        {
+            text: 'Status',
+            field: 'status',
+            width: 120,
+            align: 'center'
+        }
+    ];
+
+    export default columns;
+    ```
+
+4.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
         import DynamicPagingListPage from '@ticatec/uniface-app-component/data-table/managed/DynamicPagingListPage.svelte';
-        import { DynamicTenantService } from '../services/DynamicTenantService';
-        import { tenantColumns } from '../config/TenantColumns';
-
-        // Assume CriteriaFilterPanel is a component that lets users build queries
-        // and exposes the criteria via a `getCriteria()` method.
+        import DynamicTenantManager from '../managers/DynamicTenantManager';
+        import columns from '../config/TenantColumns';
         import CriteriaFilterPanel from './CriteriaFilterPanel.svelte';
 
-        const tenantService = new DynamicTenantService();
+        const dataManager = new DynamicTenantManager();
+
+        let page$attrs = {
+            title: "Dynamic Tenant Search"
+        };
     </script>
 
     <DynamicPagingListPage
-        title="Dynamic Tenant Search"
-        service={tenantService}
-        columns={tenantColumns}
-        let:row
+        {dataManager}
+        {columns}
+        {page$attrs}
+        rowHeight={48}
     >
-        <div slot="criteria">
-            <CriteriaFilterPanel />
-        </div>
-
-        <!-- Row rendering slot -->
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-            <td>{row.status}</td>
-        </tr>
+        <CriteriaFilterPanel slot="search-panel" />
     </DynamicPagingListPage>
     ```
 
 ## Component Props
 
--   `title: string`: The title for the page.
--   `service: PagedDataService`: An instance of your data service. **(Required)**
--   `columns: any[]`: An array of column definitions. **(Required)**
--   `pageNo?: number`: Initial page number. Defaults to `1`.
--   `pageSize?: number`: Items per page. Defaults to `10`.
--   `showActionBar?: boolean`: Show the top action bar. Defaults to `true`.
--   `showPagingBar?: boolean`: Show the bottom pagination bar. Defaults to `true`.
+-   `dataManager: PagedDataManager`: An instance of your data manager. **(Required)**
+-   `columns: DataColumn[]`: An array of column definition objects from @ticatec/uniface-element. **(Required)**
+-   `page$attrs: object`: Page attributes containing title and other page-level settings. **(Required)**
+-   `rowHeight?: number`: Height of each row in pixels. Defaults to `40`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `actions?: ButtonActions`: Array of action buttons for the top action bar.
+-   `indicatorColumn?: IndicatorColumn`: Configuration for selection indicators.
+-   `actionsColumn?: ActionsColumn`: Configuration for row action buttons.
 
 ## Slots
 
--   `criteria`: Place your filter panel component here. It must be a component that can be managed by the page.
--   `default` (`let:row`, `let:index`): The slot for rendering each row of the table.
+-   `search-panel`: Place your filter panel component here. It can be used to provide dynamic search criteria.
+-   `sidebar`: Optional sidebar content.
+
+## Features
+
+-   Automatic data fetching using PagedDataManager
+-   Built-in pagination controls
+-   Dynamic search and filtering capabilities
+-   Server-side data loading with custom criteria
+-   Loading and error state management
+-   Uses @ticatec/uniface-element/DataTable for rendering
+-   Support for row selection and actions
+-   Responsive layout with action bars and sidebar support

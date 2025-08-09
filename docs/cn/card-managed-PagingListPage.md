@@ -15,63 +15,93 @@
 
 该组件的用法与其数据表格版本几乎完全相同，依赖于一个服务来提供数据，并使用一个插槽来进行渲染。
 
-1.  **创建一个 `PagedDataService`** (您可以复用与数据表格相同的服务)。
+1.  **创建一个 `PagingDataService`**
 
     ```ts
     // src/services/TenantService.ts
-    import { PagedDataService } from '@ticatec/app-data-service';
+    import { PagingDataService } from '@ticatec/app-data-service';
 
-    export class TenantService extends PagedDataService<any> {
+    export default class TenantService extends PagingDataService {
         constructor() {
             super('/api/tenants');
         }
     }
+
+    export const service = new TenantService();
     ```
 
-2.  **在你的页面中使用该组件**
+2.  **创建一个 `PagedDataManager`**
 
-    您不需要提供 `columns` 属性，而是将数据传递给 `CardListBoard` 组件，并在插槽内完全自由地设计您的卡片。
+    ```ts
+    // src/managers/TenantManager.ts
+    import { PagedDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/TenantService';
+
+    export default class TenantManager extends PagedDataManager {
+        constructor() {
+            super(service, 'id');
+        }
+    }
+    ```
+
+3.  **在你的页面中使用该组件**
 
     ```svelte
     <script lang="ts">
-        import PagingListPage from '@ticatec/uniface-app-component/card/managed/PagingListPage.svelte';
-        import CardListBoard from '@ticatec/uniface-app-component/card/CardListBoard.svelte';
-        import { TenantService } from '../services/TenantService';
+        import PagingListPage from '@ticatec/uniface-app-component/cards/managed/PagingListPage.svelte';
+        import TenantManager from '../managers/TenantManager';
+        import TenantCard from './TenantCard.svelte'; // 您的自定义卡片组件
 
-        // 一个用于显示租户信息的简单卡片组件
-        import TenantCard from './TenantCard.svelte';
+        const dataManager = new TenantManager();
 
-        const tenantService = new TenantService();
+        let page$attrs = {
+            title: "托管租户卡片列表"
+        };
+
+        // 配置渲染对象以使用您的卡片组件
+        let render = {
+            component: TenantCard,
+            props: {} // 传递给卡片的额外属性
+        };
+
+        let criteria = {}; // 搜索条件
     </script>
 
     <PagingListPage
-        title="托管租户卡片列表"
-        service={tenantService}
-        let:pagedDataManager
+        {dataManager}
+        {page$attrs}
+        {render}
+        {criteria}
     >
-        <!--
-            插槽让您能访问到 PagedDataManager 的实例。
-            您需要将其 `pagedData` 属性传递给 CardListBoard。
-        -->
-        <CardListBoard
-            items={pagedDataManager.pagedData.data}
-            let:item
-        >
-            <!-- 为每个 item 渲染您的自定义卡片组件 -->
-            <TenantCard tenant={item} />
-        </CardListBoard>
+        <!-- 可选的搜索面板 -->
+        <div slot="search-panel">
+            <!-- 您的搜索表单控件 -->
+        </div>
     </PagingListPage>
     ```
 
 ## 组件属性 (Props)
 
--   `title: string`: 显示在页面顶部的标题。
--   `service: PagedDataService`: 您的数据服务实例。**(必需)**
--   `pageNo?: number`: 初始加载的页码（从1开始）。默认为 `1`。
--   `pageSize?: number`: 每页的项目数。默认为 `10`。
--   `showActionBar?: boolean`: 是否显示顶部的操作栏。默认为 `true`。
--   `showPagingBar?: boolean`: 是否显示底部的分页栏。默认为 `true`。
+-   `dataManager: PagedDataManager`: 您的数据管理器实例。**(必需)**
+-   `page$attrs: object`: 包含标题和其他页面级设置的页面属性。**(必需)**
+-   `render: object`: 用于渲染卡片的配置对象，包含 `component` 和 `props`。**(必需)**
+-   `criteria: object`: 传递给数据管理器的搜索条件对象。**(必需)**
+-   `gap?: number`: 卡片之间的间距（像素）。默认为 `8`。
+-   `canBeClosed?: boolean`: 页面是否可以关闭。默认为 `false`。
+-   `actions?: ButtonActions`: 搜索面板的操作按钮数组。
 
-## 插槽属性 (Slot Properties)
+## 插槽 (Slots)
 
--   `let:pagedDataManager`: 管理组件状态和数据的 `PagingDataManager` 实例。您可以通过 `pagedDataManager.pagedData.data` 访问已加载的数据。
+-   `search-panel`: 用于自定义搜索表单控件的可选插槽。
+-   `advanced-panel`: 用于高级搜索条件的可选插槽。
+
+## 功能特性
+
+-   使用 PagedDataManager 自动数据获取
+-   内置分页控件
+-   服务端数据加载和搜索
+-   加载和错误状态管理
+-   可配置间距的灵活卡片式布局
+-   集成的 FilterPanel 搜索面板
+-   带有操作栏的响应式设计
+-   使用渲染配置自动卡片渲染

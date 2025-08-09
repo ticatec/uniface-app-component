@@ -13,16 +13,26 @@ Use this component when you have a dataset on the client-side that does not requ
 
 ## How to Use
 
-You create a `ListDataManager` instance, populate it with your array of data, and pass it to the component. The component renders the `manager.filtered` data.
+This component directly takes an array of data and renders it in a table format using @ticatec/uniface-element/DataTable.
 
-1.  **Set up your `ListDataManager` with your data.**
+1.  **Prepare your data and columns**
 
     ```ts
-    import { ListDataManager } from '@ticatec/app-data-manager';
+    import type { DataColumn } from "@ticatec/uniface-element";
 
-    const columns = [
-        { key: 'name', label: 'User Name' },
-        { key: 'role', label: 'Role' }
+    const columns: Array<DataColumn> = [
+        {
+            text: 'User Name',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: 'Role',
+            field: 'role',
+            width: 150,
+            resizable: true
+        }
     ];
 
     const allUsers = [
@@ -31,39 +41,67 @@ You create a `ListDataManager` instance, populate it with your array of data, an
         { name: 'Charlie', role: 'User' }
     ];
 
-    // 1. Create the manager instance and provide the full dataset.
-    const manager = new ListDataManager({
-        data: allUsers,
-        // 2. Optional: Define which fields can be filtered by the search bar.
-        filterableFields: ['name', 'role']
-    });
+    // Optional: Create a filter function for client-side filtering
+    const filterFun = (item: any, filterText: string) => {
+        return item.name.toLowerCase().includes(filterText.toLowerCase()) ||
+               item.role.toLowerCase().includes(filterText.toLowerCase());
+    };
     ```
 
 2.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
-        // ... (script from above)
         import ListPage from '@ticatec/uniface-app-component/data-table/ListPage.svelte';
+        
+        let list = allUsers; // Your data array
+
+        let page$attrs = {
+            title: "All Users"
+        };
+
+        // Optional refresh handler
+        const onRefreshClick = () => {
+            // Reload your data here
+        };
     </script>
 
     <ListPage
-        title="All Users"
-        dataManager={manager}
+        {page$attrs}
+        {list}
         {columns}
-        let:row
-    >
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.role}</td>
-        </tr>
-    </ListPage>
+        {filterFun}
+        {onRefreshClick}
+        rowHeight={48}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `dataManager: ListDataManager`: An instance of your manually controlled data manager. **(Required)**
--   `columns: any[]`: An array of column definition objects. **(Required)**
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showFilterBar?: boolean`: Whether to show the filter/search bar. Defaults to `true`.
+-   `page$attrs: PageAttrs`: Page attributes containing title and other page-level settings. **(Required)**
+-   `list: Array<any>`: The array of data items to display in the table. **(Required)**
+-   `columns: Array<DataColumn>`: Array of column definition objects from @ticatec/uniface-element. **(Required)**
+-   `filterFun?: FunFilter`: Optional function for client-side filtering of rows.
+-   `onCreateNewClick?: MouseClickHandler`: Handler for the "Create New" button.
+-   `onRefreshClick?: MouseClickHandler`: Handler for the refresh button.
+-   `indicatorColumn?: IndicatorColumn`: Configuration for selection indicators.
+-   `actionsColumn?: ActionsColumn`: Configuration for row action buttons.
+-   `selectedRows?: Array<any>`: Array to bind selected rows to.
+-   `rowHeight?: number`: Height of each row in pixels.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `roundTable?: boolean`: Whether to use rounded table corners. Defaults to `false`.
+-   `placeholder?: string`: Placeholder text for the search input.
+-   `emptyIndicator?: string`: Custom text for empty state.
+
+## Slots
+
+-   `sidebar`: Optional sidebar content.
+
+## Features
+
+-   Client-side data display using @ticatec/uniface-element/DataTable
+-   Built-in filtering and search capabilities
+-   Support for row selection and actions
+-   Customizable action buttons (create new, refresh)
+-   Responsive design with filterable page bar
+-   Optional sidebar support

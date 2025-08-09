@@ -17,64 +17,95 @@ This component automatically creates and manages its own `ListDataManager` insta
 
 ## How to Use
 
-1.  **Create a `DataService`**
+1.  **Create a `FullListDataService`**
 
     ```ts
     // src/services/RoleService.ts
-    import { DataService } from '@ticatec/app-data-service';
+    import { FullListDataService } from '@ticatec/app-data-service';
 
-    export class RoleService extends DataService<any> {
+    export default class RoleService extends FullListDataService {
         constructor() {
-            // The base URL for your API endpoint
-            // The service will call GET /api/roles to fetch all items
             super('/api/roles');
+        }
+    }
+
+    export const service = new RoleService();
+    ```
+
+2.  **Create a `FullListDataManager`**
+
+    ```ts
+    // src/managers/RoleManager.ts
+    import { FullListDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/RoleService';
+
+    export default class RoleManager extends FullListDataManager {
+        constructor() {
+            super(service, 'id');
         }
     }
     ```
 
-2.  **Define Your Columns**
+3.  **Define Your Columns**
 
     ```ts
     // src/config/RoleColumns.ts
-    export const roleColumns = [
-        { key: 'name', label: 'Role Name' },
-        { key: 'permissions', label: 'Permissions' }
+    import type { DataColumn } from "@ticatec/uniface-element";
+
+    const columns: Array<DataColumn> = [
+        {
+            text: 'Role Name',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: 'Permissions',
+            field: 'permissions',
+            width: 300,
+            resizable: true
+        }
     ];
+
+    export default columns;
     ```
 
-3.  **Use the Component in Your Page**
+4.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
         import ListPage from '@ticatec/uniface-app-component/data-table/managed/ListPage.svelte';
-        import { RoleService } from '../services/RoleService';
-        import { roleColumns } from '../config/RoleColumns';
+        import RoleManager from '../managers/RoleManager';
+        import columns from '../config/RoleColumns';
 
-        const roleService = new RoleService();
+        const dataManager = new RoleManager();
+
+        let page$attrs = {
+            title: "All Roles"
+        };
     </script>
 
     <ListPage
-        title="All Roles"
-        service={roleService}
-        columns={roleColumns}
-        let:row
-    >
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.permissions.join(', ')}</td>
-        </tr>
-    </ListPage>
+        {dataManager}
+        {columns}
+        {page$attrs}
+        rowHeight={48}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `service: DataService`: An instance of your data service. **(Required)**
--   `columns: any[]`: An array of column definition objects. **(Required)**
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showFilterBar?: boolean`: Whether to show the filter/search bar. Defaults to `true`.
+-   `dataManager: FullListDataManager`: An instance of your data manager. **(Required)**
+-   `columns: DataColumn[]`: An array of column definition objects from @ticatec/uniface-element. **(Required)**
+-   `page$attrs: object`: Page attributes containing title and other page-level settings. **(Required)**
+-   `rowHeight?: number`: Height of each row in pixels. Defaults to `40`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `actions?: ButtonActions`: Array of action buttons for the top action bar.
 
-## Slot Properties
+## Features
 
--   `let:row`: The data object for the current row.
--   `let:index`: The zero-based index of the current row.
+-   Automatic data fetching using FullListDataManager
+-   Built-in loading and error states
+-   Client-side filtering and searching
+-   Uses @ticatec/uniface-element/DataTable for rendering
+-   Responsive layout with action bars

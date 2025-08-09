@@ -15,7 +15,7 @@ This component is a **UI shell** that renders the state of a `PagingDataManager`
 
 ## Key Dependencies
 -   **`@ticatec/app-data-manager/PagingDataManager`**: The "brain" of the component. You create and manage this object.
--   **`CardListBoard`**: A simple component that takes a list of items and renders them using its default slot. You will typically place this inside the `PagingListPage` and feed it data from your manager.
+-   **render configuration object**: Used for automatic card rendering, containing component and props properties.
 
 ## How to Use
 
@@ -53,32 +53,59 @@ The pattern is identical to the unmanaged data table: create and manage a `Pagin
 
 2.  **Use the Component in Your Page**
 
-    You use the `CardListBoard` component inside the `PagingListPage` to render the items from the manager.
-
     ```svelte
     <script lang="ts">
         // ... (script from above)
         import PagingListPage from '@ticatec/uniface-app-component/card/PagingListPage.svelte';
-        import CardListBoard from '@ticatec/uniface-app-component/card/CardListBoard.svelte';
         import TenantCard from './TenantCard.svelte';
+
+        let page$attrs = {
+            title: "Unmanaged Tenant Cards"
+        };
+
+        // Configure the render object
+        let render = {
+            component: TenantCard,
+            props: {} // Any additional props to pass to the card
+        };
+
+        // Optional action button handlers
+        const onCreateNewClick = () => {
+            // Logic for creating new items
+        };
+
+        const onRefreshClick = () => {
+            fetchData(manager.pageNo, manager.pageSize);
+        };
     </script>
 
     <PagingListPage
-        title="Unmanaged Tenant Cards"
-        dataManager={manager}
-    >
-        <CardListBoard
-            items={manager.pagedData.data}
-            let:item
-        >
-            <TenantCard tenant={item} />
-        </CardListBoard>
-    </PagingListPage>
+        {page$attrs}
+        list={manager.pagedData.data}
+        {render}
+        {onCreateNewClick}
+        {onRefreshClick}
+        gap={12}
+        canBeClosed={false}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `dataManager: PagingDataManager`: An instance of your manually controlled data manager. **(Required)**
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showPagingBar?: boolean`: Whether to show the bottom pagination bar. Defaults to `true`.
+-   `page$attrs: PageAttrs`: Page attributes containing title and other page-level settings. **(Required)**
+-   `list: Array<any>`: The array of data items to display as cards. **(Required)**
+-   `render: object`: Configuration object with `component` and `props` for rendering cards. **(Required)**
+-   `onCreateNewClick?: MouseClickHandler`: Handler for the "Create New" button.
+-   `onRefreshClick?: MouseClickHandler`: Handler for the refresh button.
+-   `gap?: number`: Gap between cards in pixels. Defaults to `12`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `placeholder?: string`: Placeholder text for the search input.
+
+## Features
+
+-   Paginated data display based on PagingDataManager
+-   Built-in pagination controls and loading state management
+-   Flexible card-based layout with configurable gap
+-   Customizable action buttons (create new, refresh)
+-   Responsive design with page-level operations support
+-   Automatic card rendering using the render configuration

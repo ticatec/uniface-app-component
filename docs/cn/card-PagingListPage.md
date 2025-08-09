@@ -14,8 +14,8 @@
 - **组件渲染状态：** `PagingListPage` 根据管理器的状态渲染分页控件，并在用户点击页码时触发管理器的 `page-changed` 事件。
 
 ## 关键依赖
--   **`@ticatec/app-data-manager/PagingDataManager`**: 该组件的“大脑”。您需要创建并管理此对象。
--   **`CardListBoard`**: 一个简单的组件，它接收一个项目列表并使用其默认插槽来渲染它们。您通常会将其放置在 `PagingListPage` 内部，并用来自您的管理器的数据来填充它。
+-   **`@ticatec/app-data-manager/PagingDataManager`**: 该组件的"大脑"。您需要创建并管理此对象。
+-   **render 配置对象**: 用于自动渲染卡片的配置，包含 component 和 props 属性。
 
 ## 如何使用
 
@@ -53,32 +53,59 @@
 
 2.  **在您的页面中使用该组件**
 
-    您需要在 `PagingListPage` 内部使用 `CardListBoard` 组件来渲染来自管理器的项目。
-
     ```svelte
     <script lang="ts">
         // ... (上面的脚本)
         import PagingListPage from '@ticatec/uniface-app-component/card/PagingListPage.svelte';
-        import CardListBoard from '@ticatec/uniface-app-component/card/CardListBoard.svelte';
         import TenantCard from './TenantCard.svelte';
+
+        let page$attrs = {
+            title: "非托管租户卡片列表"
+        };
+
+        // 配置 render 对象
+        let render = {
+            component: TenantCard,
+            props: {} // 传递给卡片组件的额外属性
+        };
+
+        // 可选的操作按钮处理器
+        const onCreateNewClick = () => {
+            // 创建新项目的逻辑
+        };
+
+        const onRefreshClick = () => {
+            fetchData(manager.pageNo, manager.pageSize);
+        };
     </script>
 
     <PagingListPage
-        title="非托管租户卡片列表"
-        dataManager={manager}
-    >
-        <CardListBoard
-            items={manager.pagedData.data}
-            let:item
-        >
-            <TenantCard tenant={item} />
-        </CardListBoard>
-    </PagingListPage>
+        {page$attrs}
+        list={manager.pagedData.data}
+        {render}
+        {onCreateNewClick}
+        {onRefreshClick}
+        gap={12}
+        canBeClosed={false}
+    />
     ```
 
 ## 组件属性 (Props)
 
--   `title: string`: 显示在页面顶部的标题。
--   `dataManager: PagingDataManager`: 您手动控制的数据管理器实例。**(必需)**
--   `showActionBar?: boolean`: 是否显示顶部的操作栏。默认为 `true`。
--   `showPagingBar?: boolean`: 是否显示底部的分页栏。默认为 `true`。
+-   `page$attrs: PageAttrs`: 包含标题和其他页面级设置的页面属性。**(必需)**
+-   `list: Array<any>`: 要显示为卡片的数据项数组。**(必需)**
+-   `render: object`: 用于渲染卡片的配置对象，包含 `component` 和 `props` 属性。**(必需)**
+-   `onCreateNewClick?: MouseClickHandler`: "创建新项" 按钮的处理器。
+-   `onRefreshClick?: MouseClickHandler`: 刷新按钮的处理器。
+-   `gap?: number`: 卡片之间的间距（像素）。默认为 `12`。
+-   `canBeClosed?: boolean`: 页面是否可以关闭。默认为 `false`。
+-   `placeholder?: string`: 搜索输入框的占位符文本。
+
+## 功能特性
+
+-   基于 PagingDataManager 的分页数据显示
+-   内置分页控件和加载状态管理
+-   灵活的卡片布局，可配置间距
+-   可自定义的操作按钮（创建新项、刷新）
+-   响应式设计，支持页面级操作
+-   使用 render 配置自动渲染卡片

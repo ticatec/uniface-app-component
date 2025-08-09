@@ -8,54 +8,78 @@ This is the card-based equivalent of the managed table `ListPage`. Use it to dis
 
 ## How to Use
 
-You provide a `DataService` and use the `let:listDataManager` slot property to access the data and pass it to a `CardListBoard`.
-
-1.  **Create a `DataService`**
+1.  **Create a `FullListDataService`**
 
     ```ts
     // src/services/ApplicationService.ts
-    import { DataService } from '@ticatec/app-data-service';
+    import { FullListDataService } from '@ticatec/app-data-service';
 
-    export class ApplicationService extends DataService<any> {
+    export default class ApplicationService extends FullListDataService {
         constructor() {
             super('/api/applications');
         }
     }
+
+    export const service = new ApplicationService();
     ```
 
-2.  **Use the Component in Your Page**
+2.  **Create a `FullListDataManager`**
+
+    ```ts
+    // src/managers/ApplicationManager.ts
+    import { FullListDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/ApplicationService';
+
+    export default class ApplicationManager extends FullListDataManager {
+        constructor() {
+            super(service, 'id');
+        }
+    }
+    ```
+
+3.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
-        import ListPage from '@ticatec/uniface-app-component/card/managed/ListPage.svelte';
-        import CardListBoard from '@ticatec/uniface-app-component/card/CardListBoard.svelte';
-        import { ApplicationService } from '../services/ApplicationService';
+        import ListPage from '@ticatec/uniface-app-component/cards/managed/ListPage.svelte';
+        import ApplicationManager from '../managers/ApplicationManager';
         import ApplicationCard from './ApplicationCard.svelte'; // Your custom card component
 
-        const appService = new ApplicationService();
+        const dataManager = new ApplicationManager();
+
+        let page$attrs = {
+            title: "All Applications"
+        };
+
+        // Configure the render object to use your card component
+        let render = {
+            component: ApplicationCard,
+            props: {} // Any additional props to pass to the card
+        };
     </script>
 
-    <ListPage
-        title="All Applications"
-        service={appService}
-        let:listDataManager
-    >
-        <CardListBoard
-            items={listDataManager.filtered}
-            let:item
-        >
-            <ApplicationCard application={item} />
-        </CardListBoard>
-    </ListPage>
+    <ListPage 
+        {dataManager}
+        {page$attrs}
+        {render}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `service: DataService`: An instance of your data service that implements `getAll()`. **(Required)**
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showFilterBar?: boolean`: Whether to show the filter/search bar. Defaults to `true`.
+-   `dataManager: FullListDataManager`: An instance of your data manager. **(Required)**
+-   `page$attrs: object`: Page attributes containing title and other page-level settings. **(Required)**
+-   `render: object`: Configuration object with `component` and `props` for rendering cards. **(Required)**
+-   `gap?: number`: Gap between cards in pixels. Defaults to `8`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `filterFun?: FunFilter`: Function for client-side filtering of cards.
+-   `placeholder?: string`: Placeholder text for the search input.
 
-## Slot Properties
+## Features
 
--   `let:listDataManager`: The instance of `ListDataManager` that manages the component's state and data. Access the data via `listDataManager.filtered`.
+-   Automatic data fetching using FullListDataManager
+-   Built-in loading and error states
+-   Client-side filtering and searching using CardListBoard
+-   Flexible card-based layout with configurable gap
+-   Responsive design with action bars
+-   Automatic card rendering using the render configuration

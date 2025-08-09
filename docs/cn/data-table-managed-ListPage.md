@@ -17,64 +17,95 @@
 
 ## 如何使用
 
-1.  **创建一个 `DataService`**
+1.  **创建一个 `FullListDataService`**
 
     ```ts
     // src/services/RoleService.ts
-    import { DataService } from '@ticatec/app-data-service';
+    import { FullListDataService } from '@ticatec/app-data-service';
 
-    export class RoleService extends DataService<any> {
+    export default class RoleService extends FullListDataService {
         constructor() {
-            // 您的 API 端点的基础 URL
-            // 服务将调用 GET /api/roles 来获取所有项目
             super('/api/roles');
+        }
+    }
+
+    export const service = new RoleService();
+    ```
+
+2.  **创建一个 `FullListDataManager`**
+
+    ```ts
+    // src/managers/RoleManager.ts
+    import { FullListDataManager } from '@ticatec/app-data-manager';
+    import { service } from '../services/RoleService';
+
+    export default class RoleManager extends FullListDataManager {
+        constructor() {
+            super(service, 'id');
         }
     }
     ```
 
-2.  **定义您的列**
+3.  **定义您的列配置**
 
     ```ts
     // src/config/RoleColumns.ts
-    export const roleColumns = [
-        { key: 'name', label: '角色名称' },
-        { key: 'permissions', label: '权限' }
+    import type { DataColumn } from "@ticatec/uniface-element";
+
+    const columns: Array<DataColumn> = [
+        {
+            text: '角色名称',
+            field: 'name',
+            width: 200,
+            resizable: true
+        },
+        {
+            text: '权限',
+            field: 'permissions',
+            width: 300,
+            resizable: true
+        }
     ];
+
+    export default columns;
     ```
 
-3.  **在您的页面中使用该组件**
+4.  **在您的页面中使用该组件**
 
     ```svelte
     <script lang="ts">
         import ListPage from '@ticatec/uniface-app-component/data-table/managed/ListPage.svelte';
-        import { RoleService } from '../services/RoleService';
-        import { roleColumns } from '../config/RoleColumns';
+        import RoleManager from '../managers/RoleManager';
+        import columns from '../config/RoleColumns';
 
-        const roleService = new RoleService();
+        const dataManager = new RoleManager();
+
+        let page$attrs = {
+            title: "所有角色"
+        };
     </script>
 
     <ListPage
-        title="所有角色"
-        service={roleService}
-        columns={roleColumns}
-        let:row
-    >
-        <tr class="hover">
-            <td>{row.name}</td>
-            <td>{row.permissions.join(', ')}</td>
-        </tr>
-    </ListPage>
+        {dataManager}
+        {columns}
+        {page$attrs}
+        rowHeight={48}
+    />
     ```
 
 ## 组件属性 (Props)
 
--   `title: string`: 显示在页面顶部的标题。
--   `service: DataService`: 您的数据服务实例。**(必需)**
--   `columns: any[]`: 列定义对象的数组。**(必需)**
--   `showActionBar?: boolean`: 是否显示顶部的操作栏。默认为 `true`。
--   `showFilterBar?: boolean`: 是否显示筛选/搜索栏。默认为 `true`。
+-   `dataManager: FullListDataManager`: 您的数据管理器实例。**(必需)**
+-   `columns: DataColumn[]`: 来自 @ticatec/uniface-element 的列定义对象数组。**(必需)**
+-   `page$attrs: object`: 包含标题和其他页面级设置的页面属性。**(必需)**
+-   `rowHeight?: number`: 每行的像素高度。默认为 `40`。
+-   `canBeClosed?: boolean`: 页面是否可以关闭。默认为 `false`。
+-   `actions?: ButtonActions`: 顶部操作栏的操作按钮数组。
 
-## 插槽属性 (Slot Properties)
+## 功能特性
 
--   `let:row`: 当前行的数据对象。
--   `let:index`: 当前行的零基索引。
+-   使用 FullListDataManager 自动数据获取
+-   内置加载和错误状态
+-   客户端筛选和搜索
+-   使用 @ticatec/uniface-element/DataTable 进行渲染
+-   带有操作栏的响应式布局

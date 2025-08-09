@@ -18,49 +18,74 @@ This component is a **UI shell** that renders the state of a `ListDataManager` y
 
 ## How to Use
 
-1.  **Set up your `ListDataManager`.**
+1.  **Prepare your data and filter function**
 
     ```ts
-    import { ListDataManager } from '@ticatec/app-data-manager';
-
     const allItems = [
         { id: 1, name: 'Product A', category: 'Electronics' },
         { id: 2, name: 'Product B', category: 'Books' },
         { id: 3, name: 'Product C', category: 'Electronics' }
     ];
 
-    const manager = new ListDataManager({
-        data: allItems,
-        filterableFields: ['name', 'category']
-    });
+    // Optional: Create a filter function for client-side filtering
+    const filterFun = (item: any, filterText: string) => {
+        return item.name.toLowerCase().includes(filterText.toLowerCase()) ||
+               item.category.toLowerCase().includes(filterText.toLowerCase());
+    };
     ```
 
 2.  **Use the Component in Your Page**
 
     ```svelte
     <script lang="ts">
-        // ... (script from above)
-        import ListPage from '@ticatec/uniface-app-component/card/ListPage.svelte';
-        import CardListBoard from '@ticatec/uniface-app-component/card/CardListBoard.svelte';
+        import ListPage from '@ticatec/uniface-app-component/cards/ListPage.svelte';
         import YourCardComponent from './YourCardComponent.svelte';
+
+        let list = allItems; // Your data array
+
+        let page$attrs = {
+            title: "All Products"
+        };
+
+        // Configure the render object
+        let render = {
+            component: YourCardComponent,
+            props: {} // Any additional props to pass to the card
+        };
+
+        // Optional refresh handler
+        const onRefreshClick = () => {
+            // Reload your data here
+        };
     </script>
 
     <ListPage
-        title="All Products"
-        dataManager={manager}
-    >
-        <CardListBoard
-            items={manager.filtered}
-            let:item
-        >
-            <YourCardComponent product={item} />
-        </CardListBoard>
-    </ListPage>
+        {page$attrs}
+        {list}
+        {render}
+        {filterFun}
+        {onRefreshClick}
+        gap={12}
+    />
     ```
 
 ## Component Props
 
--   `title: string`: The title displayed at the top of the page.
--   `dataManager: ListDataManager`: An instance of your manually controlled data manager. **(Required)**
--   `showActionBar?: boolean`: Whether to show the top action bar. Defaults to `true`.
--   `showFilterBar?: boolean`: Whether to show the filter/search bar. Defaults to `true`.
+-   `page$attrs: PageAttrs`: Page attributes containing title and other page-level settings. **(Required)**
+-   `list: Array<any>`: The array of data items to display as cards. **(Required)**
+-   `render: object`: Configuration object with `component` and `props` for rendering cards. **(Required)**
+-   `filterFun?: FunFilter`: Optional function for client-side filtering of cards.
+-   `onCreateNewClick?: MouseClickHandler`: Handler for the "Create New" button.
+-   `onRefreshClick?: MouseClickHandler`: Handler for the refresh button.
+-   `gap?: number`: Gap between cards in pixels. Defaults to `12`.
+-   `canBeClosed?: boolean`: Whether the page can be closed. Defaults to `false`.
+-   `placeholder?: string`: Placeholder text for the search input.
+
+## Features
+
+-   Client-side data display with array-based list
+-   Built-in filtering and search using CardListBoard
+-   Flexible card-based layout with configurable gap
+-   Customizable action buttons (create new, refresh)
+-   Responsive design with filterable page bar
+-   Automatic card rendering using the render configuration
